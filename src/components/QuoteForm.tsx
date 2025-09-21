@@ -15,7 +15,8 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
     email: '',
     phone: '',
     address: '',
-    availability: '',
+    preferredDate: '',
+    preferredTime: '',
     additionalNotes: ''
   });
 
@@ -28,18 +29,86 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const quoteRequest: QuoteRequest = {
       ...formData,
       services: state.items
     };
 
-    // In a real app, you would send this to a server
+    // Create email content
+    const servicesText = state.items.map(item =>
+      `- ${item.service.name} (${item.service.category}) x${item.quantity}\n  ${item.service.description}`
+    ).join('\n\n');
+
+    // Create email content for Devon
+    const emailSubject = `Quote Request from ${formData.name}`;
+    const emailBodyForDevon = `
+New Quote Request Details:
+
+Customer Information:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- Address: ${formData.address}
+
+Preferred Scheduling:
+- Date: ${formData.preferredDate}
+- Time: ${formData.preferredTime}
+
+Requested Services:
+${servicesText}
+
+Additional Notes:
+${formData.additionalNotes || 'None'}
+
+---
+This quote request was submitted through Devon's Website.
+    `.trim();
+
+    // Create customer copy email content
+    const customerSubject = `Copy of Your Quote Request - ${formData.name}`;
+    const customerEmailBody = `
+Thank you for your quote request! Here's a copy for your records:
+
+Your Information:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- Address: ${formData.address}
+
+Preferred Scheduling:
+- Date: ${formData.preferredDate}
+- Time: ${formData.preferredTime}
+
+Requested Services:
+${servicesText}
+
+Additional Notes:
+${formData.additionalNotes || 'None'}
+
+---
+Devon will review your request and contact you within 24 hours.
+You can reach Devon directly at devonmgm@gmail.com or (904) 501-7147.
+
+This quote request was submitted through Devon's Website.
+    `.trim();
+
+    // Open email client with pre-filled quote information to Devon with customer CC'd
+    const mailtoLink = `mailto:devonmgm@gmail.com?cc=${encodeURIComponent(formData.email)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBodyForDevon)}`;
+    window.open(mailtoLink);
+
+    // Also create a separate email for the customer's records
+    setTimeout(() => {
+      const customerMailtoLink = `mailto:${encodeURIComponent(formData.email)}?subject=${encodeURIComponent(customerSubject)}&body=${encodeURIComponent(customerEmailBody)}`;
+      window.open(customerMailtoLink);
+    }, 1000); // Delay to ensure the first email opens first
+
+    // Log for debugging
     console.log('Quote Request:', quoteRequest);
-    
-    // Simulate form submission
+
+    // Show success message
     setIsSubmitted(true);
-    
+
     // Clear cart after submission
     dispatch({ type: 'CLEAR_CART' });
   };
@@ -52,7 +121,14 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Quote Request Submitted!</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Thank you for your interest! Devon will review your request and get back to you within 24 hours.
+              Your email client should have opened with two pre-filled emails:
+              <br />
+              • A quote request to devonmgm@gmail.com with you CC'd
+              <br />
+              • A copy for your records
+              <br /><br />
+              If the emails didn't open automatically, please send the quote details manually to devonmgm@gmail.com.
+              Devon will review your request and get back to you within 24 hours.
             </p>
             <button
               onClick={() => setCurrentView('home')}
@@ -71,7 +147,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Request Your Quote</h1>
-          
+
           {state.items.length > 0 && (
             <div className="mb-8 p-6 bg-gray-100 rounded-lg">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Selected Services:</h2>
@@ -102,7 +178,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address *
@@ -134,24 +210,50 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="preferredDate" className="block text-sm font-medium text-gray-700 mb-2">
+                  Preferred Date *
+                </label>
+                <select
+                  id="preferredDate"
+                  name="preferredDate"
+                  required
+                  value={formData.preferredDate}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                >
+                  <option value="">Select preferred date</option>
+                  <option value="this-week">This Week</option>
+                  <option value="next-week">Next Week</option>
+                  <option value="2-weeks">In 2 Weeks</option>
+                  <option value="3-weeks">In 3 Weeks</option>
+                  <option value="next-month">Next Month</option>
+                  <option value="flexible">I'm flexible</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="preferredTime" className="block text-sm font-medium text-gray-700 mb-2">
                   Preferred Time *
                 </label>
                 <select
-                  id="availability"
-                  name="availability"
+                  id="preferredTime"
+                  name="preferredTime"
                   required
-                  value={formData.availability}
+                  value={formData.preferredTime}
                   onChange={handleInputChange}
-                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 >
                   <option value="">Select preferred time</option>
-                  <option value="morning">Morning (8 AM - 12 PM)</option>
-                  <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
-                  <option value="evening">Evening (5 PM - 8 PM)</option>
-                  <option value="weekend">Weekends</option>
+                  <option value="8am-10am">8:00 AM - 10:00 AM</option>
+                  <option value="10am-12pm">10:00 AM - 12:00 PM</option>
+                  <option value="12pm-2pm">12:00 PM - 2:00 PM</option>
+                  <option value="2pm-4pm">2:00 PM - 4:00 PM</option>
+                  <option value="4pm-6pm">4:00 PM - 6:00 PM</option>
+                  <option value="6pm-8pm">6:00 PM - 8:00 PM</option>
+                  <option value="weekend-morning">Weekend Morning</option>
+                  <option value="weekend-afternoon">Weekend Afternoon</option>
                   <option value="flexible">I'm flexible</option>
                 </select>
               </div>

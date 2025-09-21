@@ -17,7 +17,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              Professional handyman services in Clay County, North Florida. 
+              Professional handyman services in Clay County, North Florida.
               15 years of construction experience you can trust.
             </p>
           </div>
@@ -31,7 +31,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-yellow-400" />
-                <span>devonmqm@gmail.com</span>
+                <span>devonmgm@gmail.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-yellow-400" />

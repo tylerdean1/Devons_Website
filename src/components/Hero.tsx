@@ -55,7 +55,7 @@ export default function Hero({ setCurrentView }: HeroProps) {
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-yellow-400" />
-                  <span>devonmqm@gmail.com</span>
+                  <span>devonmgm@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="h-5 w-5 text-yellow-400" />

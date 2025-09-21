@@ -16,7 +16,8 @@ export interface QuoteRequest {
   email: string;
   phone: string;
   address: string;
-  availability: string;
+  preferredDate: string;
+  preferredTime: string;
   services: CartItem[];
   additionalNotes?: string;
 }
