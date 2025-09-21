@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { QuoteRequest } from '../types';
 
 interface QuoteFormProps {
   setCurrentView: (view: string) => void;
@@ -27,23 +26,17 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const quoteRequest: QuoteRequest = {
-      ...formData,
-      services: state.items
-    };
 
     // Create email content
     const servicesText = state.items.map(item =>
       `- ${item.service.name} (${item.service.category}) x${item.quantity}\n  ${item.service.description}`
     ).join('\n\n');
 
-    // Create email content for Devon
-    const emailSubject = `Quote Request from ${formData.name}`;
-    const emailBodyForDevon = `
-New Quote Request Details:
+    // Create formatted quote content
+    const quoteContent = `
+Quote Request Details:
 
 Customer Information:
 - Name: ${formData.name}
@@ -60,57 +53,43 @@ ${servicesText}
 
 Additional Notes:
 ${formData.additionalNotes || 'None'}
-
----
-This quote request was submitted through Devon's Website.
     `.trim();
 
-    // Create customer copy email content
-    const customerSubject = `Copy of Your Quote Request - ${formData.name}`;
-    const customerEmailBody = `
-Thank you for your quote request! Here's a copy for your records:
+    try {
+      // Send emails via Mailgun API
+      const response = await fetch('/api/send-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerEmail: formData.email,
+          customerName: formData.name,
+          quote: quoteContent,
+          meta: {
+            phone: formData.phone,
+            address: formData.address,
+            preferredDate: formData.preferredDate,
+            preferredTime: formData.preferredTime,
+            services: state.items
+          }
+        })
+      });
 
-Your Information:
-- Name: ${formData.name}
-- Email: ${formData.email}
-- Phone: ${formData.phone}
-- Address: ${formData.address}
+      if (!response.ok) {
+        throw new Error('Failed to send quote');
+      }
 
-Preferred Scheduling:
-- Date: ${formData.preferredDate}
-- Time: ${formData.preferredTime}
+      // Show success message
+      setIsSubmitted(true);
 
-Requested Services:
-${servicesText}
+      // Clear cart after submission
+      dispatch({ type: 'CLEAR_CART' });
 
-Additional Notes:
-${formData.additionalNotes || 'None'}
-
----
-Devon will review your request and contact you within 24 hours.
-You can reach Devon directly at devonmgm@gmail.com or (904) 501-7147.
-
-This quote request was submitted through Devon's Website.
-    `.trim();
-
-    // Open email client with pre-filled quote information to Devon with customer CC'd
-    const mailtoLink = `mailto:devonmgm@gmail.com?cc=${encodeURIComponent(formData.email)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBodyForDevon)}`;
-    window.open(mailtoLink);
-
-    // Also create a separate email for the customer's records
-    setTimeout(() => {
-      const customerMailtoLink = `mailto:${encodeURIComponent(formData.email)}?subject=${encodeURIComponent(customerSubject)}&body=${encodeURIComponent(customerEmailBody)}`;
-      window.open(customerMailtoLink);
-    }, 1000); // Delay to ensure the first email opens first
-
-    // Log for debugging
-    console.log('Quote Request:', quoteRequest);
-
-    // Show success message
-    setIsSubmitted(true);
-
-    // Clear cart after submission
-    dispatch({ type: 'CLEAR_CART' });
+    } catch (error) {
+      console.error('Error sending quote:', error);
+      alert('There was an error sending your quote. Please try again or contact us directly at devonmgm@gmail.com');
+    }
   };
 
   if (isSubmitted) {
@@ -121,13 +100,12 @@ This quote request was submitted through Devon's Website.
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Quote Request Submitted!</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Your email client should have opened with two pre-filled emails:
-              <br />
-              • A quote request to devonmgm@gmail.com with you CC'd
-              <br />
-              • A copy for your records
+              Your quote request has been successfully sent!
               <br /><br />
-              If the emails didn't open automatically, please send the quote details manually to devonmgm@gmail.com.
+              • Devon has received your quote request at devonmgm@gmail.com
+              <br />
+              • You should receive a confirmation copy at your email address
+              <br /><br />
               Devon will review your request and get back to you within 24 hours.
             </p>
             <button
