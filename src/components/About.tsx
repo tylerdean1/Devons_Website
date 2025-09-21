@@ -15,7 +15,7 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div>
             <img
-              src="/public/image.png"
+              src="/image.png"
               alt="Devon McCleese"
               className="rounded-2xl shadow-xl w-full h-96 object-cover"
             />
