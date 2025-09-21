@@ -17,7 +17,7 @@ export default function ServicesPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Professional handyman services for all your home improvement needs.
+            Professional handyman services for all your home improvement needs across Clay County and Duval County, Florida.
             Hover over each service to see details and add to your quote.
           </p>
         </div>
@@ -42,6 +42,10 @@ export default function ServicesPage() {
         </div>
 
         {/* Services Grid */}
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Available throughout Jacksonville, Jacksonville Beach, Mandarin, Riverside, Orange Park, Fleming Island, Middleburg,
+          Green Cove Springs, and surrounding First Coast communities.
+        </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredServices.map((service) => (
             <ServiceCard key={service.id} service={service} />

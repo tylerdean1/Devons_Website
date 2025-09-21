@@ -21,7 +21,7 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
             <Hammer className="h-8 w-8 text-yellow-400" />
             <div>
               <h1 className="text-xl font-bold text-white">Devon McCleese</h1>
-              <p className="text-sm text-yellow-400">Handyman Services</p>
+              <p className="text-sm text-yellow-400">Clay &amp; Duval County Handyman</p>
             </div>
           </div>
 
