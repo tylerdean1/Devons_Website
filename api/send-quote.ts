@@ -20,7 +20,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Expect JSON body from client
-    const { customerEmail, customerName, quote, meta } = (req as any).body || {};
+    type QuoteRequestBody = {
+      customerEmail?: string;
+      customerName?: string;
+      quote?: string;
+      meta?: unknown;
+    };
+
+    const { customerEmail, customerName, quote, meta } = (req.body ?? {}) as QuoteRequestBody;
     if (!customerEmail || !quote) {
       return res.status(400).json({ error: 'Missing fields: customerEmail and quote are required.' });
     }
@@ -120,8 +127,9 @@ ${meta ? JSON.stringify(meta, null, 2) : '—'}`;
     await sendEmail(OWNER_EMAIL, `New Quote Request from ${customerName || customerEmail}`, ownerText, ownerHtml);
 
     return res.status(200).json({ ok: true });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(err);
-    return res.status(500).json({ error: err?.message || 'Email send failed' });
+    const message = err instanceof Error ? err.message : 'Email send failed';
+    return res.status(500).json({ error: message });
   }
 }
