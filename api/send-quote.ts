@@ -27,7 +27,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       meta?: unknown;
     };
 
-    const { customerEmail, customerName, quote, meta } = (req.body ?? {}) as QuoteRequestBody;
+    // Vercel's Node runtime may supply the body as an already-parsed object,
+    // a JSON string, or even a Buffer. Normalize that into an object so the
+    // downstream logic always works the same way.
+    let parsedBody: QuoteRequestBody;
+
+    try {
+      if (!req.body) {
+        parsedBody = {};
+      } else if (typeof req.body === 'string') {
+        parsedBody = JSON.parse(req.body) as QuoteRequestBody;
+      } else if (Buffer.isBuffer(req.body)) {
+        parsedBody = JSON.parse(req.body.toString('utf-8')) as QuoteRequestBody;
+      } else {
+        parsedBody = req.body as QuoteRequestBody;
+      }
+    } catch (parseError) {
+      console.error('Invalid JSON body provided to /api/send-quote:', parseError);
+      return res.status(400).json({ error: 'Invalid JSON body' });
+    }
+
+    const { customerEmail, customerName, quote, meta } = parsedBody;
     if (!customerEmail || !quote) {
       return res.status(400).json({ error: 'Missing fields: customerEmail and quote are required.' });
     }
