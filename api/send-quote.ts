@@ -1,7 +1,17 @@
 // api/send-quote.ts
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { IncomingMessage, ServerResponse } from 'http';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+// Minimal request/response shapes so we don't depend on `@vercel/node` types at build time.
+type VercelLikeRequest = IncomingMessage & {
+  body?: unknown;
+};
+
+type VercelLikeResponse = ServerResponse & {
+  status: (statusCode: number) => VercelLikeResponse;
+  json: (body: unknown) => VercelLikeResponse;
+};
+
+export default async function handler(req: VercelLikeRequest, res: VercelLikeResponse) {
   // CORS (allow POST from your site; keep '*' if you truly need any origin)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
