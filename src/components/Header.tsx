@@ -1,4 +1,4 @@
-import { Hammer, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 interface HeaderProps {
@@ -18,7 +18,11 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
             className="flex items-center space-x-2 cursor-pointer"
             onClick={() => setCurrentView('home')}
           >
-            <Hammer className="h-8 w-8 text-yellow-400" />
+            <img
+              src="/logo.png"
+              alt="Devon's One Call Handyman Services"
+              className="h-16 w-auto object-contain"
+            />
             <div>
               <h1 className="text-xl font-bold text-white">Devon McCleese</h1>
               <p className="text-sm text-yellow-400">Clay &amp; Duval County Handyman</p>
@@ -29,8 +33,8 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
             <button
               onClick={() => setCurrentView('home')}
               className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'home'
-                  ? 'text-yellow-400 border-yellow-400 pb-1'
-                  : 'text-gray-300 hover:text-yellow-400 border-transparent'
+                ? 'text-yellow-400 border-yellow-400 pb-1'
+                : 'text-gray-300 hover:text-yellow-400 border-transparent'
                 }`}
             >
               Home
@@ -38,8 +42,8 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
             <button
               onClick={() => setCurrentView('services')}
               className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'services'
-                  ? 'text-yellow-400 border-yellow-400 pb-1'
-                  : 'text-gray-300 hover:text-yellow-400 border-transparent'
+                ? 'text-yellow-400 border-yellow-400 pb-1'
+                : 'text-gray-300 hover:text-yellow-400 border-transparent'
                 }`}
             >
               Services
@@ -47,8 +51,8 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
             <button
               onClick={() => setCurrentView('quote')}
               className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'quote'
-                  ? 'text-yellow-400 border-yellow-400 pb-1'
-                  : 'text-gray-300 hover:text-yellow-400 border-transparent'
+                ? 'text-yellow-400 border-yellow-400 pb-1'
+                : 'text-gray-300 hover:text-yellow-400 border-transparent'
                 }`}
             >
               Get Quote
