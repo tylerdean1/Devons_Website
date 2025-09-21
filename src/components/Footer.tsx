@@ -12,12 +12,12 @@ export default function Footer() {
               <Hammer className="h-8 w-8 text-yellow-400" />
               <div>
                 <h3 className="text-xl font-bold">Devon McCleese</h3>
-                <p className="text-gray-400">Handyman Services</p>
+                <p className="text-gray-400">Clay &amp; Duval County Handyman</p>
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              Professional handyman services in Clay County, North Florida.
-              15 years of construction experience you can trust.
+              Professional handyman services for Clay County and Duval County in Northeast Florida.
+              15 years of construction experience you can trust for homes throughout the Jacksonville metro area.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-yellow-400" />
-                <span>Clay County, North Florida</span>
+                <span>Clay &amp; Duval Counties, Florida</span>
               </div>
             </div>
           </div>
@@ -42,12 +42,9 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Service Areas</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>Orange Park</li>
-              <li>Green Cove Springs</li>
-              <li>Middleburg</li>
-              <li>Fleming Island</li>
-              <li>Keystone Heights</li>
-              <li>All of Clay County</li>
+              <li>Clay County: Orange Park, Green Cove Springs, Middleburg, Fleming Island, Keystone Heights</li>
+              <li>Duval County: Jacksonville, Mandarin, Riverside, San Marco, Arlington, Jacksonville Beach</li>
+              <li>Additional First Coast communities upon request</li>
             </ul>
           </div>
         </div>

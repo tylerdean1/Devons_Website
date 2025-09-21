@@ -124,7 +124,7 @@ ${formData.additionalNotes || 'None'}
               <br />
               • You should receive a confirmation copy at your email address
               <br /><br />
-              Devon will review your request and get back to you within 24 hours.
+              Devon will review your Clay or Duval County project and get back to you within 24 hours.
             </p>
             <button
               onClick={() => setCurrentView('home')}
@@ -142,7 +142,11 @@ ${formData.additionalNotes || 'None'}
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Request Your Quote</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Request Your Quote</h1>
+          <p className="text-lg text-gray-600 mb-8">
+            Tell us about your project in Clay County or Duval County, FL and we'll deliver a detailed estimate tailored to
+            your home. Same-day responses for most Jacksonville metro requests.
+          </p>
 
           {state.items.length > 0 && (
             <div className="mb-8 p-6 bg-gray-100 rounded-lg">

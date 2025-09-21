@@ -11,11 +11,16 @@ export default function Hero({ setCurrentView }: HeroProps) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              Professional Handyman Services in
-              <span className="text-yellow-400"> Clay County</span>
+              Trusted Handyman Services in
+              <span className="text-yellow-400"> Clay &amp; Duval County, FL</span>
             </h1>
-            <p className="text-xl mb-8 text-gray-300">
-              15 years of construction experience. Quality workmanship you can trust for all your home improvement needs.
+            <p className="text-xl mb-4 text-gray-300">
+              15 years of construction experience supporting homeowners from Orange Park and Fleming Island to Jacksonville,
+              Riverside, Mandarin, and the Beaches.
+            </p>
+            <p className="text-lg mb-8 text-gray-400">
+              Devon McCleese delivers fast, professional repairs, remodels, and maintenance tailored to North Florida homes so
+              you can protect your biggest investment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -39,8 +44,12 @@ export default function Hero({ setCurrentView }: HeroProps) {
                 <span>15+ Years Experience</span>
               </div>
               <div className="flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                <span>Serving Clay &amp; Duval County</span>
+              </div>
+              <div className="flex items-center gap-1">
                 <Phone className="h-4 w-4" />
-                <span>Licensed & Insured</span>
+                <span>Call (904) 501-7147 Today</span>
               </div>
             </div>
           </div>
@@ -59,8 +68,12 @@ export default function Hero({ setCurrentView }: HeroProps) {
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="h-5 w-5 text-yellow-400" />
-                  <span>Clay County, North Florida</span>
+                  <span>Clay &amp; Duval Counties, Florida</span>
                 </div>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Proudly repairing homes across Orange Park, Green Cove Springs, Middleburg, Fleming Island, Keystone Heights,
+                  Jacksonville, Mandarin, San Marco, Arlington, and the Beaches.
+                </p>
               </div>
             </div>
           </div>
