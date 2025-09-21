@@ -1,4 +1,5 @@
-import { Hammer, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
+import devonLogo from '../assets/devon-logo.svg';
 import { useCart } from '../context/CartContext';
 
 interface HeaderProps {
@@ -14,16 +15,18 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
     <header className="bg-gray-800 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div
-            className="flex items-center space-x-2 cursor-pointer"
+          <button
+            type="button"
+            className="flex items-center space-x-3 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800"
             onClick={() => setCurrentView('home')}
           >
-            <Hammer className="h-8 w-8 text-yellow-400" />
-            <div>
-              <h1 className="text-xl font-bold text-white">Devon McCleese</h1>
-              <p className="text-sm text-yellow-400">Clay &amp; Duval County Handyman</p>
-            </div>
-          </div>
+            <img
+              src={devonLogo}
+              alt="Devon's One Call Handyman Services logo"
+              className="h-16 w-auto drop-shadow-lg"
+            />
+            <span className="sr-only">Go to Devon McCleese Handyman Services home</span>
+          </button>
 
           <nav className="hidden md:flex items-center space-x-8">
             <button

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Devon's One Call Handyman Services Logo</title>
+  <desc id="desc">A dark background logo with a roofline, handyman tools, and gold typography for Devon's One Call Handyman Services.</desc>
+  <rect width="900" height="360" fill="#1b1b1d" rx="18" />
+  <g fill="#f4c542">
+    <text x="450" y="70" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="700" letter-spacing="4" text-anchor="middle">
+      DEVON'S ONE CALL
+    </text>
+    <text x="450" y="110" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="600" letter-spacing="3" text-anchor="middle">
+      HANDYMAN SERVICES
+    </text>
+    <path d="M120 190 L260 120 L400 190" fill="none" stroke="#f4c542" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+    <rect x="400" y="178" width="360" height="12" rx="6" />
+    <path d="M650 180 L780 110 L780 290" fill="none" stroke="#f4c542" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g fill="#f4c542">
+    <g transform="translate(160 200)">
+      <rect x="-10" y="0" width="20" height="90" rx="6" />
+      <rect x="-30" y="30" width="60" height="24" rx="6" />
+      <circle cx="20" cy="42" r="4" fill="#1b1b1d" />
+    </g>
+    <g transform="translate(240 200)">
+      <rect x="-18" y="0" width="36" height="58" rx="6" />
+      <rect x="-24" y="58" width="48" height="14" />
+      <rect x="-12" y="72" width="24" height="32" rx="4" />
+    </g>
+    <g transform="translate(320 200)">
+      <rect x="-14" y="0" width="28" height="60" rx="6" />
+      <rect x="-24" y="60" width="48" height="18" />
+      <path d="M0 78 L-10 110 L10 110 Z" />
+    </g>
+    <g transform="translate(400 200)">
+      <rect x="-9" y="0" width="18" height="52" rx="6" />
+      <rect x="-4" y="52" width="8" height="70" />
+      <path d="M0 122 L-16 150 L16 150 Z" />
+    </g>
+    <g transform="translate(480 200)">
+      <rect x="-12" y="0" width="24" height="40" rx="6" />
+      <rect x="-28" y="40" width="56" height="18" rx="6" />
+      <path d="M0 58 C-16 58 -28 72 -28 86 C-28 100 -16 114 0 114 C16 114 28 100 28 86 C28 72 16 58 0 58 Z" stroke="#1b1b1d" stroke-width="6" fill="none" />
+      <circle cx="0" cy="86" r="8" />
+    </g>
+    <g transform="translate(560 200)">
+      <path d="M0 0 L-14 80 L14 80 Z" />
+      <rect x="-6" y="80" width="12" height="70" />
+    </g>
+    <g transform="translate(640 200)">
+      <circle cx="0" cy="60" r="42" fill="none" stroke="#f4c542" stroke-width="10" />
+      <circle cx="0" cy="60" r="16" />
+      <rect x="-8" y="-10" width="16" height="32" transform="rotate(20)" />
+      <rect x="-8" y="88" width="16" height="32" transform="rotate(20)" />
+      <rect x="-50" y="36" width="16" height="32" transform="rotate(-70)" />
+      <rect x="34" y="52" width="16" height="32" transform="rotate(-70)" />
+    </g>
+    <g transform="translate(720 200)">
+      <rect x="-18" y="0" width="36" height="160" />
+      <rect x="-18" y="0" width="36" height="32" fill="#1b1b1d" />
+      <rect x="-18" y="48" width="36" height="12" fill="#1b1b1d" />
+      <rect x="-18" y="82" width="36" height="12" fill="#1b1b1d" />
+      <rect x="-18" y="116" width="36" height="12" fill="#1b1b1d" />
+    </g>
+  </g>
+</svg>
