@@ -20,16 +20,16 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
           >
             <img
               src="/logo.png"
-              alt="Devon's One Call Handyman Services"
+              alt="Devon's One Call Handyman Services logo"
               className="h-16 w-auto object-contain"
             />
             <div>
-              <h1 className="text-xl font-bold text-white">Devon McCleese</h1>
+              <span className="text-xl font-bold text-white">Devon McCleese</span>
               <p className="text-sm text-yellow-400">Clay &amp; Duval County Handyman</p>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
             <button
               onClick={() => setCurrentView('home')}
               className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'home'
