@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { services } from '../data/services';
 
 interface QuoteFormProps {
   setCurrentView: (view: string) => void;
@@ -9,6 +10,8 @@ interface QuoteFormProps {
 export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   const { state, dispatch } = useCart();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState('');
+  const [showServiceDropdown, setShowServiceDropdown] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +27,21 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleAddService = () => {
+    if (selectedServiceId) {
+      const service = services.find(s => s.id === selectedServiceId);
+      if (service) {
+        dispatch({ type: 'ADD_ITEM', payload: service });
+        setSelectedServiceId('');
+        setShowServiceDropdown(false);
+      }
+    }
+  };
+
+  const handleRemoveService = (serviceId: string) => {
+    dispatch({ type: 'REMOVE_ITEM', payload: serviceId });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,13 +150,86 @@ ${formData.additionalNotes || 'None'}
               <ul className="space-y-2">
                 {state.items.map((item) => (
                   <li key={item.service.id} className="flex justify-between items-center">
-                    <span className="text-gray-700">{item.service.name}</span>
-                    <span className="text-gray-500">x{item.quantity}</span>
+                    <div className="flex-1">
+                      <span className="text-gray-700 font-medium">{item.service.name}</span>
+                      <p className="text-sm text-gray-500">{item.service.description}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-gray-500">x{item.quantity}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveService(item.service.id)}
+                        className="text-red-600 hover:text-red-800 text-sm font-medium"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
           )}
+
+          {/* Add Service Section */}
+          <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              {state.items.length === 0 ? 'Add Services to Your Quote' : 'Add More Services'}
+            </h2>
+
+            {!showServiceDropdown ? (
+              <button
+                type="button"
+                onClick={() => setShowServiceDropdown(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2"
+              >
+                <Plus className="h-5 w-5" />
+                Add Service
+              </button>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="serviceSelect" className="block text-sm font-medium text-gray-700 mb-2">
+                    Select a service to add:
+                  </label>
+                  <select
+                    id="serviceSelect"
+                    value={selectedServiceId}
+                    onChange={(e) => setSelectedServiceId(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Choose a service...</option>
+                    {services
+                      .filter(service => !state.items.some(item => item.service.id === service.id))
+                      .map(service => (
+                        <option key={service.id} value={service.id}>
+                          {service.name} - {service.category}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={handleAddService}
+                    disabled={!selectedServiceId}
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-semibold transition-colors"
+                  >
+                    Add Selected Service
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowServiceDropdown(false);
+                      setSelectedServiceId('');
+                    }}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
