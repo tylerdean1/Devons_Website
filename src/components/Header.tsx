@@ -1,4 +1,3 @@
-import React from 'react';
 import { Hammer, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -15,7 +14,7 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
     <header className="bg-gray-800 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div 
+          <div
             className="flex items-center space-x-2 cursor-pointer"
             onClick={() => setCurrentView('home')}
           >
@@ -25,35 +24,32 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
               <p className="text-sm text-yellow-400">Handyman Services</p>
             </div>
           </div>
-          
+
           <nav className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => setCurrentView('home')}
-              className={`text-lg font-medium transition-colors border-b-2 ${
-                currentView === 'home'
+              className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'home'
                   ? 'text-yellow-400 border-yellow-400 pb-1'
                   : 'text-gray-300 hover:text-yellow-400 border-transparent'
-              }`}
+                }`}
             >
               Home
             </button>
             <button
               onClick={() => setCurrentView('services')}
-              className={`text-lg font-medium transition-colors border-b-2 ${
-                currentView === 'services'
+              className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'services'
                   ? 'text-yellow-400 border-yellow-400 pb-1'
                   : 'text-gray-300 hover:text-yellow-400 border-transparent'
-              }`}
+                }`}
             >
               Services
             </button>
             <button
               onClick={() => setCurrentView('quote')}
-              className={`text-lg font-medium transition-colors border-b-2 ${
-                currentView === 'quote'
+              className={`text-lg font-medium transition-colors border-b-2 ${currentView === 'quote'
                   ? 'text-yellow-400 border-yellow-400 pb-1'
                   : 'text-gray-300 hover:text-yellow-400 border-transparent'
-              }`}
+                }`}
             >
               Get Quote
             </button>
@@ -79,25 +75,22 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
           <div className="flex justify-center space-x-6">
             <button
               onClick={() => setCurrentView('home')}
-              className={`text-sm font-medium transition-colors ${
-                currentView === 'home' ? 'text-yellow-400' : 'text-gray-300'
-              }`}
+              className={`text-sm font-medium transition-colors ${currentView === 'home' ? 'text-yellow-400' : 'text-gray-300'
+                }`}
             >
               Home
             </button>
             <button
               onClick={() => setCurrentView('services')}
-              className={`text-sm font-medium transition-colors ${
-                currentView === 'services' ? 'text-yellow-400' : 'text-gray-300'
-              }`}
+              className={`text-sm font-medium transition-colors ${currentView === 'services' ? 'text-yellow-400' : 'text-gray-300'
+                }`}
             >
               Services
             </button>
             <button
               onClick={() => setCurrentView('quote')}
-              className={`text-sm font-medium transition-colors ${
-                currentView === 'quote' ? 'text-yellow-400' : 'text-gray-300'
-              }`}
+              className={`text-sm font-medium transition-colors ${currentView === 'quote' ? 'text-yellow-400' : 'text-gray-300'
+                }`}
             >
               Get Quote
             </button>

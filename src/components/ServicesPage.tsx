@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Filter } from 'lucide-react';
 import ServiceCard from './ServiceCard';
 import { services } from '../data/services';
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
+
   const categories = ['All', ...Array.from(new Set(services.map(s => s.category)))];
-  const filteredServices = selectedCategory === 'All' 
-    ? services 
+  const filteredServices = selectedCategory === 'All'
+    ? services
     : services.filter(s => s.category === selectedCategory);
 
   return (
@@ -17,7 +17,7 @@ export default function ServicesPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Professional handyman services for all your home improvement needs. 
+            Professional handyman services for all your home improvement needs.
             Hover over each service to see details and add to your quote.
           </p>
         </div>
@@ -30,11 +30,10 @@ export default function ServicesPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                  selectedCategory === category
+                className={`px-4 py-2 rounded-md font-medium transition-colors ${selectedCategory === category
                     ? 'bg-gray-800 text-yellow-400'
                     : 'text-gray-700 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 {category}
               </button>

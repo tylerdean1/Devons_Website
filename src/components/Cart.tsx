@@ -1,4 +1,3 @@
-import React from 'react';
 import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -45,24 +44,24 @@ export default function Cart({ setCurrentView }: CartProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Your Quote Cart</h1>
-          
+
           <div className="space-y-6">
             {state.items.map((item) => (
               <div key={item.service.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900">{item.service.name}</h3>
                   <p className="text-gray-600 text-sm mt-1">{item.service.description}</p>
-                  <span className="inline-block mt-2 text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded">
                   <span className="inline-block mt-2 text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded">
                     {item.service.category}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQuantity(item.service.id, Math.max(0, item.quantity - 1))}
                       className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                      aria-label="Decrease quantity"
                     >
                       <Minus className="h-4 w-4" />
                     </button>
@@ -70,14 +69,16 @@ export default function Cart({ setCurrentView }: CartProps) {
                     <button
                       onClick={() => updateQuantity(item.service.id, item.quantity + 1)}
                       className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                      aria-label="Increase quantity"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
                   </div>
-                  
+
                   <button
                     onClick={() => removeItem(item.service.id)}
                     className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                    aria-label="Remove item from cart"
                   >
                     <Trash2 className="h-5 w-5" />
                   </button>
@@ -91,7 +92,7 @@ export default function Cart({ setCurrentView }: CartProps) {
               <span>Total Services:</span>
               <span>{state.items.reduce((total, item) => total + item.quantity, 0)} items</span>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setCurrentView('services')}
@@ -101,7 +102,7 @@ export default function Cart({ setCurrentView }: CartProps) {
               </button>
               <button
                 onClick={proceedToQuote}
-               className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
               >
                 Request Quote <ArrowRight className="h-5 w-5" />
               </button>
@@ -109,9 +110,6 @@ export default function Cart({ setCurrentView }: CartProps) {
           </div>
         </div>
       </div>
-    )
-    )
-    }
     </div>
   );
 }

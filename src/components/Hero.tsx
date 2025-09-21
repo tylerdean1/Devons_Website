@@ -1,4 +1,3 @@
-import React from 'react';
 import { Phone, Mail, MapPin, Star } from 'lucide-react';
 
 interface HeroProps {
@@ -12,13 +11,13 @@ export default function Hero({ setCurrentView }: HeroProps) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              Professional Handyman Services in 
+              Professional Handyman Services in
               <span className="text-yellow-400"> Clay County</span>
             </h1>
             <p className="text-xl mb-8 text-gray-300">
               15 years of construction experience. Quality workmanship you can trust for all your home improvement needs.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <button
                 onClick={() => setCurrentView('services')}
