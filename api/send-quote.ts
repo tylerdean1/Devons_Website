@@ -123,6 +123,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Origin: "https://devonmccleese.com",
+          Referer: "https://devonmccleese.com/",
         },
         body: JSON.stringify({
           name: customerName,
@@ -130,6 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           _replyto: normalizedCustomerEmail,
           _subject: `New quote request from ${customerName}`,
           _template: "table",
+          _url: "https://devonmccleese.com/",
           message,
         }),
       },
