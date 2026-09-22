@@ -5,7 +5,7 @@ import { services } from '../data/services';
 import { site } from '../data/site';
 
 interface QuoteSubmissionResponse {
-  success?: boolean | string;
+  success?: boolean;
   message?: string;
   error?: string;
 }
@@ -17,7 +17,6 @@ interface QuoteFormProps {
 export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   const { state, dispatch } = useCart();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [activationRequired, setActivationRequired] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedServiceId, setSelectedServiceId] = useState('');
@@ -61,54 +60,8 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Create email content
-    const servicesText = state.items.map(item =>
-      `- ${item.service.name} (${item.service.category}) x${item.quantity}\n  ${item.service.description}`
-    ).join('\n\n');
-
-    // Create formatted quote content
-    const quoteContent = `
-Quote Request Details:
-
-Customer Information:
-- Name: ${formData.name}
-- Email: ${formData.email}
-- Phone: ${formData.phone}
-- Address: ${formData.address}
-
-Preferred Scheduling:
-- Date: ${formData.preferredDate}
-- Time: ${formData.preferredTime}
-
-Requested Services:
-${servicesText}
-
-Additional Notes:
-${formData.additionalNotes || 'None'}
-    `.trim();
-
     try {
-      const providerMessage = [
-        'New quote request received from devonmccleese.com',
-        '',
-        `Customer: ${formData.name.trim() || 'Not provided'}`,
-        `Email: ${formData.email.trim()}`,
-        '',
-        'Quote details:',
-        quoteContent,
-        '',
-        'Additional information:',
-        JSON.stringify({
-          phone: formData.phone,
-          address: formData.address,
-          preferredDate: formData.preferredDate,
-          preferredTime: formData.preferredTime,
-          services: state.items,
-        }, null, 2),
-      ].join('\n');
-
-      // FormSubmit supports browser AJAX submissions and preserves the live site origin.
-      const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`, {
+      const response = await fetch('/api/send-quote', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -117,11 +70,17 @@ ${formData.additionalNotes || 'None'}
         body: JSON.stringify({
           name: formData.name.trim() || 'Not provided',
           email: formData.email.trim(),
-          _replyto: formData.email.trim(),
-          _subject: `New quote request from ${formData.name.trim() || formData.email.trim()}`,
-          _template: 'table',
-          _url: window.location.origin,
-          message: providerMessage,
+          phone: formData.phone.trim(),
+          address: formData.address.trim(),
+          preferredDate: formData.preferredDate,
+          preferredTime: formData.preferredTime,
+          additionalNotes: formData.additionalNotes.trim(),
+          services: state.items.map((item) => ({
+            name: item.service.name,
+            category: item.service.category,
+            description: item.service.description,
+            quantity: item.quantity,
+          })),
         }),
       });
 
@@ -131,15 +90,11 @@ ${formData.additionalNotes || 'None'}
           ? (responseBody as QuoteSubmissionResponse)
           : {};
 
-      const activationRequired = /activat/i.test(result.message || '');
-      const providerAccepted = result.success === true || result.success === 'true';
-
-      if (!response.ok || (!providerAccepted && !activationRequired)) {
-        throw new Error('Email delivery failed. Please try again or call Devon directly.');
+      if (!response.ok || result.success !== true) {
+        throw new Error(result.error || 'Email delivery failed. Please try again or call Devon directly.');
       }
 
       // Show success message
-      setActivationRequired(activationRequired);
       setIsSubmitted(true);
 
       // Clear cart after submission
@@ -165,17 +120,9 @@ ${formData.additionalNotes || 'None'}
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Quote Request Submitted!</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Your quote request has been submitted successfully!
+              Thanks — your quote request was sent successfully.
               <br /><br />
-              {activationRequired ? (
-                <>
-                  Please check {site.email} for a one-time activation email from our form
-                  provider. After it is activated, future quote requests will be delivered
-                  automatically.
-                </>
-              ) : (
-                <>Devon has received your quote request at {site.email}.</>
-              )}
+              Devon has received your request at {site.email} and can reply directly to your email.
               <br /><br />
               Devon will review your {site.primaryArea} project and get back to you within 24 hours.
             </p>
