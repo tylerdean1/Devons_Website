@@ -137,8 +137,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const providerText = await providerResponse.text();
     const providerResult = parseFormSubmitResponse(providerText);
+    const providerMessage = providerResult.message || "";
+    const activationRequired = /activat/i.test(providerMessage);
     const providerSuccess =
-      providerResult.success === true || providerResult.success === "true";
+      providerResult.success === true ||
+      providerResult.success === "true" ||
+      activationRequired;
 
     if (!providerResponse.ok || !providerSuccess) {
       console.error("[send-quote] FormSubmit delivery failed", {
@@ -150,9 +154,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         error: "Email delivery failed. Please try again or call Devon directly.",
       });
     }
-
-    const providerMessage = providerResult.message || "";
-    const activationRequired = /activat/i.test(providerMessage);
 
     return res.status(200).json({
       ok: true,
