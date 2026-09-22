@@ -157,6 +157,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         error: "Email delivery failed. Please try again or call Devon directly.",
         providerStatus: providerResponse.status,
         providerMessage: providerMessage.slice(0, 300),
+        providerBody: providerText.slice(0, 300),
       });
     }
 
