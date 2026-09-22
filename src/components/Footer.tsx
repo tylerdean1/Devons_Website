@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin, Hammer } from 'lucide-react';
+import { site } from '../data/site';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,15 +10,15 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <Hammer className="h-8 w-8 text-yellow-400" />
+              <Hammer className="h-8 w-8 text-yellow-400" aria-hidden="true" />
               <div>
-                <h3 className="text-xl font-bold">Devon McCleese</h3>
-                <p className="text-gray-400">Clay &amp; Duval County Handyman</p>
+              <h3 className="text-xl font-bold">{site.name}</h3>
+                <p className="text-gray-400">{site.regionLabel} Handyman</p>
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              Professional handyman services for Clay County and Duval County in Northeast Florida.
-              15 years of construction experience you can trust for homes throughout the Jacksonville metro area.
+              Professional handyman services for {site.serviceAreaLabel}. 15 years of construction experience you can trust
+              for the repairs and improvements that keep your home working well.
             </p>
           </div>
 
@@ -25,16 +26,16 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-yellow-400" />
-                <span>(904) 501-7147</span>
+                <Phone className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                <a className="hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400" href={site.phoneHref}>{site.phone}</a>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-yellow-400" />
-                <span>devonmgm@gmail.com</span>
+                <Mail className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                <a className="hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400" href={site.emailHref}>{site.email}</a>
               </div>
               <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-yellow-400" />
-                <span>Clay &amp; Duval Counties, Florida</span>
+                <MapPin className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                <span>{site.regionLabel}, Florida</span>
               </div>
             </div>
           </div>
@@ -42,9 +43,9 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Service Areas</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>Clay County: Orange Park, Green Cove Springs, Middleburg, Fleming Island, Keystone Heights</li>
-              <li>Duval County: Jacksonville, Mandarin, Riverside, San Marco, Arlington, Jacksonville Beach</li>
-              <li>Additional First Coast communities upon request</li>
+              <li>{site.primaryArea} and nearby St. Johns County communities</li>
+              <li>Residential repairs, maintenance, and home improvements</li>
+              <li>Additional nearby service areas upon request</li>
             </ul>
           </div>
         </div>

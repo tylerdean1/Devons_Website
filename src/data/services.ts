@@ -4,14 +4,14 @@ export const services: Service[] = [
   {
     id: '1',
     name: 'Drywall Installation & Repair',
-    description: 'Professional drywall installation, patching, and repair services for walls and ceilings across Clay County and Duval County, Florida.',
+    description: 'Professional drywall installation, patching, and repair services for walls and ceilings across St. Augustine and St. Johns County, Florida.',
     category: 'Interior',
     icon: 'Hammer'
   },
   {
     id: '2',
     name: 'Interior Painting',
-    description: 'Complete interior painting services including prep work, priming, and professional finishing for homes in Clay County and Duval County, FL.',
+    description: 'Complete interior painting services including prep work, priming, and professional finishing for homes in St. Augustine and St. Johns County, FL.',
     category: 'Interior',
     icon: 'Paintbrush'
   },
@@ -25,14 +25,14 @@ export const services: Service[] = [
   {
     id: '4',
     name: 'Flooring Installation',
-    description: 'Installation of laminate, vinyl, hardwood, and tile flooring with professional finishing for Jacksonville and Clay County homeowners.',
+    description: 'Installation of laminate, vinyl, hardwood, and tile flooring with professional finishing for St. Augustine and St. Johns County homeowners.',
     category: 'Interior',
     icon: 'Square'
   },
   {
     id: '5',
     name: 'Kitchen Remodeling',
-    description: 'Complete kitchen renovations including cabinets, countertops, and fixture installation for Clay County and Duval County residences.',
+    description: 'Complete kitchen renovations including cabinets, countertops, and fixture installation for St. Augustine and St. Johns County residences.',
     category: 'Interior',
     icon: 'ChefHat'
   },
@@ -46,21 +46,21 @@ export const services: Service[] = [
   {
     id: '7',
     name: 'Deck Building & Repair',
-    description: 'Custom deck construction, repair, and maintenance including staining and sealing for the Clay County and Jacksonville climate.',
+    description: 'Custom deck construction, repair, and maintenance including staining and sealing for the St. Augustine climate.',
     category: 'Exterior',
     icon: 'Trees'
   },
   {
     id: '8',
     name: 'Fence Installation',
-    description: 'Installation of wood, vinyl, and chain link fencing with proper post setting throughout Clay County and Duval County.',
+    description: 'Installation of wood, vinyl, and chain link fencing with proper post setting throughout St. Augustine and St. Johns County.',
     category: 'Exterior',
     icon: 'Grid3x3'
   },
   {
     id: '9',
     name: 'Door Installation',
-    description: 'Interior and exterior door installation including hardware and trim work for homes across Clay County and Duval County, FL.',
+    description: 'Interior and exterior door installation including hardware and trim work for homes across St. Augustine and St. Johns County, FL.',
     category: 'Interior',
     icon: 'DoorOpen'
   },
@@ -74,14 +74,14 @@ export const services: Service[] = [
   {
     id: '11',
     name: 'Trim & Molding',
-    description: 'Installation of baseboards, crown molding, and decorative trim for homes in Jacksonville, Orange Park, and surrounding communities.',
+    description: 'Installation of baseboards, crown molding, and decorative trim for homes in St. Augustine and nearby communities.',
     category: 'Interior',
     icon: 'Ruler'
   },
   {
     id: '12',
     name: 'Pressure Washing',
-    description: 'Professional pressure washing for driveways, sidewalks, decks, and exterior surfaces across Clay County and Duval County.',
+    description: 'Professional pressure washing for driveways, sidewalks, decks, and exterior surfaces across St. Augustine and St. Johns County.',
     category: 'Exterior',
     icon: 'Droplets'
   },
@@ -95,21 +95,21 @@ export const services: Service[] = [
   {
     id: '14',
     name: 'Minor Plumbing',
-    description: 'Basic plumbing repairs including faucet replacement, toilet installation, and leak fixes for Clay County and Duval County homeowners.',
+    description: 'Basic plumbing repairs including faucet replacement, toilet installation, and leak fixes for St. Augustine and St. Johns County homeowners.',
     category: 'Interior',
     icon: 'Wrench'
   },
   {
     id: '15',
     name: 'Minor Electrical',
-    description: 'Basic electrical work including outlet installation, switch replacement, and fixture mounting with attention to Florida building codes.',
+    description: 'Basic electrical work including outlet installation, switch replacement, and fixture mounting for St. Augustine homes.',
     category: 'Interior',
     icon: 'Zap'
   },
   {
     id: '16',
     name: 'Shelving & Storage',
-    description: 'Custom shelving solutions and storage installations for closets and living spaces throughout Clay County and Duval County.',
+    description: 'Custom shelving solutions and storage installations for closets and living spaces throughout St. Augustine and St. Johns County.',
     category: 'Interior',
     icon: 'Archive'
   }

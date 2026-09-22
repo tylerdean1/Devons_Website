@@ -39,8 +39,14 @@ function App() {
   return (
     <CartProvider>
       <div className="min-h-screen">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-yellow-400 focus:px-4 focus:py-2 focus:font-semibold focus:text-gray-900"
+        >
+          Skip to main content
+        </a>
         <Header currentView={currentView} setCurrentView={setCurrentView} />
-        {renderCurrentView()}
+        <main id="main-content">{renderCurrentView()}</main>
         <Footer />
       </div>
     </CartProvider>

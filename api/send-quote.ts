@@ -1,16 +1,55 @@
 // api/send-quote.ts
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * Env vars in Vercel:
  *  - MAILGUN_API_KEY
  *  - MAILGUN_DOMAIN  (mg.devonmccleese.com)
  *  - OWNER_EMAIL     (devonmgm@gmail.com)
  * Optional:
+ *  - MAILGUN_REGION  (us or eu; defaults to us)
+ *  - MAILGUN_API_BASE_URL (override the regional API host when needed)
+ *  - MAILGUN_FROM_EMAIL (verified sender address)
+ *  - REPLY_TO_EMAIL
+ * Optional:
  *  - MAILGUN_TEST_MODE = 1
  */
 
-export default async function handler(req: any, res: any) {
+interface VercelRequest {
+  method?: string;
+  body?: unknown;
+}
+
+interface VercelResponse {
+  setHeader(name: string, value: string): VercelResponse;
+  status(code: number): VercelResponse;
+  json(body: unknown): VercelResponse;
+  end(): VercelResponse;
+}
+
+interface QuoteRequestBody {
+  customerEmail?: unknown;
+  customerName?: unknown;
+  quote?: unknown;
+  meta?: unknown;
+}
+
+class MailgunError extends Error {
+  public readonly status: number;
+  public readonly responseText: string;
+
+  constructor(
+    status: number,
+    responseText: string,
+  ) {
+    super(`Mailgun request failed with status ${status}`);
+    this.name = 'MailgunError';
+    this.status = status;
+    this.responseText = responseText;
+  }
+}
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS (tighten later)
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -19,13 +58,38 @@ export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method Not Allowed" });
 
   try {
-    const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
-    const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
-    const OWNER_EMAIL = process.env.OWNER_EMAIL || "devonmgm@gmail.com";
-    const TEST_MODE = process.env.MAILGUN_TEST_MODE === "1";
+    const mailgunApiKey = process.env.MAILGUN_API_KEY;
+    const mailgunDomain = process.env.MAILGUN_DOMAIN?.trim();
+    const ownerEmail = (process.env.OWNER_EMAIL || "devonmgm@gmail.com").trim();
+    const replyTo = (process.env.REPLY_TO_EMAIL || "devonmgm@gmail.com").trim();
+    const testMode = process.env.MAILGUN_TEST_MODE === "1";
+    const region = (process.env.MAILGUN_REGION || "us").trim().toLowerCase();
+    const mailgunApiBaseUrl = (
+      process.env.MAILGUN_API_BASE_URL ||
+      (region === "eu" ? "https://api.eu.mailgun.net" : "https://api.mailgun.net")
+    ).replace(/\/$/, "");
 
-    if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) {
+    if (!mailgunApiKey || !mailgunDomain) {
+      console.error("[send-quote] Missing Mailgun configuration", {
+        hasApiKey: Boolean(mailgunApiKey),
+        hasDomain: Boolean(mailgunDomain),
+        trigger: "user",
+      });
       return res.status(500).json({ error: "Missing Mailgun configuration" });
+    }
+
+    if (!process.env.MAILGUN_API_BASE_URL && region !== "us" && region !== "eu") {
+      console.error("[send-quote] Invalid Mailgun region", { region, trigger: "user" });
+      return res.status(500).json({ error: "Invalid Mailgun region configuration" });
+    }
+
+    if (!EMAIL_PATTERN.test(ownerEmail) || !EMAIL_PATTERN.test(replyTo)) {
+      console.error("[send-quote] Invalid owner/reply-to email configuration", {
+        ownerEmail,
+        replyTo,
+        trigger: "background",
+      });
+      return res.status(500).json({ error: "Invalid email configuration" });
     }
 
     // Body may arrive as string
@@ -35,16 +99,17 @@ export default async function handler(req: any, res: any) {
     }
     const body = (raw && typeof raw === "object") ? (raw as Record<string, unknown>) : {};
 
-    type QuoteRequestBody = {
-      customerEmail?: string;
-      customerName?: string;
-      quote?: string;
-      meta?: unknown;
-    };
-
     const { customerEmail, customerName, quote, meta } = (body as QuoteRequestBody) ?? {};
-    if (!customerEmail || !quote) {
+    const normalizedCustomerEmail = typeof customerEmail === "string" ? customerEmail.trim() : "";
+    const normalizedCustomerName = typeof customerName === "string" ? customerName.trim() : "";
+    const normalizedQuote = typeof quote === "string" ? quote.trim() : "";
+
+    if (!normalizedCustomerEmail || !normalizedQuote) {
       return res.status(400).json({ error: "Missing fields: customerEmail and quote are required." });
+    }
+
+    if (!EMAIL_PATTERN.test(normalizedCustomerEmail)) {
+      return res.status(400).json({ error: "customerEmail must be a valid email address." });
     }
 
     // Brand colors
@@ -58,8 +123,7 @@ export default async function handler(req: any, res: any) {
       blockBg: "#f9fafb",  // gray-50
     };
 
-    const sender = `Devon's Handyman <quotes@${MAILGUN_DOMAIN}>`;
-    const replyTo = "devonmgm@gmail.com";
+    const sender = process.env.MAILGUN_FROM_EMAIL?.trim() || `Devon's Handyman <quotes@${mailgunDomain}>`;
 
     const esc = (s: string) =>
       String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -142,11 +206,11 @@ ${q}
     }
 
     // Text versions (deliverability)
-    const customerText = `Hi ${customerName || "there"},
+    const customerText = `Hi ${normalizedCustomerName || "there"},
 
 Thanks for reaching out! Here are your details:
 
-${quote}
+${normalizedQuote}
 
 We’ll review and get back to you within 24 hours.
 
@@ -158,11 +222,11 @@ devonmgm@gmail.com
 
     const ownerText = `New quote request received:
 
-Customer: ${customerName || "Not provided"}
-Email: ${customerEmail}
+Customer: ${normalizedCustomerName || "Not provided"}
+Email: ${normalizedCustomerEmail}
 
 Quote Details:
-${quote}
+${normalizedQuote}
 
 Additional Info:
 ${meta ? JSON.stringify(meta, null, 2) : "—"}`;
@@ -170,17 +234,17 @@ ${meta ? JSON.stringify(meta, null, 2) : "—"}`;
     // HTML versions
     const customerHtml = renderEmail({
       title: "Your quote request",
-      greeting: `Hi ${esc(customerName || "there")},`,
+      greeting: `Hi ${esc(normalizedCustomerName || "there")},`,
       lead: "Thanks for reaching out! Here are your details:",
-      quoteText: quote,
+      quoteText: normalizedQuote,
       extraHtml: "We’ll review and get back to you within 24 hours.",
     });
 
     const ownerHtml = renderEmail({
       title: "New quote request",
-      greeting: `<strong>Customer:</strong> ${esc(customerName || "Not provided")}<br>
-                 <strong>Email:</strong> <a href="mailto:${encodeURIComponent(customerEmail)}">${esc(customerEmail)}</a>`,
-      quoteText: quote,
+      greeting: `<strong>Customer:</strong> ${esc(normalizedCustomerName || "Not provided")}<br>
+                 <strong>Email:</strong> <a href="mailto:${encodeURIComponent(normalizedCustomerEmail)}">${esc(normalizedCustomerEmail)}</a>`,
+      quoteText: normalizedQuote,
       extraHtml: meta ? `<strong>Additional info:</strong><br><div style="white-space:pre-line;margin-top:6px;">${esc(
         JSON.stringify(meta, null, 2)
       )}</div>` : "",
@@ -188,33 +252,41 @@ ${meta ? JSON.stringify(meta, null, 2) : "—"}`;
 
     // ---- Mailgun helper
     const sendEmail = async (to: string, subject: string, text: string, html: string) => {
-      const auth = Buffer.from(`api:${MAILGUN_API_KEY}`).toString("base64");
-      const form = new URLSearchParams();
+      const auth = Buffer.from(`api:${mailgunApiKey}`).toString("base64");
+      // Mailgun's messages endpoint expects multipart/form-data. Let fetch set
+      // the boundary automatically instead of overriding Content-Type manually.
+      const form = new FormData();
       form.append("from", sender);
       form.append("to", to);
       form.append("subject", subject);
       form.append("text", text);
       form.append("html", html);
       form.append("h:Reply-To", replyTo);
-      form.append("h:List-Unsubscribe", "<mailto:devonmgm@gmail.com?subject=unsubscribe>");
+      form.append("h:List-Unsubscribe", `<mailto:${replyTo}?subject=unsubscribe>`);
       form.append("h:List-Unsubscribe-Post", "List-Unsubscribe=One-Click");
-      if (TEST_MODE) form.append("o:testmode", "yes");
+      if (testMode) form.append("o:testmode", "yes");
 
-      const resp = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
+      const resp = await fetch(`${mailgunApiBaseUrl}/v3/${mailgunDomain}/messages`, {
         method: "POST",
-        headers: { Authorization: `Basic ${auth}`, "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { Authorization: `Basic ${auth}` },
         body: form,
       });
-      if (!resp.ok) throw new Error(`Mailgun error ${resp.status}: ${await resp.text()}`);
+      if (!resp.ok) {
+        const responseText = await resp.text();
+        throw new MailgunError(resp.status, responseText);
+      }
       return resp.json();
     };
 
-    await sendEmail(customerEmail, "Your quote from Devon's Handyman Services", customerText, customerHtml);
-    await sendEmail(OWNER_EMAIL, `New Quote Request from ${customerName || customerEmail}`, ownerText, ownerHtml);
+    await sendEmail(normalizedCustomerEmail, "Your quote from Devon's Handyman Services", customerText, customerHtml);
+    await sendEmail(ownerEmail, `New Quote Request from ${normalizedCustomerName || normalizedCustomerEmail}`, ownerText, ownerHtml);
 
     return res.status(200).json({ ok: true });
-  } catch (err: any) {
-    console.error(err);
-    return res.status(500).json({ error: err?.message || "Email send failed" });
+  } catch (err: unknown) {
+    console.error("[send-quote] Email delivery failed", {
+      error: err,
+      trigger: "user",
+    });
+    return res.status(502).json({ error: "Email delivery failed. Please try again or call Devon directly." });
   }
 }

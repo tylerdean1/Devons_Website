@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Send, CheckCircle, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { services } from '../data/services';
+import { site } from '../data/site';
 
 interface QuoteFormProps {
   setCurrentView: (view: string) => void;
@@ -10,6 +11,8 @@ interface QuoteFormProps {
 export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   const { state, dispatch } = useCart();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedServiceId, setSelectedServiceId] = useState('');
   const [showServiceDropdown, setShowServiceDropdown] = useState(false);
   const [formData, setFormData] = useState({
@@ -46,6 +49,10 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitError(null);
 
     // Create email content
     const servicesText = state.items.map(item =>
@@ -105,8 +112,14 @@ ${formData.additionalNotes || 'None'}
       dispatch({ type: 'CLEAR_CART' });
 
     } catch (error) {
-      console.error('Error sending quote:', error);
-      alert('There was an error sending your quote. Please try again or contact us directly at devonmgm@gmail.com');
+      console.error('[QuoteForm] Failed to send quote request', {
+        error,
+        trigger: 'user',
+        email: formData.email,
+      });
+      setSubmitError(`We couldn't send your request. ${error instanceof Error ? error.message : `Please try again or call ${site.phone}.`}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -120,11 +133,11 @@ ${formData.additionalNotes || 'None'}
             <p className="text-xl text-gray-600 mb-8">
               Your quote request has been successfully sent!
               <br /><br />
-              • Devon has received your quote request at devonmgm@gmail.com
+              • Devon has received your quote request at {site.email}
               <br />
               • You should receive a confirmation copy at your email address
               <br /><br />
-              Devon will review your Clay or Duval County project and get back to you within 24 hours.
+              Devon will review your {site.primaryArea} project and get back to you within 24 hours.
             </p>
             <button
               onClick={() => setCurrentView('home')}
@@ -144,9 +157,16 @@ ${formData.additionalNotes || 'None'}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Request Your Quote</h1>
           <p className="text-lg text-gray-600 mb-8">
-            Tell us about your project in Clay County or Duval County, FL and we'll deliver a detailed estimate tailored to
-            your home. Same-day responses for most Jacksonville metro requests.
+            Tell us about your project in {site.serviceAreaLabel} and we'll deliver a detailed estimate tailored to your home.
+            Same-day responses are available for most local requests.
           </p>
+
+          {submitError && (
+            <div className="mb-8 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800" role="alert" aria-live="polite">
+              <p className="font-semibold">Quote request not sent</p>
+              <p className="mt-1 text-sm">{submitError}</p>
+            </div>
+          )}
 
           {state.items.length > 0 && (
             <div className="mb-8 p-6 bg-gray-100 rounded-lg">
@@ -201,7 +221,7 @@ ${formData.additionalNotes || 'None'}
                     onChange={(e) => setSelectedServiceId(e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <option value="">Choose a service...</option>
+                    <option value="">Choose a service…</option>
                     {services
                       .filter(service => !state.items.some(item => item.service.id === service.id))
                       .map(service => (
@@ -245,6 +265,7 @@ ${formData.additionalNotes || 'None'}
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
                   required
                   value={formData.name}
                   onChange={handleInputChange}
@@ -260,6 +281,8 @@ ${formData.additionalNotes || 'None'}
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
+                  spellCheck={false}
                   required
                   value={formData.email}
                   onChange={handleInputChange}
@@ -277,6 +300,8 @@ ${formData.additionalNotes || 'None'}
                   type="tel"
                   id="phone"
                   name="phone"
+                  autoComplete="tel"
+                  inputMode="tel"
                   required
                   value={formData.phone}
                   onChange={handleInputChange}
@@ -340,10 +365,11 @@ ${formData.additionalNotes || 'None'}
                 type="text"
                 id="address"
                 name="address"
+                autoComplete="street-address"
                 required
                 value={formData.address}
                 onChange={handleInputChange}
-                placeholder="Street address, City, State, ZIP"
+                placeholder="Street address, city, state, ZIP…"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               />
             </div>
@@ -358,7 +384,7 @@ ${formData.additionalNotes || 'None'}
                 rows={4}
                 value={formData.additionalNotes}
                 onChange={handleInputChange}
-                placeholder="Any specific details, timeline requirements, or questions..."
+                placeholder="Any specific details, timeline requirements, or questions…"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               ></textarea>
             </div>
@@ -373,10 +399,11 @@ ${formData.additionalNotes || 'None'}
               </button>
               <button
                 type="submit"
-                className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="flex-1 bg-yellow-500 hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2"
               >
-                <Send className="h-5 w-5" />
-                Send Quote Request
+                <Send className="h-5 w-5" aria-hidden="true" />
+                {isSubmitting ? 'Sending…' : 'Send Quote Request'}
               </button>
             </div>
           </form>

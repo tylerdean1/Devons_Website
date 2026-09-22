@@ -1,14 +1,15 @@
 import { Award, Users, Clock, Shield } from 'lucide-react';
+import { site } from '../data/site';
 
 export default function About() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section id="about" className="bg-gray-50 py-20" aria-labelledby="about-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">About Devon McCleese</h2>
+          <h2 id="about-heading" className="text-4xl font-bold text-gray-900 mb-4">About {site.name}</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             With 15 years of construction experience in North Florida, I provide reliable, quality handyman services for
-            homeowners across Clay County and Duval County, Florida.
+            homeowners in {site.serviceAreaLabel}.
           </p>
         </div>
 
@@ -16,7 +17,7 @@ export default function About() {
           <div>
             <img
               src="/image.png"
-              alt="Devon McCleese providing handyman services in Clay and Duval County Florida"
+              alt="Devon McCleese providing handyman services in St. Augustine, Florida"
               className="rounded-2xl shadow-xl w-full h-96 object-cover"
             />
           </div>
@@ -30,9 +31,9 @@ export default function About() {
               stands the test of time even in Florida's heat, humidity, and storms.
             </p>
             <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-              Based in Clay County and serving nearby Duval County, I understand the unique needs of Jacksonville's historic
-              neighborhoods as well as newer communities in Orange Park, Middleburg, Fleming Island, and beyond. Every project
-              starts with a clear conversation about your goals, timeline, and budget.
+              Based in North Florida and serving {site.serviceAreaLabel}, I understand the demands that heat, humidity, storms,
+              and coastal living can place on a home. Every project starts with a clear conversation about your goals, timeline,
+              and budget.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
               I handle all projects that don't require a contractor's license, ensuring you get professional results without
