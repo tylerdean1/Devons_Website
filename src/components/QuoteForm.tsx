@@ -5,8 +5,8 @@ import { services } from '../data/services';
 import { site } from '../data/site';
 
 interface QuoteSubmissionResponse {
-  ok?: boolean;
-  activationRequired?: boolean;
+  success?: boolean | string;
+  message?: string;
   error?: string;
 }
 
@@ -88,24 +88,41 @@ ${formData.additionalNotes || 'None'}
     `.trim();
 
     try {
-      // Submit through the server-side email provider proxy.
-      const response = await fetch('/api/send-quote', {
+      const providerMessage = [
+        'New quote request received from devonmccleese.com',
+        '',
+        `Customer: ${formData.name.trim() || 'Not provided'}`,
+        `Email: ${formData.email.trim()}`,
+        '',
+        'Quote details:',
+        quoteContent,
+        '',
+        'Additional information:',
+        JSON.stringify({
+          phone: formData.phone,
+          address: formData.address,
+          preferredDate: formData.preferredDate,
+          preferredTime: formData.preferredTime,
+          services: state.items,
+        }, null, 2),
+      ].join('\n');
+
+      // FormSubmit supports browser AJAX submissions and preserves the live site origin.
+      const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`, {
         method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerEmail: formData.email,
-          customerName: formData.name,
-          quote: quoteContent,
-          meta: {
-            phone: formData.phone,
-            address: formData.address,
-            preferredDate: formData.preferredDate,
-            preferredTime: formData.preferredTime,
-            services: state.items
-          }
-        })
+          name: formData.name.trim() || 'Not provided',
+          email: formData.email.trim(),
+          _replyto: formData.email.trim(),
+          _subject: `New quote request from ${formData.name.trim() || formData.email.trim()}`,
+          _template: 'table',
+          _url: window.location.origin,
+          message: providerMessage,
+        }),
       });
 
       const responseBody: unknown = await response.json().catch(() => null);
@@ -114,12 +131,15 @@ ${formData.additionalNotes || 'None'}
           ? (responseBody as QuoteSubmissionResponse)
           : {};
 
-      if (!response.ok || result.ok !== true) {
-        throw new Error(result.error || 'Email delivery failed. Please try again.');
+      const activationRequired = /activat/i.test(result.message || '');
+      const providerAccepted = result.success === true || result.success === 'true';
+
+      if (!response.ok || (!providerAccepted && !activationRequired)) {
+        throw new Error('Email delivery failed. Please try again or call Devon directly.');
       }
 
       // Show success message
-      setActivationRequired(result.activationRequired === true);
+      setActivationRequired(activationRequired);
       setIsSubmitted(true);
 
       // Clear cart after submission

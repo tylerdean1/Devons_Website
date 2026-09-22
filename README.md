@@ -21,9 +21,9 @@ The current service area is St. Augustine and nearby St. Johns County communitie
 
 ## Quote email configuration
 
-The quote form calls `api/send-quote.ts`, which securely proxies submissions through
-[FormSubmit's AJAX endpoint](https://formsubmit.co/ajax-documentation). No provider API key
-is exposed to the browser.
+The quote form submits through [FormSubmit's AJAX endpoint](https://formsubmit.co/ajax-documentation)
+from the live website. FormSubmit supports cross-origin browser AJAX, so the request preserves the
+website origin and does not require a provider API key or server-side credential.
 
 - `OWNER_EMAIL` — Devon's inbox for new quote notifications. It defaults to `devonmgm@gmail.com`.
 
