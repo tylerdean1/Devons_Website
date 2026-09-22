@@ -287,15 +287,6 @@ ${meta ? JSON.stringify(meta, null, 2) : "—"}`;
       error: err,
       trigger: "user",
     });
-    const providerDetails = err instanceof MailgunError
-      ? {
-          providerStatus: err.status,
-          providerMessage: err.responseText.replace(/[\r\n]+/g, " ").slice(0, 300),
-        }
-      : {};
-    return res.status(502).json({
-      error: "Email delivery failed. Please try again or call Devon directly.",
-      ...providerDetails,
-    });
+    return res.status(502).json({ error: "Email delivery failed. Please try again or call Devon directly." });
   }
 }
