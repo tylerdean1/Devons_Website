@@ -125,6 +125,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           "Content-Type": "application/json",
           Origin: "https://devonmccleese.com",
           Referer: "https://devonmccleese.com/",
+          "User-Agent": "Mozilla/5.0 (compatible; DevonMccleeseQuoteForm/1.0)",
         },
         body: JSON.stringify({
           name: customerName,
@@ -155,9 +156,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       return res.status(502).json({
         error: "Email delivery failed. Please try again or call Devon directly.",
-        providerStatus: providerResponse.status,
-        providerMessage: providerMessage.slice(0, 300),
-        providerBody: providerText.slice(0, 300),
       });
     }
 
