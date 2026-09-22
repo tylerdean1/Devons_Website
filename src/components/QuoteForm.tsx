@@ -4,6 +4,12 @@ import { useCart } from '../context/CartContext';
 import { services } from '../data/services';
 import { site } from '../data/site';
 
+interface QuoteSubmissionResponse {
+  ok?: boolean;
+  activationRequired?: boolean;
+  error?: string;
+}
+
 interface QuoteFormProps {
   setCurrentView: (view: string) => void;
 }
@@ -11,6 +17,7 @@ interface QuoteFormProps {
 export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   const { state, dispatch } = useCart();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activationRequired, setActivationRequired] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedServiceId, setSelectedServiceId] = useState('');
@@ -81,7 +88,7 @@ ${formData.additionalNotes || 'None'}
     `.trim();
 
     try {
-      // Send emails via Mailgun API
+      // Submit through the server-side email provider proxy.
       const response = await fetch('/api/send-quote', {
         method: 'POST',
         headers: {
@@ -101,11 +108,18 @@ ${formData.additionalNotes || 'None'}
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send quote');
+      const responseBody: unknown = await response.json().catch(() => null);
+      const result: QuoteSubmissionResponse =
+        responseBody && typeof responseBody === 'object'
+          ? (responseBody as QuoteSubmissionResponse)
+          : {};
+
+      if (!response.ok || result.ok !== true) {
+        throw new Error(result.error || 'Email delivery failed. Please try again.');
       }
 
       // Show success message
+      setActivationRequired(result.activationRequired === true);
       setIsSubmitted(true);
 
       // Clear cart after submission
@@ -131,11 +145,17 @@ ${formData.additionalNotes || 'None'}
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Quote Request Submitted!</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Your quote request has been successfully sent!
+              Your quote request has been submitted successfully!
               <br /><br />
-              • Devon has received your quote request at {site.email}
-              <br />
-              • You should receive a confirmation copy at your email address
+              {activationRequired ? (
+                <>
+                  Please check {site.email} for a one-time activation email from our form
+                  provider. After it is activated, future quote requests will be delivered
+                  automatically.
+                </>
+              ) : (
+                <>Devon has received your quote request at {site.email}.</>
+              )}
               <br /><br />
               Devon will review your {site.primaryArea} project and get back to you within 24 hours.
             </p>

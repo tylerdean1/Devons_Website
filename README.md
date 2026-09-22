@@ -21,14 +21,13 @@ The current service area is St. Augustine and nearby St. Johns County communitie
 
 ## Quote email configuration
 
-The quote form calls `api/send-quote.ts`, which sends through Mailgun. Configure these Vercel environment variables for the relevant deployment environments:
+The quote form calls `api/send-quote.ts`, which securely proxies submissions through
+[FormSubmit's AJAX endpoint](https://formsubmit.co/ajax-documentation). No provider API key
+is exposed to the browser.
 
-- `MAILGUN_API_KEY` — a Mailgun sending or private API key.
-- `MAILGUN_DOMAIN` — the verified Mailgun sending domain.
-- `OWNER_EMAIL` — Devon's inbox for new quote notifications.
-- `MAILGUN_REGION` — `us` by default, or `eu` for a Mailgun EU domain.
-- `MAILGUN_FROM_EMAIL` — optional verified `From` address; otherwise the handler uses `quotes@MAILGUN_DOMAIN`.
-- `REPLY_TO_EMAIL` — optional reply-to address; otherwise it uses Devon's public email.
-- `MAILGUN_TEST_MODE` — optional `1` value for Mailgun test mode.
+- `OWNER_EMAIL` — Devon's inbox for new quote notifications. It defaults to `devonmgm@gmail.com`.
 
-Never put Mailgun credentials in frontend code or `VITE_*` variables.
+FormSubmit sends a one-time activation email the first time an address is used. The inbox
+owner must activate the form once; later quote requests are delivered automatically. The
+website displays that activation state instead of claiming a quote was delivered before
+activation is complete.
