@@ -1,3 +1,5 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
+
 interface QuoteService {
   name: string;
   category: string;
@@ -19,6 +21,12 @@ interface QuoteRequestPayload {
 interface UnknownRecord {
   [key: string]: unknown;
 }
+
+interface VercelRequest extends IncomingMessage {
+  body?: unknown;
+}
+
+type VercelResponse = ServerResponse<IncomingMessage>;
 
 const MAX_FIELD_LENGTH = 500;
 const MAX_NOTES_LENGTH = 3000;
@@ -44,6 +52,26 @@ function escapeHtml(value: string): string {
 
 function normalizeText(value: string, maximumLength: number): string {
   return value.trim().slice(0, maximumLength);
+}
+
+function sendJson(response: VercelResponse, statusCode: number, body: UnknownRecord): void {
+  response.statusCode = statusCode;
+  response.setHeader('Content-Type', 'application/json; charset=utf-8');
+  response.end(JSON.stringify(body));
+}
+
+async function readRequestBody(request: VercelRequest): Promise<unknown> {
+  if (request.body !== undefined) {
+    return request.body;
+  }
+
+  const chunks: Buffer[] = [];
+  for await (const chunk of request) {
+    chunks.push(Buffer.from(chunk));
+  }
+
+  const rawBody = Buffer.concat(chunks).toString('utf8');
+  return rawBody ? JSON.parse(rawBody) as unknown : null;
 }
 
 function parseQuoteRequest(value: unknown): QuoteRequestPayload {
@@ -162,25 +190,28 @@ function renderQuoteText(request: QuoteRequestPayload): string {
   ].join('\n');
 }
 
-export default async function handler(request: Request): Promise<Response> {
+export default async function handler(request: VercelRequest, response: VercelResponse): Promise<void> {
   if (request.method !== 'POST') {
-    return Response.json({ error: 'Method not allowed.' }, { status: 405 });
+    sendJson(response, 405, { error: 'Method not allowed.' });
+    return;
   }
 
   const requestId = crypto.randomUUID();
   let quoteRequest: QuoteRequestPayload;
 
   try {
-    quoteRequest = parseQuoteRequest(await request.json());
+    quoteRequest = parseQuoteRequest(await readRequestBody(request));
   } catch (error) {
     console.error('[send-quote] Invalid quote request', { error, requestId, trigger: 'user' });
-    return Response.json({ error: error instanceof Error ? error.message : 'Please check the form and try again.' }, { status: 400 });
+    sendJson(response, 400, { error: error instanceof Error ? error.message : 'Please check the form and try again.' });
+    return;
   }
 
   const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     console.error('[send-quote] Missing RESEND_API_KEY', { requestId, trigger: 'user' });
-    return Response.json({ error: 'Email delivery is temporarily unavailable. Please call Devon directly.' }, { status: 503 });
+    sendJson(response, 503, { error: 'Email delivery is temporarily unavailable. Please call Devon directly.' });
+    return;
   }
 
   try {
@@ -208,12 +239,13 @@ export default async function handler(request: Request): Promise<Response> {
         responseBody,
         trigger: 'user',
       });
-      return Response.json({ error: 'Email delivery failed. Please try again or call Devon directly.' }, { status: 502 });
+      sendJson(response, 502, { error: 'Email delivery failed. Please try again or call Devon directly.' });
+      return;
     }
 
-    return Response.json({ success: true, message: 'Your quote request was sent successfully.' });
+    sendJson(response, 200, { success: true, message: 'Your quote request was sent successfully.' });
   } catch (error) {
     console.error('[send-quote] Resend request failed', { error, requestId, trigger: 'user' });
-    return Response.json({ error: 'Email delivery failed. Please try again or call Devon directly.' }, { status: 502 });
+    sendJson(response, 502, { error: 'Email delivery failed. Please try again or call Devon directly.' });
   }
 }
