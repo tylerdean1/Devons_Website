@@ -22,8 +22,11 @@ The current service area is St. Augustine and nearby St. Johns County communitie
 ## Quote email configuration
 
 The quote form posts to the server-side `/api/send-quote` Vercel Function. That function sends
-through [Resend](https://resend.com), so the Resend credential never reaches the browser and
-customers can reply directly to their original email address.
+two separate messages through [Resend](https://resend.com): the full request to Devon and a
+brief confirmation of the selected services and scheduling details to the customer. The Resend
+credential never reaches the browser. Devon can reply to the customer notification, and the
+customer can reply to their confirmation to reach Devon. A submission ID prevents duplicate
+messages if a request is retried.
 
 Required Vercel environment variable:
 

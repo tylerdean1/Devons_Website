@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { createHash } from 'node:crypto';
 
 interface QuoteService {
   name: string;
@@ -8,6 +9,7 @@ interface QuoteService {
 }
 
 interface QuoteRequestPayload {
+  submissionId: string;
   name: string;
   email: string;
   phone: string;
@@ -111,6 +113,9 @@ function parseQuoteRequest(value: unknown): QuoteRequestPayload {
     : [];
 
   return {
+    submissionId: typeof value.submissionId === 'string' && /^[0-9a-f]{8}-[0-9a-f-]{27,36}$/i.test(value.submissionId)
+      ? value.submissionId
+      : crypto.randomUUID(),
     name: normalizeText(value.name as string, MAX_FIELD_LENGTH),
     email,
     phone: normalizeText(value.phone as string, MAX_FIELD_LENGTH),
@@ -190,6 +195,62 @@ function renderQuoteText(request: QuoteRequestPayload): string {
   ].join('\n');
 }
 
+function renderCustomerServicesHtml(services: QuoteService[]): string {
+  if (services.length === 0) {
+    return '<p style="margin:0;">No specific services selected.</p>';
+  }
+
+  return `<ul style="margin:0;padding-left:20px;">${services.map((service) =>
+    `<li>${escapeHtml(service.name)} × ${service.quantity}</li>`).join('')}</ul>`;
+}
+
+function renderCustomerHtml(request: QuoteRequestPayload): string {
+  return `<!doctype html>
+<html lang="en">
+  <body style="margin:0;background:#f8fafc;font-family:Arial,Helvetica,sans-serif;color:#0f172a;">
+    <div style="max-width:600px;margin:0 auto;padding:32px 16px;">
+      <div style="background:#111827;border-radius:16px 16px 0 0;padding:24px 28px;color:#fff;">
+        <p style="margin:0 0 6px;color:#facc15;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Devon's Handyman Services</p>
+        <h1 style="margin:0;font-size:24px;">We received your quote request</h1>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-top:0;border-radius:0 0 16px 16px;padding:28px;">
+        <p>Hi ${escapeHtml(request.name)},</p>
+        <p>Thanks for reaching out. Here is a brief summary of the request you sent to Devon:</p>
+        <h2 style="font-size:16px;">Requested services</h2>
+        ${renderCustomerServicesHtml(request.services)}
+        <p><strong>Project address:</strong> ${escapeHtml(request.address)}<br>
+        <strong>Preferred date:</strong> ${escapeHtml(request.preferredDate)}<br>
+        <strong>Preferred time:</strong> ${escapeHtml(request.preferredTime)}</p>
+        <p><strong>Additional notes:</strong><br><span style="white-space:pre-wrap;">${escapeHtml(request.additionalNotes)}</span></p>
+        <p>Devon will review your request and reply to you. If you need to add anything, reply to this email or call (904) 501-7147.</p>
+      </div>
+    </div>
+  </body>
+</html>`;
+}
+
+function renderCustomerText(request: QuoteRequestPayload): string {
+  const services = request.services.length > 0
+    ? request.services.map((service) => `- ${service.name} x${service.quantity}`).join('\n')
+    : 'No specific services selected.';
+
+  return [
+    `Hi ${request.name},`,
+    '',
+    'Thanks for reaching out. We received your quote request for Devon.',
+    '',
+    'Requested services',
+    services,
+    '',
+    `Project address: ${request.address}`,
+    `Preferred date: ${request.preferredDate}`,
+    `Preferred time: ${request.preferredTime}`,
+    `Additional notes: ${request.additionalNotes}`,
+    '',
+    'Devon will review your request and reply to you. To add anything, reply to this email or call (904) 501-7147.',
+  ].join('\n');
+}
+
 export default async function handler(request: VercelRequest, response: VercelResponse): Promise<void> {
   if (request.method !== 'POST') {
     sendJson(response, 405, { error: 'Method not allowed.' });
@@ -215,25 +276,38 @@ export default async function handler(request: VercelRequest, response: VercelRe
   }
 
   try {
-    const resendResponse = await fetch('https://api.resend.com/emails', {
+    const contentHash = createHash('sha256').update(JSON.stringify(quoteRequest)).digest('hex').slice(0, 16);
+    const resendResponse = await fetch('https://api.resend.com/emails/batch', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
+        'Idempotency-Key': `quote-${quoteRequest.submissionId}-${contentHash}`,
       },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [OWNER_EMAIL],
-        reply_to: quoteRequest.email,
-        subject: `New quote request from ${quoteRequest.name}`,
-        html: renderQuoteHtml(quoteRequest),
-        text: renderQuoteText(quoteRequest),
-      }),
+      body: JSON.stringify([
+        {
+          from: FROM_EMAIL,
+          to: [OWNER_EMAIL],
+          reply_to: quoteRequest.email,
+          subject: `New quote request from ${quoteRequest.name}`,
+          html: renderQuoteHtml(quoteRequest),
+          text: renderQuoteText(quoteRequest),
+        },
+        {
+          from: FROM_EMAIL,
+          to: [quoteRequest.email],
+          reply_to: OWNER_EMAIL,
+          subject: "Your quote request to Devon's Handyman Services",
+          html: renderCustomerHtml(quoteRequest),
+          text: renderCustomerText(quoteRequest),
+        },
+      ]),
     });
 
     const responseBody: unknown = await resendResponse.json().catch(() => null);
-    if (!resendResponse.ok) {
-      console.error('[send-quote] Resend rejected the message', {
+    const emails = isRecord(responseBody) && Array.isArray(responseBody.data) ? responseBody.data : [];
+    if (!resendResponse.ok || emails.length !== 2 || !emails.every((email) => isRecord(email) && isNonEmptyString(email.id))) {
+      console.error('[send-quote] Resend did not accept both messages', {
         requestId,
         status: resendResponse.status,
         responseBody,
@@ -243,7 +317,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
       return;
     }
 
-    sendJson(response, 200, { success: true, message: 'Your quote request was sent successfully.' });
+    console.info('[send-quote] Both quote emails accepted', {
+      requestId,
+      emailIds: emails.map((email) => email.id),
+    });
+    sendJson(response, 200, { success: true, message: 'Your quote request and confirmation email were sent.' });
   } catch (error) {
     console.error('[send-quote] Resend request failed', { error, requestId, trigger: 'user' });
     sendJson(response, 502, { error: 'Email delivery failed. Please try again or call Devon directly.' });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Send, CheckCircle, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { services } from '../data/services';
@@ -21,6 +21,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedServiceId, setSelectedServiceId] = useState('');
   const [showServiceDropdown, setShowServiceDropdown] = useState(false);
+  const submissionId = useRef(crypto.randomUUID());
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,6 +69,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          submissionId: submissionId.current,
           name: formData.name.trim() || 'Not provided',
           email: formData.email.trim(),
           phone: formData.phone.trim(),
@@ -122,7 +124,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
             <p className="text-xl text-gray-600 mb-8">
               Thanks — your quote request was sent successfully.
               <br /><br />
-              Devon has received your request at {site.email} and can reply directly to your email.
+              We sent Devon the request details and a confirmation email to your address. Check your inbox or spam folder for the summary.
               <br /><br />
               Devon will review your {site.primaryArea} project and get back to you within 24 hours.
             </p>
