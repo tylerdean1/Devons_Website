@@ -1,49 +1,75 @@
-import { Plus } from 'lucide-react';
-import * as Icons from 'lucide-react';
-import { Service } from '../types';
+import {
+  Bath,
+  BrickWall,
+  CloudRain,
+  CookingPot,
+  DoorOpen,
+  Droplets,
+  Fence,
+  Hammer,
+  Layers3,
+  PaintBucket,
+  PaintRoller,
+  PanelsTopLeft,
+  PlugZap,
+  Plus,
+  Ruler,
+  Rows3,
+  SprayCan,
+  type LucideIcon,
+} from 'lucide-react';
+import type { Service } from '../types';
 import { useCart } from '../context/CartContext';
 
 interface ServiceCardProps {
   service: Service;
 }
 
+const serviceIcons: Record<Service['icon'], LucideIcon> = {
+  Bath,
+  BrickWall,
+  CloudRain,
+  CookingPot,
+  DoorOpen,
+  Droplets,
+  Fence,
+  Hammer,
+  Layers3,
+  PaintBucket,
+  PaintRoller,
+  PanelsTopLeft,
+  PlugZap,
+  Ruler,
+  Rows3,
+  SprayCan,
+};
+
 export default function ServiceCard({ service }: ServiceCardProps) {
   const { dispatch } = useCart();
-
-  // Dynamically get the icon component
-  const IconComponent = ((Icons as unknown) as Record<string, React.ComponentType<{ className?: string; 'aria-hidden'?: boolean }>>)[service.icon] || Icons.Hammer;
-
-  const handleAddToCart = () => {
-    dispatch({ type: 'ADD_ITEM', payload: service });
-  };
+  const Icon = serviceIcons[service.icon];
 
   return (
-    <div
-      className="flex min-h-[280px] flex-col rounded-xl bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl"
-    >
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex items-center justify-between mb-4">
-          <IconComponent className="h-8 w-8 text-gray-700" aria-hidden="true" />
-          <span className="text-sm font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded">
-            {service.category}
-          </span>
+    <article className="group flex min-h-[320px] flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_35px_-25px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-[0_20px_45px_-25px_rgba(15,23,42,0.4)]">
+      <div className="mb-7 flex items-start justify-between gap-4">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 text-slate-800 transition-colors group-hover:bg-amber-100">
+          <Icon className="h-8 w-8 stroke-[1.7]" aria-hidden="true" />
         </div>
-
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.name}</h3>
-
-        <div className="flex-grow">
-          <p className="text-gray-600">{service.description}</p>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-gray-800 px-4 py-2 font-medium text-yellow-400 transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2"
-        >
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          Add to Quote
-        </button>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">
+          {service.category}
+        </span>
       </div>
-    </div>
+
+      <h3 className="mb-3 text-xl font-semibold leading-snug tracking-tight text-slate-900">{service.name}</h3>
+      <p className="flex-1 text-[15px] leading-7 text-slate-600">{service.description}</p>
+
+      <button
+        type="button"
+        onClick={() => dispatch({ type: 'ADD_ITEM', payload: service })}
+        className="mt-7 flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
+      >
+        Add to quote
+        <Plus className="h-4 w-4 text-amber-300" aria-hidden="true" />
+      </button>
+    </article>
   );
 }

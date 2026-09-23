@@ -1,64 +1,56 @@
 import { useState } from 'react';
-import { Filter } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import ServiceCard from './ServiceCard';
 import { services } from '../data/services';
 import { site } from '../data/site';
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  const categories = ['All', ...Array.from(new Set(services.map(s => s.category)))];
+  const categories = ['All', ...Array.from(new Set(services.map((service) => service.category)))];
   const filteredServices = selectedCategory === 'All'
     ? services
-    : services.filter(s => s.category === selectedCategory);
+    : services.filter((service) => service.category === selectedCategory);
 
   return (
-    <section className="min-h-screen bg-gray-50 py-12" aria-labelledby="services-heading">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 id="services-heading" className="text-4xl font-bold text-gray-900 mb-4">Our Services</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Professional handyman services for repairs, maintenance, and improvements in {site.serviceAreaLabel}.
-            Choose any service to add it to your quote request.
+    <section className="min-h-screen bg-[#f7f6f2] py-16 sm:py-20" aria-labelledby="services-heading">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 max-w-3xl">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-amber-700">What we can help with</p>
+          <h1 id="services-heading" className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">Services for every part of your home</h1>
+          <p className="mt-5 text-lg leading-8 text-slate-600">
+            From the small fixes to the bigger improvements, choose the work you have in mind and add it to your quote request.
+          </p>
+          <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-500">
+            <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
+            Serving {site.serviceAreaLabel}
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="mb-8 flex items-center justify-center">
-          <div className="flex max-w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-white p-2 shadow-md">
-            <Filter className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter services by category">
             {categories.map((category) => (
               <button
                 key={category}
                 type="button"
                 onClick={() => setSelectedCategory(category)}
                 aria-pressed={selectedCategory === category}
-                className={`rounded-md px-4 py-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 ${selectedCategory === category
-                    ? 'bg-gray-800 text-yellow-400'
-                    : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+                className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 ${selectedCategory === category
+                  ? 'bg-slate-900 text-white'
+                  : 'border border-slate-200 bg-white text-slate-700 hover:border-slate-400'
+                }`}
               >
-                {category}
+                {category === 'All' ? 'All services' : category}
               </button>
             ))}
           </div>
+          <p className="text-sm text-slate-500">{filteredServices.length} services</p>
         </div>
 
-        {/* Services Grid */}
-        <p className="mb-6 text-center text-sm text-gray-500">
-          Available throughout {site.serviceAreaLabel}.
-        </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredServices.map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}
         </div>
-
-        {filteredServices.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-500">No services found in this category.</p>
-          </div>
-        )}
       </div>
     </section>
   );

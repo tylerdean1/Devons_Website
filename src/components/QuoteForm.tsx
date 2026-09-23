@@ -116,9 +116,9 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-[#f7f6f2] py-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Quote Request Submitted!</h1>
             <p className="text-xl text-gray-600 mb-8">
@@ -130,7 +130,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
             </p>
             <button
               onClick={() => setCurrentView('home')}
-              className="bg-gray-800 hover:bg-gray-700 text-yellow-400 px-8 py-3 rounded-lg font-semibold transition-colors"
+              className="rounded-xl bg-slate-900 px-8 py-3 font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             >
               Return Home
             </button>
@@ -141,13 +141,14 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-[#f7f6f2] py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Request Your Quote</h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Tell us about your project in {site.serviceAreaLabel} and we'll deliver a detailed estimate tailored to your home.
-            Same-day responses are available for most local requests.
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Let's get started</p>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-slate-900">Request Your Quote</h1>
+          <p className="mb-8 text-lg leading-8 text-slate-600">
+            Tell Devon about the work you have in mind in {site.serviceAreaLabel}. You'll receive an email summarizing
+            your request, and Devon will follow up to discuss the next steps.
           </p>
 
           {submitError && (
@@ -158,7 +159,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
           )}
 
           {state.items.length > 0 && (
-            <div className="mb-8 p-6 bg-gray-100 rounded-lg">
+            <div className="mb-8 rounded-xl border border-slate-200 bg-slate-50 p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Selected Services:</h2>
               <ul className="space-y-2">
                 {state.items.map((item) => (
@@ -184,7 +185,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
           )}
 
           {/* Add Service Section */}
-          <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50/50 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               {state.items.length === 0 ? 'Add Services to Your Quote' : 'Add More Services'}
             </h2>
@@ -193,7 +194,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
               <button
                 type="button"
                 onClick={() => setShowServiceDropdown(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2"
+                className="flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <Plus className="h-5 w-5" />
                 Add Service
@@ -208,7 +209,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                     id="serviceSelect"
                     value={selectedServiceId}
                     onChange={(e) => setSelectedServiceId(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-amber-500"
                   >
                     <option value="">Choose a service…</option>
                     {services
@@ -225,7 +226,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                     type="button"
                     onClick={handleAddService}
                     disabled={!selectedServiceId}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-semibold transition-colors"
+                    className="rounded-lg bg-amber-400 px-4 py-2 font-semibold text-slate-900 transition-colors hover:bg-amber-300 disabled:bg-gray-300"
                   >
                     Add Selected Service
                   </button>
@@ -235,7 +236,7 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                       setShowServiceDropdown(false);
                       setSelectedServiceId('');
                     }}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                    className="rounded-lg border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-800 transition-colors hover:bg-slate-50"
                   >
                     Cancel
                   </button>
@@ -382,14 +383,14 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
               <button
                 type="button"
                 onClick={() => setCurrentView('cart')}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-6 py-3 font-semibold text-slate-800 transition-colors hover:bg-slate-50"
               >
                 Back to Cart
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 bg-yellow-500 hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3 font-semibold text-slate-900 transition-colors hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
               >
                 <Send className="h-5 w-5" aria-hidden="true" />
                 {isSubmitting ? 'Sending…' : 'Send Quote Request'}

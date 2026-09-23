@@ -3,7 +3,9 @@ export interface Service {
   name: string;
   description: string;
   category: string;
-  icon: string;
+  icon: 'Bath' | 'BrickWall' | 'CloudRain' | 'CookingPot' | 'DoorOpen'
+    | 'Droplets' | 'Fence' | 'Hammer' | 'Layers3' | 'PaintBucket' | 'PaintRoller'
+    | 'PanelsTopLeft' | 'PlugZap' | 'Ruler' | 'Rows3' | 'SprayCan';
 }
 
 export interface CartItem {

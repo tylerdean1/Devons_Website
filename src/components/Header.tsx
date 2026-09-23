@@ -1,4 +1,4 @@
-import { ShoppingCart } from 'lucide-react';
+import { Hammer, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { site } from '../data/site';
 
@@ -7,113 +7,80 @@ interface HeaderProps {
   setCurrentView: (view: string) => void;
 }
 
+const navigation = [
+  { view: 'home', label: 'Home' },
+  { view: 'services', label: 'Services' },
+  { view: 'quote', label: 'Get a Quote' },
+];
+
 export default function Header({ currentView, setCurrentView }: HeaderProps) {
   const { state } = useCart();
   const itemCount = state.items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <header className="bg-gray-800 shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#172230] text-white shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between gap-4">
           <button
             type="button"
-            className="flex items-center space-x-2 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800"
             onClick={() => setCurrentView('home')}
-              aria-label={`Return to ${site.name} home page`}
-            >
-              <img
-                src="/logo.png"
-              alt=""
-              className="h-16 w-auto object-contain"
-            />
-            <div>
-              <span className="text-xl font-bold text-white">{site.name}</span>
-              <p className="text-sm text-yellow-400">{site.regionLabel} Handyman</p>
-            </div>
+            aria-label={`Return to ${site.businessName} home page`}
+            className="flex min-w-0 items-center gap-3 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+          >
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400 text-slate-900">
+              <Hammer className="h-6 w-6 stroke-[1.8]" aria-hidden="true" />
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate text-base font-bold leading-tight tracking-tight sm:text-lg">Devon McCleese</span>
+              <span className="block truncate text-[10px] font-bold uppercase tracking-[0.18em] text-amber-300 sm:text-xs">Handyman Services</span>
+            </span>
           </button>
 
-          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
-            <button
-              onClick={() => setCurrentView('home')}
-              aria-current={currentView === 'home' ? 'page' : undefined}
-              className={`rounded-sm text-lg font-medium transition-colors border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'home'
-                ? 'text-yellow-400 border-yellow-400 pb-1'
-                : 'text-gray-300 hover:text-yellow-400 border-transparent'
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
+            {navigation.map(({ view, label }) => (
+              <button
+                key={view}
+                type="button"
+                onClick={() => setCurrentView(view)}
+                aria-current={currentView === view ? 'page' : undefined}
+                className={`border-b-2 pb-1 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view
+                  ? 'border-amber-400 text-amber-300'
+                  : 'border-transparent text-slate-200 hover:text-white'
                 }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => setCurrentView('services')}
-              aria-current={currentView === 'services' ? 'page' : undefined}
-              className={`rounded-sm text-lg font-medium transition-colors border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'services'
-                ? 'text-yellow-400 border-yellow-400 pb-1'
-                : 'text-gray-300 hover:text-yellow-400 border-transparent'
-                }`}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => setCurrentView('quote')}
-              aria-current={currentView === 'quote' ? 'page' : undefined}
-              className={`rounded-sm text-lg font-medium transition-colors border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'quote'
-                ? 'text-yellow-400 border-yellow-400 pb-1'
-                : 'text-gray-300 hover:text-yellow-400 border-transparent'
-                }`}
-            >
-              Get Quote
-            </button>
+              >
+                {label}
+              </button>
+            ))}
           </nav>
 
-          <div className="flex items-center">
-            <button
-              onClick={() => setCurrentView('cart')}
-              type="button"
-              className="relative rounded-full bg-yellow-500 p-2 text-gray-800 transition-colors hover:bg-yellow-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800"
-              aria-label={`Open quote cart${itemCount > 0 ? ` with ${itemCount} item${itemCount === 1 ? '' : 's'}` : ''}`}
-            >
-              <ShoppingCart className="h-6 w-6" aria-hidden="true" />
-              {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gray-800 text-yellow-400 text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setCurrentView('cart')}
+            aria-label={`Open quote cart${itemCount > 0 ? ` with ${itemCount} item${itemCount === 1 ? '' : 's'}` : ''}`}
+            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-amber-400/50 text-amber-300 transition-colors hover:bg-amber-400 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+          >
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+            {itemCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1 text-[11px] font-bold text-slate-900">
+                {itemCount}
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden pb-4">
-          <div className="flex justify-center space-x-6">
+        <nav className="flex justify-center gap-7 border-t border-white/10 py-3 md:hidden" aria-label="Mobile navigation">
+          {navigation.map(({ view, label }) => (
             <button
-              onClick={() => setCurrentView('home')}
+              key={view}
               type="button"
-              aria-current={currentView === 'home' ? 'page' : undefined}
-              className={`rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'home' ? 'text-yellow-400' : 'text-gray-300'
-                }`}
+              onClick={() => setCurrentView(view)}
+              aria-current={currentView === view ? 'page' : undefined}
+              className={`rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view ? 'text-amber-300' : 'text-slate-200'}`}
             >
-              Home
+              {label}
             </button>
-            <button
-              onClick={() => setCurrentView('services')}
-              type="button"
-              aria-current={currentView === 'services' ? 'page' : undefined}
-              className={`rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'services' ? 'text-yellow-400' : 'text-gray-300'
-                }`}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => setCurrentView('quote')}
-              type="button"
-              aria-current={currentView === 'quote' ? 'page' : undefined}
-              className={`rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 ${currentView === 'quote' ? 'text-yellow-400' : 'text-gray-300'
-                }`}
-            >
-              Get Quote
-            </button>
-          </div>
-        </div>
+          ))}
+        </nav>
       </div>
     </header>
   );

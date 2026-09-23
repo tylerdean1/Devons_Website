@@ -4,113 +4,113 @@ export const services: Service[] = [
   {
     id: '1',
     name: 'Drywall Installation & Repair',
-    description: 'Professional drywall installation, patching, and repair services for walls and ceilings across St. Augustine and St. Johns County, Florida.',
+    description: 'Wall repairs, seamless patches, and clean installation for a smooth, paint-ready finish.',
     category: 'Interior',
-    icon: 'Hammer'
+    icon: 'BrickWall'
   },
   {
     id: '2',
     name: 'Interior Painting',
-    description: 'Complete interior painting services including prep work, priming, and professional finishing for homes in St. Augustine and St. Johns County, FL.',
+    description: 'Careful prep, crisp edges, and even finishes for walls, ceilings, and trim.',
     category: 'Interior',
-    icon: 'Paintbrush'
+    icon: 'PaintRoller'
   },
   {
     id: '3',
     name: 'Exterior Painting',
-    description: 'Exterior house painting with weather-resistant paints and proper surface preparation tailored to Northeast Florida properties.',
+    description: 'Surface preparation and durable coatings to refresh siding, doors, and outdoor details.',
     category: 'Exterior',
-    icon: 'Home'
+    icon: 'PaintBucket'
   },
   {
     id: '4',
     name: 'Flooring Installation',
-    description: 'Installation of laminate, vinyl, hardwood, and tile flooring with professional finishing for St. Augustine and St. Johns County homeowners.',
+    description: 'Laminate, vinyl, hardwood, and tile installed with precise cuts and clean transitions.',
     category: 'Interior',
-    icon: 'Square'
+    icon: 'Layers3'
   },
   {
     id: '5',
     name: 'Kitchen Remodeling',
-    description: 'Complete kitchen renovations including cabinets, countertops, and fixture installation for St. Augustine and St. Johns County residences.',
+    description: 'Cabinet, countertop, and fixture upgrades that make your kitchen work better.',
     category: 'Interior',
-    icon: 'ChefHat'
+    icon: 'CookingPot'
   },
   {
     id: '6',
     name: 'Bathroom Remodeling',
-    description: 'Full bathroom renovations including tile work, fixture installation, and vanity setup built for North Florida lifestyles.',
+    description: 'Tile, vanity, and fixture updates planned around your space and budget.',
     category: 'Interior',
     icon: 'Bath'
   },
   {
     id: '7',
     name: 'Deck Building & Repair',
-    description: 'Custom deck construction, repair, and maintenance including staining and sealing for the St. Augustine climate.',
+    description: 'Deck construction, repairs, staining, and sealing for outdoor spaces.',
     category: 'Exterior',
-    icon: 'Trees'
+    icon: 'Hammer'
   },
   {
     id: '8',
     name: 'Fence Installation',
-    description: 'Installation of wood, vinyl, and chain link fencing with proper post setting throughout St. Augustine and St. Johns County.',
+    description: 'Wood, vinyl, and chain-link fencing with sturdy posts and tidy finishes.',
     category: 'Exterior',
-    icon: 'Grid3x3'
+    icon: 'Fence'
   },
   {
     id: '9',
     name: 'Door Installation',
-    description: 'Interior and exterior door installation including hardware and trim work for homes across St. Augustine and St. Johns County, FL.',
+    description: 'Interior and exterior doors fitted with dependable hardware and clean trim.',
     category: 'Interior',
     icon: 'DoorOpen'
   },
   {
     id: '10',
     name: 'Window Installation',
-    description: 'Professional window installation and replacement with proper sealing and trim to keep out Florida heat and storms.',
+    description: 'Window replacement and installation with careful sealing and finished trim.',
     category: 'Interior',
-    icon: 'Square'
+    icon: 'PanelsTopLeft'
   },
   {
     id: '11',
     name: 'Trim & Molding',
-    description: 'Installation of baseboards, crown molding, and decorative trim for homes in St. Augustine and nearby communities.',
+    description: 'Baseboards, crown molding, and finishing details that bring a room together.',
     category: 'Interior',
     icon: 'Ruler'
   },
   {
     id: '12',
     name: 'Pressure Washing',
-    description: 'Professional pressure washing for driveways, sidewalks, decks, and exterior surfaces across St. Augustine and St. Johns County.',
+    description: 'Driveways, walkways, decks, and siding cleaned with care for each surface.',
     category: 'Exterior',
-    icon: 'Droplets'
+    icon: 'SprayCan'
   },
   {
     id: '13',
     name: 'Gutter Installation',
-    description: 'Seamless gutter installation and repair to protect First Coast homes from water damage and heavy summer storms.',
+    description: 'Gutter installation and repairs that help move rainwater away from your home.',
     category: 'Exterior',
-    icon: 'Waves'
+    icon: 'CloudRain'
   },
   {
     id: '14',
     name: 'Minor Plumbing',
-    description: 'Basic plumbing repairs including faucet replacement, toilet installation, and leak fixes for St. Augustine and St. Johns County homeowners.',
+    description: 'Faucets, toilets, and small leaks handled with practical, tidy repairs.',
     category: 'Interior',
-    icon: 'Wrench'
+    icon: 'Droplets'
   },
   {
     id: '15',
     name: 'Minor Electrical',
-    description: 'Basic electrical work including outlet installation, switch replacement, and fixture mounting for St. Augustine homes.',
+    description: 'Switches, outlets, and light fixtures installed or replaced where permitted.',
     category: 'Interior',
-    icon: 'Zap'
+    icon: 'PlugZap'
   },
   {
     id: '16',
     name: 'Shelving & Storage',
-    description: 'Custom shelving solutions and storage installations for closets and living spaces throughout St. Augustine and St. Johns County.',
+    description: 'Shelves and storage that make better use of closets, garages, and living spaces.',
     category: 'Interior',
-    icon: 'Archive'
+    icon: 'Rows3'
   }
 ];

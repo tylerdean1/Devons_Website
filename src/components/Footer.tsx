@@ -1,58 +1,48 @@
-import { Phone, Mail, MapPin, Hammer } from 'lucide-react';
+import { Hammer, Mail, MapPin, Phone } from 'lucide-react';
 import { site } from '../data/site';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Hammer className="h-8 w-8 text-yellow-400" aria-hidden="true" />
+    <footer className="bg-[#101923] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-[1.25fr_1fr_1fr]">
+          <div className="max-w-sm">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-400 text-slate-900">
+                <Hammer className="h-6 w-6 stroke-[1.8]" aria-hidden="true" />
+              </span>
               <div>
-              <h3 className="text-xl font-bold">{site.name}</h3>
-                <p className="text-gray-400">{site.regionLabel} Handyman</p>
+                <p className="text-lg font-bold leading-tight">Devon McCleese</p>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-300">Handyman Services</p>
               </div>
             </div>
-            <p className="text-gray-400 leading-relaxed">
-              Professional handyman services for {site.serviceAreaLabel}. 15 years of construction experience you can trust
-              for the repairs and improvements that keep your home working well.
+            <p className="mt-6 text-sm leading-7 text-slate-300">
+              Thoughtful repairs and improvements for homes in {site.serviceAreaLabel}.
             </p>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                <a className="hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400" href={site.phoneHref}>{site.phone}</a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                <a className="hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400" href={site.emailHref}>{site.email}</a>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                <span>{site.regionLabel}, Florida</span>
-              </div>
+            <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Get in touch</h2>
+            <div className="mt-6 space-y-4 text-sm text-slate-300">
+              <a className="flex items-center gap-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" href={site.phoneHref}>
+                <Phone className="h-4 w-4 text-amber-300" aria-hidden="true" />{site.phone}
+              </a>
+              <a className="flex items-center gap-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" href={site.emailHref}>
+                <Mail className="h-4 w-4 text-amber-300" aria-hidden="true" />{site.email}
+              </a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Service Areas</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>{site.primaryArea} and nearby St. Johns County communities</li>
-              <li>Residential repairs, maintenance, and home improvements</li>
-              <li>Additional nearby service areas upon request</li>
-            </ul>
+            <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Service area</h2>
+            <p className="mt-6 flex items-start gap-3 text-sm leading-7 text-slate-300">
+              <MapPin className="mt-1 h-4 w-4 shrink-0 text-amber-300" aria-hidden="true" />
+              {site.serviceAreaLabel}, Florida
+            </p>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {currentYear} Devon McCleese Handyman Services. All rights reserved.</p>
-        </div>
+        <p className="pt-8 text-sm text-slate-400">© {new Date().getFullYear()} {site.businessName}. All rights reserved.</p>
       </div>
     </footer>
   );

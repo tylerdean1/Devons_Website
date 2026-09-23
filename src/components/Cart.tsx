@@ -1,4 +1,4 @@
-import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
+import { ArrowRight, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 interface CartProps {
@@ -7,109 +7,93 @@ interface CartProps {
 
 export default function Cart({ setCurrentView }: CartProps) {
   const { state, dispatch } = useCart();
-
-  const updateQuantity = (id: string, newQuantity: number) => {
-    dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity: newQuantity } });
-  };
-
-  const removeItem = (id: string) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: id });
-  };
-
-  const proceedToQuote = () => {
-    setCurrentView('quote');
-  };
-
-  if (state.items.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Your Quote Cart</h1>
-            <p className="text-xl text-gray-600 mb-8">Your cart is empty. Add some services to get started!</p>
-            <button
-              onClick={() => setCurrentView('services')}
-              className="bg-gray-800 hover:bg-gray-700 text-yellow-400 px-8 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Browse Services
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const itemCount = state.items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Your Quote Cart</h1>
+    <section className="min-h-screen bg-[#f7f6f2] py-16" aria-labelledby="cart-heading">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Your project list</p>
+        <h1 id="cart-heading" className="text-4xl font-bold tracking-tight text-slate-900">Your Quote Cart</h1>
+        <p className="mt-4 text-lg text-slate-600">Review the services you want to discuss with Devon.</p>
 
-          <div className="space-y-6">
-            {state.items.map((item) => (
-              <div key={item.service.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900">{item.service.name}</h3>
-                  <p className="text-gray-600 text-sm mt-1">{item.service.description}</p>
-                  <span className="inline-block mt-2 text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded">
-                    {item.service.category}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => updateQuantity(item.service.id, Math.max(0, item.quantity - 1))}
-                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus className="h-4 w-4" />
-                    </button>
-                    <span className="w-8 text-center font-medium">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.service.id, item.quantity + 1)}
-                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
-                      aria-label="Increase quantity"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </button>
+        {state.items.length === 0 ? (
+          <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+            <p className="text-lg text-slate-600">Your list is empty. Browse the services and add the work you have in mind.</p>
+            <button
+              type="button"
+              onClick={() => setCurrentView('services')}
+              className="mt-7 rounded-xl bg-slate-900 px-7 py-3 font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            >
+              Browse services
+            </button>
+          </div>
+        ) : (
+          <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            <div className="space-y-3">
+              {state.items.map((item) => (
+                <div key={item.service.id} className="flex flex-col justify-between gap-5 rounded-xl border border-slate-200 p-5 sm:flex-row sm:items-center">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-amber-700">{item.service.category}</p>
+                    <h2 className="mt-1 text-lg font-semibold text-slate-900">{item.service.name}</h2>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">{item.service.description}</p>
                   </div>
 
-                  <button
-                    onClick={() => removeItem(item.service.id)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                    aria-label="Remove item from cart"
-                  >
-                    <Trash2 className="h-5 w-5" />
-                  </button>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <div className="flex items-center rounded-lg border border-slate-200">
+                      <button
+                        type="button"
+                        onClick={() => dispatch({ type: 'UPDATE_QUANTITY', payload: { id: item.service.id, quantity: Math.max(0, item.quantity - 1) } })}
+                        aria-label={`Decrease ${item.service.name} quantity`}
+                        className="rounded-l-lg p-2 text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                      >
+                        <Minus className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                      <span className="w-8 text-center text-sm font-semibold text-slate-900">{item.quantity}</span>
+                      <button
+                        type="button"
+                        onClick={() => dispatch({ type: 'UPDATE_QUANTITY', payload: { id: item.service.id, quantity: item.quantity + 1 } })}
+                        aria-label={`Increase ${item.service.name} quantity`}
+                        className="rounded-r-lg p-2 text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                      >
+                        <Plus className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.service.id })}
+                      aria-label={`Remove ${item.service.name} from quote`}
+                      className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                    >
+                      <Trash2 className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <div className="flex items-center justify-between text-lg font-semibold text-gray-900 mb-6">
-              <span>Total Services:</span>
-              <span>{state.items.reduce((total, item) => total + item.quantity, 0)} items</span>
+              ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 flex items-center justify-between border-t border-slate-200 pt-6 text-base font-semibold text-slate-900">
+              <span>Services selected</span>
+              <span>{itemCount}</span>
+            </div>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <button
+                type="button"
                 onClick={() => setCurrentView('services')}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-6 py-3 font-semibold text-slate-800 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
-                Continue Shopping
+                Add more services
               </button>
               <button
-                onClick={proceedToQuote}
-                className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                type="button"
+                onClick={() => setCurrentView('quote')}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3 font-semibold text-slate-900 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
-                Request Quote <ArrowRight className="h-5 w-5" />
+                Request a quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
