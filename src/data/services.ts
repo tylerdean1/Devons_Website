@@ -42,7 +42,7 @@ export const services = [
     view: 'kitchenFinishUpdates',
     slug: 'kitchen-finish-updates',
     name: 'Kitchen Finish Updates',
-    description: 'Cabinet hardware, painting, and nonstructural finish work to refresh your kitchen. Licensed trades handle plumbing, electrical, structural, and permit-required work.',
+    description: 'Refresh cabinets, hardware, backsplashes, and other nonstructural kitchen finishes.',
     category: 'Interior',
     icon: 'CookingPot'
   },
@@ -51,7 +51,7 @@ export const services = [
     view: 'bathroomFinishUpdates',
     slug: 'bathroom-finish-updates',
     name: 'Bathroom Finish Updates',
-    description: 'Tile, trim, painting, and other nonstructural finish work. Plumbing, electrical, structural, and permit-required work goes to licensed trades.',
+    description: 'Refresh tile, trim, paint, and other nonstructural finishes around your existing fixtures.',
     category: 'Interior',
     icon: 'Bath'
   },
@@ -59,8 +59,8 @@ export const services = [
     id: '7',
     view: 'deckMaintenance',
     slug: 'deck-maintenance',
-    name: 'Deck Maintenance',
-    description: 'Cleaning, staining, and sealing existing decks. Structural repairs and permit work need a licensed contractor.',
+    name: 'Deck Cleaning & Maintenance',
+    description: 'Cleaning, staining, and sealing existing decks to keep outdoor spaces looking cared for.',
     category: 'Exterior',
     icon: 'Hammer'
   },
