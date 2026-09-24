@@ -59,8 +59,8 @@ export const services = [
     id: '7',
     view: 'deckMaintenance',
     slug: 'deck-maintenance',
-    name: 'Deck Cleaning & Maintenance',
-    description: 'Cleaning, staining, and sealing existing decks to keep outdoor spaces looking cared for.',
+    name: 'Deck Cleaning, Staining & Sealing',
+    description: 'Refresh an existing deck with surface cleaning and finish maintenance suited to its material and condition.',
     category: 'Exterior',
     icon: 'Hammer'
   },
