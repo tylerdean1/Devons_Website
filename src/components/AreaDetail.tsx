@@ -19,7 +19,7 @@ const projectTypes = [
 
 const preparation = [
   'Share the St. Augustine Beach project address and a short description of the work.',
-  'Add measurements or photos when they help explain the repair or finish you have in mind.',
+  'If photos help explain the work, text or email them to Devon after you submit the request and include the project address.',
   'Mention any existing damage, access details, or permit questions so the scope can be reviewed before scheduling.',
 ];
 

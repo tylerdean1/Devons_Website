@@ -53,6 +53,11 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
             <p className="eyebrow">Before you reach out</p>
             <h2 className="mt-4 font-display text-4xl font-bold tracking-tight text-slate-950">A few details make the conversation easier.</h2>
             <p className="mt-5 text-lg leading-8 text-slate-600">{detail.prepare}</p>
+            <p className="mt-4 text-sm leading-6 text-slate-600">
+              Have project photos? After sending the request, text Devon at{' '}
+              <a className="font-semibold text-slate-900 underline decoration-amber-500 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2" href={site.phoneHref}>{site.phone}</a>{' '}
+              or email <a className="font-semibold text-slate-900 underline decoration-amber-500 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2" href={site.emailHref}>{site.email}</a> with the project address.
+            </p>
           </div>
           {detail.scopeNote && (
             <aside className="self-start rounded-2xl border-l-4 border-amber-500 bg-amber-50 p-6 sm:p-8" aria-label="Service scope">

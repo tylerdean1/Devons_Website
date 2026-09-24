@@ -377,6 +377,11 @@ export default function QuoteForm({ setCurrentView }: QuoteFormProps) {
                 placeholder="Any specific details, timeline requirements, or questions…"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               ></textarea>
+              <p className="mt-2 text-sm leading-6 text-gray-600">
+                Need to share photos? Submit your request, then text Devon at{' '}
+                <a className="font-semibold underline decoration-yellow-500 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2" href={site.phoneHref}>{site.phone}</a>{' '}
+                or email <a className="font-semibold underline decoration-yellow-500 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2" href={site.emailHref}>{site.email}</a> with your project address.
+              </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-6">

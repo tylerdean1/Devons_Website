@@ -20,7 +20,7 @@ const projectTypes = [
 const quoteDetails = [
   'Include the project address or ZIP code so Devon can confirm service coverage and availability.',
   'List each repair or improvement and describe the result you want.',
-  'Add current photos, measurements, and preferred timing when they help explain the work.',
+  'If photos help explain the work, text or email them to Devon after you submit the request and include the project address.',
 ];
 
 const questions = [
@@ -30,7 +30,7 @@ const questions = [
   },
   {
     question: 'What should I include in a quote request?',
-    answer: 'Send the project location, a short list of the work, and your preferred timing. Photos or measurements can help explain the job when they are available.',
+    answer: 'Send the project location, a short list of the work, and your preferred timing. After you submit the request, you can text or email photos to Devon with the project address.',
   },
   {
     question: 'Can I ask about a custom project?',
