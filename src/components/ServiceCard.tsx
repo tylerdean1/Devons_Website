@@ -64,6 +64,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 
       <button
         type="button"
+        aria-label={`Add ${service.name} to quote`}
         onClick={() => dispatch({ type: 'ADD_ITEM', payload: service })}
         className="mt-7 flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
       >

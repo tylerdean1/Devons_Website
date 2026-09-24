@@ -1,6 +1,7 @@
 import { Hammer, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { site } from '../data/site';
+import { pathForView } from '../data/routes';
 
 interface HeaderProps {
   currentView: string;
@@ -21,9 +22,9 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#172230] text-white shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between gap-4">
-          <button
-            type="button"
-            onClick={() => setCurrentView('home')}
+          <a
+            href="/"
+            onClick={(event) => { event.preventDefault(); setCurrentView('home'); }}
             aria-label={`Return to ${site.businessName} home page`}
             className="flex min-w-0 items-center gap-3 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
           >
@@ -34,14 +35,14 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
               <span className="block truncate text-base font-bold leading-tight tracking-tight sm:text-lg">Devon McCleese</span>
               <span className="block truncate text-[10px] font-bold uppercase tracking-[0.18em] text-amber-300 sm:text-xs">Handyman Services</span>
             </span>
-          </button>
+          </a>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
             {navigation.map(({ view, label }) => (
-              <button
+              <a
                 key={view}
-                type="button"
-                onClick={() => setCurrentView(view)}
+                href={pathForView(view)}
+                onClick={(event) => { event.preventDefault(); setCurrentView(view); }}
                 aria-current={currentView === view ? 'page' : undefined}
                 className={`border-b-2 pb-1 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view
                   ? 'border-amber-400 text-amber-300'
@@ -49,13 +50,13 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
                 }`}
               >
                 {label}
-              </button>
+              </a>
             ))}
           </nav>
 
-          <button
-            type="button"
-            onClick={() => setCurrentView('cart')}
+          <a
+            href={pathForView('cart')}
+            onClick={(event) => { event.preventDefault(); setCurrentView('cart'); }}
             aria-label={`Open quote cart${itemCount > 0 ? ` with ${itemCount} item${itemCount === 1 ? '' : 's'}` : ''}`}
             className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-amber-400/50 text-amber-300 transition-colors hover:bg-amber-400 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
           >
@@ -65,20 +66,20 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
                 {itemCount}
               </span>
             )}
-          </button>
+          </a>
         </div>
 
         <nav className="flex justify-center gap-7 border-t border-white/10 py-3 md:hidden" aria-label="Mobile navigation">
           {navigation.map(({ view, label }) => (
-            <button
+            <a
               key={view}
-              type="button"
-              onClick={() => setCurrentView(view)}
+              href={pathForView(view)}
+              onClick={(event) => { event.preventDefault(); setCurrentView(view); }}
               aria-current={currentView === view ? 'page' : undefined}
               className={`rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view ? 'text-amber-300' : 'text-slate-200'}`}
             >
               {label}
-            </button>
+            </a>
           ))}
         </nav>
       </div>

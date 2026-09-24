@@ -15,9 +15,10 @@ Available checks:
 npx tsc --noEmit
 npm run build
 npm run lint
+npm test
 ```
 
-The current service area is St. Augustine and nearby St. Johns County communities. Shared business details and location copy live in `src/data/site.ts`; update that file alongside `index.html` when the service area changes.
+The build renders a separate HTML page for the homepage, services, and three featured services. The quote and project-list pages are rendered with `noindex`. Keep `src/data/site.ts`, `src/data/seo.ts`, `scripts/prerender.mjs`, and `public/sitemap.xml` in sync when changing the service area or public routes. The service-area business address is intentionally absent from the website and structured data.
 
 ## Quote email configuration
 

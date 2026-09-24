@@ -1,11 +1,12 @@
 import { Hammer, Mail, MapPin, Phone } from 'lucide-react';
 import { site } from '../data/site';
+import { routes } from '../data/routes';
 
 export default function Footer() {
   return (
     <footer className="bg-[#101923] text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-[1.25fr_1fr_1fr]">
+        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-400 text-slate-900">
@@ -19,6 +20,16 @@ export default function Footer() {
             <p className="mt-6 text-sm leading-7 text-slate-300">
               Thoughtful repairs and improvements for homes in {site.serviceAreaLabel}.
             </p>
+          </div>
+
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Explore services</h2>
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+              <li><a href={routes.services} className="hover:text-white">All services</a></li>
+              <li><a href={routes.drywall} className="hover:text-white">Drywall repair</a></li>
+              <li><a href={routes.painting} className="hover:text-white">Interior painting</a></li>
+              <li><a href={routes.pressureWashing} className="hover:text-white">Pressure washing</a></li>
+            </ul>
           </div>
 
           <div>
