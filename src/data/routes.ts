@@ -7,6 +7,7 @@ export const routes = {
   ...Object.fromEntries(services.map((service) => [service.view, `/services/${service.slug}/`])) as Record<ServiceView, string>,
   quote: '/quote/',
   cart: '/cart/',
+  invoices: '/invoices/',
 } as const;
 
 export type View = keyof typeof routes;

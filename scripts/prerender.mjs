@@ -11,6 +11,7 @@ const pages = [
   { view: 'stAugustineBeach', path: '/areas/st-augustine-beach/', title: 'St. Augustine Beach Handyman | Devon’s Handyman Services', description: 'Looking for a handyman in St. Augustine Beach, FL? Ask Devon about drywall repair, painting, pressure washing, and nonstructural home maintenance.' },
   { view: 'quote', path: '/quote/', title: 'Request a Handyman Quote | Devon McCleese', description: 'Tell Devon McCleese about your home repair or improvement project in St. Augustine and St. Johns County.' , noindex: true },
   { view: 'cart', path: '/cart/', title: 'Your Project List | Devon McCleese', description: 'Review the handyman services you want to discuss with Devon McCleese.', noindex: true },
+  { view: 'invoices', path: '/invoices/', title: 'Invoice Manager | Devon’s Handyman Services', description: 'Private invoice management for Devon’s Handyman Services.', noindex: true },
 ];
 
 const escapeHtml = (value) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');

@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import HomeSections from './components/HomeSections';
 import ServiceDetail from './components/ServiceDetail';
 import AreaDetail from './components/AreaDetail';
+import InvoiceAdmin from './components/InvoiceAdmin';
 import { isServiceView, pathForView, viewForPath, type View } from './data/routes';
 import { pageSeo } from './data/seo';
 
@@ -30,7 +31,7 @@ function App({ initialView }: { initialView?: View }) {
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', meta.description);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://devonmccleese.com${pathForView(currentView)}`);
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://devonmccleese.com${pathForView(currentView)}`);
-    const shouldNoindex = currentView === 'quote' || currentView === 'cart';
+    const shouldNoindex = currentView === 'quote' || currentView === 'cart' || currentView === 'invoices';
     let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (shouldNoindex && !robots) {
       robots = document.createElement('meta');
@@ -71,6 +72,8 @@ function App({ initialView }: { initialView?: View }) {
         return <Cart setCurrentView={navigate} />;
       case 'quote':
         return <QuoteForm setCurrentView={navigate} />;
+      case 'invoices':
+        return <InvoiceAdmin />;
       default:
         return (
           <>

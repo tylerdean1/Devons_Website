@@ -42,3 +42,15 @@ Optional environment variables:
 
 The sending domain must remain verified in Resend. If the domain or API key changes, update the
 Vercel environment variables and redeploy so the server function receives the new configuration.
+
+## Stripe invoices
+
+The private `/invoices/` page lets the owner create manual USD invoices, send them through Stripe,
+and review the latest payment status from Stripe. Customers pay on Stripe’s hosted invoice page;
+the website does not collect card numbers. Invoice records and payment status live in Stripe, so
+there is no local payment database or payment webhook to maintain.
+
+Follow [`docs/stripe-invoice-setup.md`](docs/stripe-invoice-setup.md) to complete account onboarding,
+configure Vercel environment variables, test with Stripe test mode, and switch to live payments.
+Keep all Stripe and invoice-desk secrets in Vercel only. Do not commit them or expose them to browser
+code. Test mode does not email customers or accept real payments.
