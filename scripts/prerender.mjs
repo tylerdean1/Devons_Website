@@ -9,6 +9,7 @@ const pages = [
   { view: 'home', path: '/', title: 'St. Augustine Handyman | Devon’s Handyman Services', description: 'St. Augustine handyman Devon McCleese handles drywall, painting, home repairs, and outdoor upkeep in St. Augustine Beach, Crescent Beach, and St. Johns County.' },
   { view: 'services', path: '/services/', title: 'Handyman Services in St. Augustine, FL | Devon McCleese', description: 'Drywall, painting, flooring, doors, pressure washing, and handyman repairs in St. Augustine, St. Augustine Beach, Crescent Beach, and St. Johns County.' },
   { view: 'stAugustineBeach', path: '/areas/st-augustine-beach/', title: 'St. Augustine Beach Handyman | Devon’s Handyman Services', description: 'Looking for a handyman in St. Augustine Beach, FL? Ask Devon about drywall repair, painting, pressure washing, and nonstructural home maintenance.' },
+  { view: 'stJohnsCounty', path: '/areas/st-johns-county/', title: 'St. Johns County Handyman | Devon’s Handyman Services', description: 'Handyman services across St. Johns County, including St. Augustine, St. Augustine Beach, Crescent Beach, and nearby communities.' },
   { view: 'quote', path: '/quote/', title: 'Request a Handyman Quote | Devon McCleese', description: 'Tell Devon McCleese about your home repair or improvement project in St. Augustine and St. Johns County.' , noindex: true },
   { view: 'cart', path: '/cart/', title: 'Your Project List | Devon McCleese', description: 'Review the handyman services you want to discuss with Devon McCleese.', noindex: true },
   { view: 'invoices', path: '/invoices/', title: 'Invoice Manager | Devon’s Handyman Services', description: 'Private invoice management for Devon’s Handyman Services.', noindex: true },
@@ -45,6 +46,8 @@ function schemaFor(page) {
       breadcrumbItems.push({ name: page.serviceName, url: `${origin}${page.path}` });
     } else if (page.path === '/services/') {
       breadcrumbItems.push({ name: 'Services', url: `${origin}${page.path}` });
+    } else if (page.view === 'stJohnsCounty') {
+      breadcrumbItems.push({ name: 'St. Johns County', url: `${origin}${page.path}` });
     } else {
       breadcrumbItems.push({ name: 'St. Augustine Beach', url: `${origin}${page.path}` });
     }
@@ -66,6 +69,9 @@ function schemaFor(page) {
   }
   if (page.view === 'stAugustineBeach') {
     graph.push({ '@type': 'Service', name: 'Nonstructural handyman services in St. Augustine Beach', serviceType: 'Home repair and maintenance within handyman scope', provider: { '@id': business['@id'] }, areaServed: { '@type': 'City', name: 'St. Augustine Beach, Florida' }, url: `${origin}${page.path}` });
+  }
+  if (page.view === 'stJohnsCounty') {
+    graph.push({ '@type': 'Service', name: 'Handyman services in St. Johns County', serviceType: 'Home repair and maintenance within handyman scope', provider: { '@id': business['@id'] }, areaServed: { '@type': 'AdministrativeArea', name: 'St. Johns County, Florida' }, url: `${origin}${page.path}` });
   }
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c');
 }

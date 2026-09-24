@@ -4,6 +4,7 @@ export const routes = {
   home: '/',
   services: '/services/',
   stAugustineBeach: '/areas/st-augustine-beach/',
+  stJohnsCounty: '/areas/st-johns-county/',
   ...Object.fromEntries(services.map((service) => [service.view, `/services/${service.slug}/`])) as Record<ServiceView, string>,
   quote: '/quote/',
   cart: '/cart/',
