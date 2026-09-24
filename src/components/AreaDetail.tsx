@@ -65,6 +65,21 @@ export default function AreaDetail({ setCurrentView }: { setCurrentView: (view: 
         </div>
       </section>
 
+      <section className="bg-white py-16 sm:py-20" aria-labelledby="beach-building-resources-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 rounded-3xl border border-slate-200 bg-[#f5f2eb] p-8 sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="max-w-3xl">
+              <p className="eyebrow">St. Augustine Beach property resources</p>
+              <h2 id="beach-building-resources-heading" className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-slate-950 sm:text-4xl">Check the city’s building guidance.</h2>
+              <p className="mt-5 leading-7 text-slate-600">The City’s Building Department handles permits, inspections, and building records for St. Augustine Beach properties. Requirements depend on the address and project scope, so check the City’s current guidance when approval may be needed.</p>
+            </div>
+            <a href="https://www.staugbch.com/288/Building-Zoning" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-amber-900 underline decoration-amber-500 decoration-2 underline-offset-4 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+              Building &amp; Zoning guidance <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white py-20 sm:py-24" aria-labelledby="area-request-heading">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24 lg:px-8">
           <div>

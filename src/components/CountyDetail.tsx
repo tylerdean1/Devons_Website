@@ -23,6 +23,27 @@ const quoteDetails = [
   'If photos help explain the work, text or email them to Devon after you submit the request and include the project address.',
 ];
 
+const buildingResources = [
+  {
+    title: 'St. Johns County',
+    description: 'Building permits, inspections, and contractor-licensing information.',
+    href: 'https://www.sjcfl.us/departments/building-department/',
+    linkLabel: 'County Building Department',
+  },
+  {
+    title: 'City of St. Augustine',
+    description: 'City permit information and guidance for historic properties.',
+    href: 'https://www.citystaug.com/1199/Building-Permit-Information',
+    linkLabel: 'City building permit information',
+  },
+  {
+    title: 'St. Augustine Beach',
+    description: 'City Building & Zoning contacts, permit submittals, and inspections.',
+    href: 'https://www.staugbch.com/288/Building-Zoning',
+    linkLabel: 'City Building & Zoning guidance',
+  },
+];
+
 const questions = [
   {
     question: 'Does Devon travel to homes across St. Johns County?',
@@ -98,6 +119,27 @@ export default function CountyDetail({ setCurrentView }: { setCurrentView: (view
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="bg-white pb-20 sm:pb-24" aria-labelledby="county-building-resources-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Local homeowner resources</p>
+            <h2 id="county-building-resources-heading" className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-slate-950 sm:text-4xl">Check project requirements with the right local office.</h2>
+            <p className="mt-5 leading-7 text-slate-600">Permit and inspection requirements depend on the property address and project. These official offices publish local guidance; contact the jurisdiction responsible for your address when you are unsure.</p>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {buildingResources.map(({ title, description, href, linkLabel }) => (
+              <article key={title} className="rounded-2xl border border-slate-200 bg-[#f5f2eb] p-7">
+                <h3 className="font-display text-xl font-bold text-slate-950">{title}</h3>
+                <p className="mt-3 min-h-14 leading-7 text-slate-600">{description}</p>
+                <a href={href} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 font-semibold text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+                  {linkLabel} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
