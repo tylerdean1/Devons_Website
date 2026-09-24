@@ -24,7 +24,9 @@ export default function Hero({ setCurrentView }: { setCurrentView: (view: string
             <img src="/image.png" alt="Devon McCleese in St. Augustine" className="aspect-[4/4.7] w-full object-cover object-center" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent px-7 pb-7 pt-20 sm:px-9 sm:pb-9"><p className="eyebrow text-amber-300">Meet Devon</p><p className="mt-2 font-display text-2xl font-bold">A real person for the work on your list.</p></div>
           </div>
-          <div className="absolute -bottom-7 -left-4 rounded-xl bg-amber-400 px-5 py-4 text-slate-950 shadow-xl sm:-left-10 sm:px-6"><p className="font-display text-3xl font-black leading-none">15 years</p><p className="mt-1 text-xs font-bold uppercase tracking-wider">construction experience</p></div>
+          <div className="mt-5 flex justify-start">
+            <div className="rounded-xl bg-amber-400 px-5 py-4 text-slate-950 shadow-xl sm:px-6"><p className="font-display text-3xl font-black leading-none">15 years</p><p className="mt-1 text-xs font-bold uppercase tracking-wider">construction experience</p></div>
+          </div>
         </div>
       </div>
       <div className="relative z-10 border-t border-white/10 bg-[#111b26]"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 px-4 py-5 text-sm sm:px-6 md:flex-row md:items-center lg:px-8"><p className="font-medium text-slate-300">Have a question before you start?</p><a href={site.phoneHref} className="inline-flex items-center gap-2 font-bold text-amber-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"><Phone className="h-4 w-4" aria-hidden="true" /> Call Devon at {site.phone}</a></div></div>
