@@ -52,7 +52,7 @@ export default function ServiceCard({ service, setCurrentView }: ServiceCardProp
   const Icon = serviceIcons[service.icon];
 
   return (
-    <article className="group flex min-h-[320px] flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_35px_-25px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-[0_20px_45px_-25px_rgba(15,23,42,0.4)]">
+    <article className="group relative flex min-h-[320px] flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_35px_-25px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-[0_20px_45px_-25px_rgba(15,23,42,0.4)]">
       <a
         href={pathForView(service.view)}
         aria-label={`View ${service.name} service details`}
@@ -61,7 +61,7 @@ export default function ServiceCard({ service, setCurrentView }: ServiceCardProp
           event.preventDefault();
           setCurrentView(service.view);
         }}
-        className="flex flex-1 flex-col rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-4"
+        className="after:absolute after:inset-0 after:z-10 after:rounded-2xl after:content-[''] flex flex-1 flex-col rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-4"
       >
         <div className="mb-7 flex items-start justify-between gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 text-slate-800 transition-colors group-hover:bg-amber-100">
@@ -84,7 +84,7 @@ export default function ServiceCard({ service, setCurrentView }: ServiceCardProp
         type="button"
         aria-label={`Add ${service.name} to quote`}
         onClick={() => dispatch({ type: 'ADD_ITEM', payload: service })}
-        className="mt-7 flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
+        className="relative z-20 mt-7 flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
       >
         Add to quote
         <Plus className="h-4 w-4 text-amber-300" aria-hidden="true" />
