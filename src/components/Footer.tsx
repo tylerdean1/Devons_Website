@@ -1,4 +1,4 @@
-import { Hammer, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Hammer, Mail, MapPin, MessageSquare, Phone } from 'lucide-react';
 import { site } from '../data/site';
 import { routes } from '../data/routes';
 
@@ -41,6 +41,13 @@ export default function Footer() {
               </a>
               <a className="flex items-center gap-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" href={site.emailHref}>
                 <Mail className="h-4 w-4 text-amber-300" aria-hidden="true" />{site.email}
+              </a>
+              <p className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" aria-hidden="true" />
+                <span>{site.businessHoursLabel}</span>
+              </p>
+              <a className="flex items-center gap-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer">
+                <MessageSquare className="h-4 w-4 text-amber-300" aria-hidden="true" />Leave a Google review
               </a>
             </div>
           </div>

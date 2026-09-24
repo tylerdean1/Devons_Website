@@ -5,6 +5,8 @@ export const site = {
   phoneHref: 'tel:+19045017147',
   email: 'devonmgm@gmail.com',
   emailHref: 'mailto:devonmgm@gmail.com',
+  businessHoursLabel: 'Daily, 6:00 a.m.–8:00 p.m.',
+  googleReviewUrl: 'https://g.page/r/CY0twgFPlGkzEBM/review',
   primaryArea: 'St. Augustine',
   countyArea: 'St. Johns County',
   regionLabel: 'St. Augustine & St. Johns County',

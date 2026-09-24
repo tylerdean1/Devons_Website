@@ -21,6 +21,12 @@ const business = {
   url: `${origin}/`,
   telephone: '+1-904-501-7147',
   email: 'devonmgm@gmail.com',
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['https://schema.org/Monday', 'https://schema.org/Tuesday', 'https://schema.org/Wednesday', 'https://schema.org/Thursday', 'https://schema.org/Friday', 'https://schema.org/Saturday', 'https://schema.org/Sunday'],
+    opens: '06:00',
+    closes: '20:00',
+  }],
   image: `${origin}/image.png`,
   logo: `${origin}/logo.png`,
   description: 'Handyman services for home repairs and improvements in St. Augustine and St. Johns County, Florida.',
