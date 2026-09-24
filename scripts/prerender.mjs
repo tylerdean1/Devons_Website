@@ -22,6 +22,7 @@ const business = {
   url: `${origin}/`,
   telephone: '+1-904-501-7147',
   email: 'devonmgm@gmail.com',
+  sameAs: ['https://www.google.com/maps/place/Devon%27s+Handyman+Services/data=!4m2!3m1!1s0x0:0x3369944f01c22d8d'],
   openingHoursSpecification: [{
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['https://schema.org/Monday', 'https://schema.org/Tuesday', 'https://schema.org/Wednesday', 'https://schema.org/Thursday', 'https://schema.org/Friday', 'https://schema.org/Saturday', 'https://schema.org/Sunday'],
