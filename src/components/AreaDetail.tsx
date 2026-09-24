@@ -31,7 +31,7 @@ export default function AreaDetail({ setCurrentView }: { setCurrentView: (view: 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <a href={routes.services} onClick={(event) => { event.preventDefault(); setCurrentView('services'); }} className="text-sm font-semibold text-amber-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">All services</a>
           <p className="eyebrow mt-14 text-amber-300"><MapPin className="mr-2 inline h-4 w-4" aria-hidden="true" />Serving St. Augustine Beach</p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl font-black leading-[1.06] tracking-tight sm:text-6xl lg:text-7xl">Handyman services in St. Augustine Beach, FL</h1>
+          <h1 className="mt-4 max-w-5xl font-display text-4xl font-black leading-[1.06] tracking-tight sm:text-6xl lg:text-7xl">Handyman services in St. Augustine Beach, FL</h1>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300">Devon travels to customers in St. Augustine Beach for home repairs, painting, drywall, pressure washing, and practical punch-list projects. Share your address and project details so he can confirm whether the work is a fit.</p>
           <div className="mt-10 flex flex-wrap gap-4">
             <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 font-bold text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Request a quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
