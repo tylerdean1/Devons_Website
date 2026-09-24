@@ -36,7 +36,7 @@ export default function HomeSections({ setCurrentView }: { setCurrentView: (view
             {featured.map((item) => (
               <article key={item.number} className="group flex min-h-80 flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.45)] transition-transform hover:-translate-y-1 sm:p-9">
                 <div>
-                  <span className="font-display text-6xl font-black leading-none text-amber-500/60" aria-hidden="true">{item.number}</span>
+                  <span className="font-display text-6xl font-black leading-none text-amber-800" aria-hidden="true">{item.number}</span>
                   <h3 className="mt-8 font-display text-2xl font-bold tracking-tight text-slate-950">{item.title}</h3>
                   <p className="mt-3 leading-7 text-slate-600">{item.description}</p>
                 </div>
