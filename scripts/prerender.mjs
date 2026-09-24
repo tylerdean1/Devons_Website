@@ -32,7 +32,7 @@ const business = {
     closes: '20:00',
   }],
   image: `${origin}/image.png`,
-  logo: `${origin}/logo.png`,
+  logo: `${origin}/logo.svg`,
   description: 'Handyman services for home repairs and improvements in St. Augustine and St. Johns County, Florida.',
   areaServed: [{ '@type': 'City', name: 'St. Augustine, Florida' }, { '@type': 'City', name: 'St. Augustine Beach, Florida' }, { '@type': 'Place', name: 'Crescent Beach, Florida' }, { '@type': 'AdministrativeArea', name: 'St. Johns County, Florida' }],
 };
