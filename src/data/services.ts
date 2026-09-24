@@ -25,28 +25,28 @@ export const services: Service[] = [
   {
     id: '4',
     name: 'Flooring Installation',
-    description: 'Laminate, vinyl, hardwood, and tile installed with precise cuts and clean transitions.',
+    description: 'Residential floor covering and tile installation, with precise cuts and clean transitions. Condo flooring is excluded from the local handyman scope.',
     category: 'Interior',
     icon: 'Layers3'
   },
   {
     id: '5',
-    name: 'Kitchen Updates',
-    description: 'Cabinets, hardware, painting, and finish work to refresh your kitchen. Licensed trades handle regulated work.',
+    name: 'Kitchen Finish Updates',
+    description: 'Cabinet hardware, painting, and nonstructural finish work to refresh your kitchen. Licensed trades handle plumbing, electrical, structural, and permit-required work.',
     category: 'Interior',
     icon: 'CookingPot'
   },
   {
     id: '6',
-    name: 'Bathroom Updates',
-    description: 'Tile, trim, painting, and finish updates planned around your space. Plumbing and other regulated work goes to licensed trades.',
+    name: 'Bathroom Finish Updates',
+    description: 'Tile, trim, painting, and other nonstructural finish work. Plumbing, electrical, structural, and permit-required work goes to licensed trades.',
     category: 'Interior',
     icon: 'Bath'
   },
   {
     id: '7',
-    name: 'Deck Maintenance & Minor Repair',
-    description: 'Staining, sealing, and suitable nonstructural repairs. Structural construction and permit work need a licensed contractor.',
+    name: 'Deck Maintenance',
+    description: 'Cleaning, staining, and sealing existing decks. Structural repairs and permit work need a licensed contractor.',
     category: 'Exterior',
     icon: 'Hammer'
   },
@@ -66,8 +66,8 @@ export const services: Service[] = [
   },
   {
     id: '10',
-    name: 'Window Trim & Finishing',
-    description: 'Interior trim and finish details around windows. Window installation and replacement require a licensed contractor.',
+    name: 'Interior Window Trim & Finishing',
+    description: 'Interior trim and finish details around existing windows. Window or door installation and replacement are not offered.',
     category: 'Interior',
     icon: 'PanelsTopLeft'
   },
@@ -91,13 +91,6 @@ export const services: Service[] = [
     description: 'Cleaning and suitable minor upkeep to help gutters drain; ask about any larger repair or replacement scope.',
     category: 'Exterior',
     icon: 'CloudRain'
-  },
-  {
-    id: '14',
-    name: 'Plumbing Fixture Help',
-    description: 'Ask about faucets, toilets, and fixture issues. Devon will confirm handyman scope and refer regulated plumbing work to a licensed plumber.',
-    category: 'Interior',
-    icon: 'Droplets'
   },
   {
     id: '16',
@@ -142,13 +135,6 @@ export const services: Service[] = [
     icon: 'Rows3'
   },
   {
-    id: '22',
-    name: 'Fixture Issue Assessment',
-    description: 'Describe the issue and Devon can help identify suitable handyman work or refer regulated plumbing to a licensed plumber.',
-    category: 'Interior',
-    icon: 'Droplets'
-  },
-  {
     id: '23',
     name: 'Tile Replacement',
     description: 'Replace damaged or dated tile in suitable areas with careful prep, alignment, and finishing.',
@@ -161,5 +147,12 @@ export const services: Service[] = [
     description: 'Plan mounting location, wall support, and hardware for a clean, secure installation.',
     category: 'Interior',
     icon: 'PanelsTopLeft'
+  },
+  {
+    id: '25',
+    name: 'Custom Project / Other',
+    description: 'Have another home repair or improvement in mind? Describe it so Devon can confirm whether it fits the handyman scope. Licensed trade, structural, and permit-required work is excluded.',
+    category: 'Other',
+    icon: 'Hammer'
   }
 ];

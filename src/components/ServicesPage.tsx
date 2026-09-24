@@ -25,7 +25,8 @@ export default function ServicesPage() {
             <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
             Serving {site.serviceAreaLabel}
           </p>
-          <p className="mt-5 text-sm leading-7 text-slate-600">Looking for details? Explore <a className="font-semibold text-amber-800 underline" href={routes.drywall}>drywall repair</a>, <a className="font-semibold text-amber-800 underline" href={routes.painting}>interior painting</a>, and <a className="font-semibold text-amber-800 underline" href={routes.pressureWashing}>pressure washing</a> in St. Augustine.</p>
+          <p className="mt-5 text-sm leading-7 text-slate-600">Looking for details? Explore <a className="font-semibold text-amber-800 underline" href={routes.drywall}>drywall repair</a>, <a className="font-semibold text-amber-800 underline" href={routes.painting}>interior painting</a>, and <a className="font-semibold text-amber-800 underline" href={routes.pressureWashing}>pressure washing</a> in St. Augustine, or see the <a className="font-semibold text-amber-800 underline" href={routes.stAugustineBeach}>St. Augustine Beach service area</a>.</p>
+          <p className="mt-4 rounded-xl border-l-4 border-amber-500 bg-amber-50 px-5 py-4 text-sm leading-7 text-slate-700">Plumbing and electrical work, window or door installation and replacement, and structural or permit-required work are not offered. Contact an appropriately licensed contractor for those projects.</p>
         </div>
 
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">

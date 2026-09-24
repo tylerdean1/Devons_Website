@@ -1,6 +1,7 @@
 export const routes = {
   home: '/',
   services: '/services/',
+  stAugustineBeach: '/areas/st-augustine-beach/',
   drywall: '/services/drywall-repair/',
   painting: '/services/interior-painting/',
   pressureWashing: '/services/pressure-washing/',

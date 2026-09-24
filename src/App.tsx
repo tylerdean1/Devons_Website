@@ -9,6 +9,7 @@ import QuoteForm from './components/QuoteForm';
 import Footer from './components/Footer';
 import HomeSections from './components/HomeSections';
 import ServiceDetail from './components/ServiceDetail';
+import AreaDetail from './components/AreaDetail';
 import { pathForView, viewForPath, type View } from './data/routes';
 import { pageSeo } from './data/seo';
 
@@ -60,6 +61,8 @@ function App({ initialView }: { initialView?: View }) {
         );
       case 'services':
         return <ServicesPage />;
+      case 'stAugustineBeach':
+        return <AreaDetail setCurrentView={navigate} />;
       case 'drywall':
       case 'painting':
       case 'pressureWashing':
