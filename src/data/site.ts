@@ -8,5 +8,5 @@ export const site = {
   primaryArea: 'St. Augustine',
   countyArea: 'St. Johns County',
   regionLabel: 'St. Augustine & St. Johns County',
-  serviceAreaLabel: 'St. Augustine, St. Augustine Beach, and nearby St. Johns County communities',
+  serviceAreaLabel: 'St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities',
 } as const;

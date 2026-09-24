@@ -35,7 +35,7 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
             <p className="eyebrow">What to expect</p>
             <h2 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-slate-950">{detail.lead}</h2>
             <p className="mt-6 text-lg leading-8 text-slate-600">{detail.body}</p>
-            <p className="mt-8 inline-flex items-start gap-2 text-sm font-semibold text-slate-700"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />Serving St. Augustine and nearby St. Johns County communities</p>
+            <p className="mt-8 inline-flex items-start gap-2 text-sm font-semibold text-slate-700"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />Serving St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities</p>
           </div>
           <div className="rounded-[2rem] bg-white p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-10">
             <p className="eyebrow">Project breakdown</p>
