@@ -34,7 +34,31 @@ const business = {
 };
 
 function schemaFor(page) {
-  const graph = [business, { '@type': 'WebPage', '@id': `${origin}${page.path}#webpage`, url: `${origin}${page.path}`, name: page.title, description: page.description, about: { '@id': business['@id'] } }];
+  const webPage = { '@type': 'WebPage', '@id': `${origin}${page.path}#webpage`, url: `${origin}${page.path}`, name: page.title, description: page.description, about: { '@id': business['@id'] } };
+  const graph = [business, webPage];
+  if (page.path !== '/' && !page.noindex) {
+    const breadcrumbItems = [{ name: 'Home', url: `${origin}/` }];
+    if (page.serviceName) {
+      breadcrumbItems.push({ name: 'Services', url: `${origin}/services/` });
+      breadcrumbItems.push({ name: page.serviceName, url: `${origin}${page.path}` });
+    } else if (page.path === '/services/') {
+      breadcrumbItems.push({ name: 'Services', url: `${origin}${page.path}` });
+    } else {
+      breadcrumbItems.push({ name: 'St. Augustine Beach', url: `${origin}${page.path}` });
+    }
+    const breadcrumbId = `${origin}${page.path}#breadcrumb`;
+    webPage.breadcrumb = { '@id': breadcrumbId };
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': breadcrumbId,
+      itemListElement: breadcrumbItems.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+  }
   if (page.serviceName) {
     graph.push({ '@type': 'Service', name: page.serviceName, serviceType: page.serviceName, description: page.description, provider: { '@id': business['@id'] }, areaServed: business.areaServed, url: `${origin}${page.path}` });
   }
