@@ -3,6 +3,7 @@ import { services, type ServiceView } from './services';
 export const routes = {
   home: '/',
   services: '/services/',
+  stAugustine: '/areas/st-augustine/',
   stAugustineBeach: '/areas/st-augustine-beach/',
   stJohnsCounty: '/areas/st-johns-county/',
   ...Object.fromEntries(services.map((service) => [service.view, `/services/${service.slug}/`])) as Record<ServiceView, string>,

@@ -26,6 +26,7 @@ export default function Footer() {
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Explore services</h2>
             <ul className="mt-6 space-y-3 text-sm text-slate-300">
               <li><a href={routes.services} className="hover:text-white">All services</a></li>
+              <li><a href={routes.stAugustine} className="hover:text-white">St. Augustine handyman</a></li>
               <li><a href={routes.stAugustineBeach} className="hover:text-white">St. Augustine Beach handyman</a></li>
               <li><a href={routes.stJohnsCounty} className="hover:text-white">St. Johns County handyman</a></li>
               <li><a href={routes.drywall} className="hover:text-white">Drywall repair</a></li>

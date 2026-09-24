@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import HomeSections from './components/HomeSections';
 import ServiceDetail from './components/ServiceDetail';
 import AreaDetail from './components/AreaDetail';
+import StAugustineDetail from './components/StAugustineDetail';
 import CountyDetail from './components/CountyDetail';
 import InvoiceAdmin from './components/InvoiceAdmin';
 import { isServiceView, pathForView, viewForPath, type View } from './data/routes';
@@ -69,6 +70,8 @@ function App({ initialView }: { initialView?: View }) {
         return <ServicesPage setCurrentView={navigate} />;
       case 'stAugustineBeach':
         return <AreaDetail setCurrentView={navigate} />;
+      case 'stAugustine':
+        return <StAugustineDetail setCurrentView={navigate} />;
       case 'stJohnsCounty':
         return <CountyDetail setCurrentView={navigate} />;
       case 'cart':

@@ -57,6 +57,7 @@ export default function AreaDetail({ setCurrentView }: { setCurrentView: (view: 
             ))}
           </div>
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
+            <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.stAugustine}>Handyman services in St. Augustine</a>
             <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.drywall}>Drywall repair in St. Augustine</a>
             <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.painting}>Interior painting in St. Augustine</a>
             <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.pressureWashing}>Pressure washing in St. Augustine</a>

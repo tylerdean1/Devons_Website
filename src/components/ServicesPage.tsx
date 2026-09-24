@@ -25,7 +25,7 @@ export default function ServicesPage({ setCurrentView }: { setCurrentView: (view
             <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
             Serving {site.serviceAreaLabel}
           </p>
-          <p className="mt-5 text-sm leading-7 text-slate-600">Select any service card for a detailed project breakdown and tips for your quote request. Read about local coverage in <a className="font-semibold text-amber-800 underline" href={routes.stAugustineBeach}>St. Augustine Beach</a> and <a className="font-semibold text-amber-800 underline" href={routes.stJohnsCounty}>St. Johns County</a>.</p>
+          <p className="mt-5 text-sm leading-7 text-slate-600">Select any service card for a detailed project breakdown and tips for your quote request. Read about local coverage in <a className="font-semibold text-amber-800 underline" href={routes.stAugustine}>St. Augustine</a>, <a className="font-semibold text-amber-800 underline" href={routes.stAugustineBeach}>St. Augustine Beach</a>, and <a className="font-semibold text-amber-800 underline" href={routes.stJohnsCounty}>St. Johns County</a>.</p>
         </div>
 
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">

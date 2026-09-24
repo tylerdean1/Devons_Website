@@ -1,7 +1,7 @@
 import { Hammer, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { site } from '../data/site';
-import { pathForView } from '../data/routes';
+import { isServiceView, pathForView } from '../data/routes';
 
 interface HeaderProps {
   currentView: string;
@@ -17,6 +17,11 @@ const navigation = [
 export default function Header({ currentView, setCurrentView }: HeaderProps) {
   const { state } = useCart();
   const itemCount = state.items.reduce((total, item) => total + item.quantity, 0);
+  const activeView = isServiceView(currentView)
+    ? 'services'
+    : ['stAugustine', 'stAugustineBeach', 'stJohnsCounty'].includes(currentView)
+      ? 'home'
+      : currentView;
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#172230] text-white shadow-sm">
@@ -43,8 +48,8 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
                 key={view}
                 href={pathForView(view)}
                 onClick={(event) => { event.preventDefault(); setCurrentView(view); }}
-                aria-current={currentView === view ? 'page' : undefined}
-                className={`border-b-2 pb-1 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view
+                aria-current={activeView === view ? 'page' : undefined}
+                className={`border-b-2 pb-1 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${activeView === view
                   ? 'border-amber-400 text-amber-300'
                   : 'border-transparent text-slate-200 hover:text-white'
                 }`}
@@ -75,8 +80,8 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
               key={view}
               href={pathForView(view)}
               onClick={(event) => { event.preventDefault(); setCurrentView(view); }}
-              aria-current={currentView === view ? 'page' : undefined}
-              className={`rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${currentView === view ? 'text-amber-300' : 'text-slate-200'}`}
+              aria-current={activeView === view ? 'page' : undefined}
+              className={`rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${activeView === view ? 'text-amber-300' : 'text-slate-200'}`}
             >
               {label}
             </a>
