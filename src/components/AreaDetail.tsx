@@ -56,10 +56,6 @@ export default function AreaDetail({ setCurrentView }: { setCurrentView: (view: 
               </article>
             ))}
           </div>
-          <div className="mt-8 rounded-2xl border-l-4 border-amber-500 bg-white px-6 py-5 text-slate-700">
-            <h3 className="font-bold text-slate-950">Work that needs a licensed contractor</h3>
-            <p className="mt-2 leading-7">Electrical and plumbing work, window or door installation and replacement, and structural or permit-required projects are outside this handyman service. For plumbing fixture repair or replacement, contact an appropriately licensed plumber.</p>
-          </div>
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
             <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.drywall}>Drywall repair in St. Augustine</a>
             <a className="text-amber-900 underline decoration-amber-500 underline-offset-4 hover:text-slate-950" href={routes.painting}>Interior painting in St. Augustine</a>
