@@ -42,7 +42,7 @@ export default function CountyDetail({ setCurrentView }: { setCurrentView: (view
   return (
     <>
       <section className="relative overflow-hidden bg-[#172230] py-20 text-white sm:py-28">
-        <div className="pointer-events-none absolute -right-32 top-0 h-96 w-96 rounded-full border border-white/10" aria-hidden="true" />
+        <div className="pointer-events-none absolute -right-32 top-0 hidden h-96 w-96 rounded-full border border-white/10 sm:block" aria-hidden="true" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <a href={routes.services} onClick={(event) => { event.preventDefault(); setCurrentView('services'); }} className="text-sm font-semibold text-amber-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">All services</a>
           <p className="eyebrow mt-14 text-amber-300"><MapPin className="mr-2 inline h-4 w-4" aria-hidden="true" />Serving St. Johns County</p>
