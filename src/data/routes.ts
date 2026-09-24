@@ -1,15 +1,20 @@
+import { services, type ServiceView } from './services';
+
 export const routes = {
   home: '/',
   services: '/services/',
   stAugustineBeach: '/areas/st-augustine-beach/',
-  drywall: '/services/drywall-repair/',
-  painting: '/services/interior-painting/',
-  pressureWashing: '/services/pressure-washing/',
+  ...Object.fromEntries(services.map((service) => [service.view, `/services/${service.slug}/`])) as Record<ServiceView, string>,
   quote: '/quote/',
   cart: '/cart/',
 } as const;
 
 export type View = keyof typeof routes;
+export type { ServiceView };
+
+export function isServiceView(view: string): view is ServiceView {
+  return services.some((service) => service.view === view);
+}
 
 export function viewForPath(pathname: string): View {
   const normalized = pathname === '/' ? '/' : `${pathname.replace(/\/+$/, '')}/`;

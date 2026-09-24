@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import {
   Bath,
   BrickWall,
@@ -20,9 +21,11 @@ import {
 } from 'lucide-react';
 import type { Service } from '../types';
 import { useCart } from '../context/CartContext';
+import { pathForView } from '../data/routes';
 
 interface ServiceCardProps {
   service: Service;
+  setCurrentView: (view: string) => void;
 }
 
 const serviceIcons: Record<Service['icon'], LucideIcon> = {
@@ -44,7 +47,7 @@ const serviceIcons: Record<Service['icon'], LucideIcon> = {
   SprayCan,
 };
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+export default function ServiceCard({ service, setCurrentView }: ServiceCardProps) {
   const { dispatch } = useCart();
   const Icon = serviceIcons[service.icon];
 
@@ -61,6 +64,14 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 
       <h3 className="mb-3 text-xl font-semibold leading-snug tracking-tight text-slate-900">{service.name}</h3>
       <p className="flex-1 text-[15px] leading-7 text-slate-600">{service.description}</p>
+
+      <a
+        href={pathForView(service.view)}
+        onClick={(event) => { event.preventDefault(); setCurrentView(service.view); }}
+        className="mt-6 inline-flex items-center gap-2 font-semibold text-slate-900 underline decoration-amber-500 decoration-2 underline-offset-4 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+      >
+        View service details <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </a>
 
       <button
         type="button"

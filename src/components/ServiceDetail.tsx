@@ -1,42 +1,18 @@
 import { ArrowRight, ArrowUpRight, Check, MapPin, Phone } from 'lucide-react';
-import { routes, type View } from '../data/routes';
+import { routes, pathForView, type ServiceView } from '../data/routes';
+import { serviceDetails } from '../data/serviceDetails';
+import { services } from '../data/services';
 import { site } from '../data/site';
 
-const details = {
-  drywall: {
-    eyebrow: 'Interior repairs',
-    title: 'Drywall repair in St. Augustine, FL',
-    intro: 'Dings, holes, cracks, and damaged corners can make an otherwise good room feel unfinished. Devon can help you plan the repair and get the wall ready for the next step.',
-    lead: 'A cleaner wall starts with the right repair.',
-    body: 'Drywall work is more than filling a hole. The size and location of the damage, the condition behind the wall, and the existing texture all affect the approach. Share a description of the damage in your quote request so Devon can discuss the right scope with you.',
-    tasks: ['Wall and ceiling patching', 'Damaged corners and small sections', 'Surface prep for painting', 'Drywall installation for home improvements'],
-    prepare: 'Tell Devon where the damage is, roughly how large it is, and whether there is any sign of moisture or a recurring crack. A photo can make the first conversation easier.',
-    serviceName: 'Drywall Installation & Repair',
-  },
-  painting: {
-    eyebrow: 'Interior finishes',
-    title: 'Interior painting in St. Augustine, FL',
-    intro: 'A new coat of paint should make the room feel finished, not draw attention to the prep that was skipped. Devon handles interior painting with a focus on clean lines and an even result.',
-    lead: 'The finish starts before the first coat.',
-    body: 'Walls, ceilings, doors, and trim each need a different level of preparation. The condition of the surface, existing color, and how the room is used shape the plan. Describe the spaces you want painted so Devon can review the scope and timing with you.',
-    tasks: ['Walls and ceilings', 'Doors, baseboards, and trim', 'Surface preparation and touchups', 'Room refreshes and larger interior projects'],
-    prepare: 'List the rooms or surfaces, approximate sizes, current condition, and any color changes you have in mind. Mention repairs that should happen before painting.',
-    serviceName: 'Interior Painting',
-  },
-  pressureWashing: {
-    eyebrow: 'Outdoor upkeep',
-    title: 'Pressure washing in St. Augustine, FL',
-    intro: 'Outdoor surfaces collect dirt and buildup over time. A careful cleaning can refresh the parts of your property you see every day.',
-    lead: 'A fresh look for hard-working outdoor spaces.',
-    body: 'Driveways, walkways, decks, and siding call for different cleaning methods. Surface material and condition matter. Devon can talk through what you want cleaned and the right approach for each area before work begins.',
-    tasks: ['Driveways and walkways', 'Decks and patios', 'Exterior surfaces where appropriate', 'Prep for selected outdoor improvement work'],
-    prepare: 'Share the surface type, approximate area, and any delicate finishes or existing damage. That helps Devon assess the work and avoid treating every surface the same way.',
-    serviceName: 'Pressure Washing',
-  },
-} as const;
+export default function ServiceDetail({ view, setCurrentView }: { view: ServiceView; setCurrentView: (view: string) => void }) {
+  const service = services.find((item) => item.view === view);
+  const detail = serviceDetails[view];
 
-export default function ServiceDetail({ view, setCurrentView }: { view: Extract<View, 'drywall' | 'painting' | 'pressureWashing'>; setCurrentView: (view: string) => void }) {
-  const detail = details[view];
+  if (!service) return null;
+
+  const sameCategory = services.filter((item) => item.view !== view && item.category === service.category);
+  const relatedServices = (sameCategory.length ? sameCategory : services.filter((item) => item.view !== view)).slice(0, 3);
+
   return (
     <>
       <section className="relative overflow-hidden bg-[#172230] py-20 text-white sm:py-28">
@@ -52,31 +28,62 @@ export default function ServiceDetail({ view, setCurrentView }: { view: Extract<
           </div>
         </div>
       </section>
+
       <section className="bg-[#f5f2eb] py-20 sm:py-24">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:px-8">
           <div>
             <p className="eyebrow">What to expect</p>
             <h2 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-slate-950">{detail.lead}</h2>
             <p className="mt-6 text-lg leading-8 text-slate-600">{detail.body}</p>
-            <p className="mt-8 inline-flex items-start gap-2 text-sm font-semibold text-slate-700"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" /> Serving St. Augustine and nearby St. Johns County communities</p>
+            <p className="mt-8 inline-flex items-start gap-2 text-sm font-semibold text-slate-700"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />Serving St. Augustine and nearby St. Johns County communities</p>
           </div>
           <div className="rounded-[2rem] bg-white p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-10">
-            <p className="eyebrow">Projects to discuss</p>
-            <h2 className="mt-3 font-display text-2xl font-bold text-slate-950">{detail.serviceName}</h2>
+            <p className="eyebrow">Project breakdown</p>
+            <h2 className="mt-3 font-display text-2xl font-bold text-slate-950">{service.name}</h2>
             <ul className="mt-7 space-y-5">
               {detail.tasks.map((task) => <li key={task} className="flex items-start gap-3 leading-7 text-slate-700"><Check className="mt-1 h-5 w-5 shrink-0 text-amber-700" aria-hidden="true" />{task}</li>)}
             </ul>
           </div>
         </div>
       </section>
+
       <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
-          <div className="max-w-3xl">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
+          <div>
             <p className="eyebrow">Before you reach out</p>
             <h2 className="mt-4 font-display text-4xl font-bold tracking-tight text-slate-950">A few details make the conversation easier.</h2>
             <p className="mt-5 text-lg leading-8 text-slate-600">{detail.prepare}</p>
           </div>
-          <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex shrink-0 items-center gap-2 self-start border-b-2 border-amber-500 pb-2 font-bold text-slate-950 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Tell Devon about your project <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
+          {detail.scopeNote && (
+            <aside className="self-start rounded-2xl border-l-4 border-amber-500 bg-amber-50 p-6 sm:p-8" aria-label="Service scope">
+              <p className="eyebrow">Scope and fit</p>
+              <p className="mt-3 leading-7 text-slate-700">{detail.scopeNote}</p>
+            </aside>
+          )}
+          <div className="lg:col-span-2">
+            <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex items-center gap-2 border-b-2 border-amber-500 pb-2 font-bold text-slate-950 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Tell Devon about your project <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f2eb] py-16 sm:py-20" aria-labelledby="related-services-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="eyebrow">Keep planning</p>
+              <h2 id="related-services-heading" className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-950">Related services</h2>
+            </div>
+            <a href={routes.services} onClick={(event) => { event.preventDefault(); setCurrentView('services'); }} className="inline-flex items-center gap-2 font-semibold text-slate-900 underline decoration-amber-500 decoration-2 underline-offset-4 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Browse all services <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {relatedServices.map((related) => (
+              <a key={related.id} href={pathForView(related.view)} onClick={(event) => { event.preventDefault(); setCurrentView(related.view); }} className="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-700">{related.category}</p>
+                <span className="mt-3 flex items-center justify-between gap-3 font-display text-xl font-bold text-slate-950">{related.name}<ArrowRight className="h-4 w-4 shrink-0 text-amber-700 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>
+                <p className="mt-3 text-sm leading-6 text-slate-600">{related.description}</p>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </>

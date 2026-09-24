@@ -1,5 +1,7 @@
 export interface Service {
   id: string;
+  view: string;
+  slug: string;
   name: string;
   description: string;
   category: string;

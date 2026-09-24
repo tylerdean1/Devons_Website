@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import HomeSections from './components/HomeSections';
 import ServiceDetail from './components/ServiceDetail';
 import AreaDetail from './components/AreaDetail';
-import { pathForView, viewForPath, type View } from './data/routes';
+import { isServiceView, pathForView, viewForPath, type View } from './data/routes';
 import { pageSeo } from './data/seo';
 
 function App({ initialView }: { initialView?: View }) {
@@ -50,6 +50,10 @@ function App({ initialView }: { initialView?: View }) {
   };
 
   const renderCurrentView = () => {
+    if (isServiceView(currentView)) {
+      return <ServiceDetail view={currentView} setCurrentView={navigate} />;
+    }
+
     switch (currentView) {
       case 'home':
         return (
@@ -60,13 +64,9 @@ function App({ initialView }: { initialView?: View }) {
           </>
         );
       case 'services':
-        return <ServicesPage />;
+        return <ServicesPage setCurrentView={navigate} />;
       case 'stAugustineBeach':
         return <AreaDetail setCurrentView={navigate} />;
-      case 'drywall':
-      case 'painting':
-      case 'pressureWashing':
-        return <ServiceDetail view={currentView} setCurrentView={navigate} />;
       case 'cart':
         return <Cart setCurrentView={navigate} />;
       case 'quote':

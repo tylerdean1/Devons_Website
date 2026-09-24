@@ -5,7 +5,7 @@ import { services } from '../data/services';
 import { site } from '../data/site';
 import { routes } from '../data/routes';
 
-export default function ServicesPage() {
+export default function ServicesPage({ setCurrentView }: { setCurrentView: (view: string) => void }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = ['All', ...Array.from(new Set(services.map((service) => service.category)))];
   const filteredServices = selectedCategory === 'All'
@@ -19,13 +19,13 @@ export default function ServicesPage() {
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-amber-700">What we can help with</p>
           <h1 id="services-heading" className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">Handyman services in St. Augustine</h1>
           <p className="mt-5 text-lg leading-8 text-slate-600">
-            From the small fixes to the bigger improvements, choose the work you have in mind and add it to your quote request.
+            Explore what each service covers, then add the work you want to discuss to your quote request.
           </p>
           <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-500">
             <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
             Serving {site.serviceAreaLabel}
           </p>
-          <p className="mt-5 text-sm leading-7 text-slate-600">Looking for details? Explore <a className="font-semibold text-amber-800 underline" href={routes.drywall}>drywall repair</a>, <a className="font-semibold text-amber-800 underline" href={routes.painting}>interior painting</a>, and <a className="font-semibold text-amber-800 underline" href={routes.pressureWashing}>pressure washing</a> in St. Augustine, or see the <a className="font-semibold text-amber-800 underline" href={routes.stAugustineBeach}>St. Augustine Beach service area</a>.</p>
+          <p className="mt-5 text-sm leading-7 text-slate-600">Choose “View service details” on any card for a breakdown of typical project scope and what to share when you request a quote. See the <a className="font-semibold text-amber-800 underline" href={routes.stAugustineBeach}>St. Augustine Beach service area</a> for local coverage.</p>
           <p className="mt-4 rounded-xl border-l-4 border-amber-500 bg-amber-50 px-5 py-4 text-sm leading-7 text-slate-700">Plumbing and electrical work, window or door installation and replacement, and structural or permit-required work are not offered. Contact an appropriately licensed contractor for those projects.</p>
         </div>
 
@@ -51,7 +51,7 @@ export default function ServicesPage() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
+            <ServiceCard key={service.id} service={service} setCurrentView={setCurrentView} />
           ))}
         </div>
       </div>
