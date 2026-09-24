@@ -21,7 +21,10 @@ export default function Hero({ setCurrentView }: { setCurrentView: (view: string
         <div className="relative z-10 mx-auto w-full max-w-md lg:ml-auto">
           <div className="absolute -inset-3 rounded-[2rem] border border-amber-300/40 sm:-inset-5" aria-hidden="true" />
           <div className="relative overflow-hidden rounded-[1.5rem] bg-slate-700 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.65)]">
-            <img src="/image.png" alt="Devon McCleese in St. Augustine" className="aspect-[4/4.7] w-full object-cover object-center" />
+            <picture className="block">
+              <source srcSet="/image.webp" type="image/webp" />
+              <img src="/image.png" width={958} height={960} alt="Devon McCleese in St. Augustine" className="aspect-[4/4.7] w-full object-cover object-center" />
+            </picture>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent px-7 pb-7 pt-20 sm:px-9 sm:pb-9"><p className="eyebrow text-amber-300">Meet Devon</p><p className="mt-2 font-display text-2xl font-bold">A real person for the work on your list.</p></div>
           </div>
           <div className="mt-5 flex justify-start">
