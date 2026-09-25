@@ -33,7 +33,7 @@ const business = {
   }],
   image: `${origin}/image.webp`,
   logo: `${origin}/logo.svg`,
-  description: 'Handyman services for home repairs and improvements in St. Augustine and St. Johns County, Florida.',
+  description: "Devon's Handyman Services provides handyman services for homes in St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County. Ask Devon about drywall repair, painting, flooring, door hardware, trim, pressure washing, deck maintenance, and other nonstructural home projects. Work directly with Devon McCleese, who brings 15 years of construction experience. Share your project details and location to confirm scope and availability.",
   areaServed: [{ '@type': 'City', name: 'St. Augustine, Florida' }, { '@type': 'City', name: 'St. Augustine Beach, Florida' }, { '@type': 'Place', name: 'Crescent Beach, Florida' }, { '@type': 'AdministrativeArea', name: 'St. Johns County, Florida' }],
 };
 
