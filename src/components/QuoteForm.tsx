@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Send, CheckCircle, Plus } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 import { services } from '../data/services';
 import { site } from '../data/site';
 

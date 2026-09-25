@@ -1,5 +1,5 @@
 import { Hammer, ShoppingCart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 import { site } from '../data/site';
 import { isServiceView, pathForView } from '../data/routes';
 

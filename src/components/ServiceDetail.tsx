@@ -1,14 +1,23 @@
+import type { MouseEvent } from 'react';
 import { ArrowRight, ArrowUpRight, Check, MapPin, Phone } from 'lucide-react';
 import { routes, pathForView, type ServiceView } from '../data/routes';
 import { serviceDetails } from '../data/serviceDetails';
 import { services } from '../data/services';
 import { site } from '../data/site';
+import { useCart } from '../context/useCart';
 
 export default function ServiceDetail({ view, setCurrentView }: { view: ServiceView; setCurrentView: (view: string) => void }) {
+  const { dispatch } = useCart();
   const service = services.find((item) => item.view === view);
   const detail = serviceDetails[view];
 
   if (!service) return null;
+
+  const requestQuote = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    dispatch({ type: 'ENSURE_ITEM', payload: service });
+    setCurrentView('quote');
+  };
 
   const sameCategory = services.filter((item) => item.view !== view && item.category === service.category);
   const relatedServices = (sameCategory.length ? sameCategory : services.filter((item) => item.view !== view)).slice(0, 3);
@@ -23,7 +32,7 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-black leading-[1.06] tracking-tight sm:text-6xl lg:text-7xl">{detail.title}</h1>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300">{detail.intro}</p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 font-bold text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Request a quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+            <a href={routes.quote} onClick={requestQuote} className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 font-bold text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Request a quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
             <a href={site.phoneHref} className="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3.5 font-bold text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"><Phone className="h-4 w-4" aria-hidden="true" /> Call {site.phone}</a>
           </div>
         </div>
@@ -35,7 +44,14 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
             <p className="eyebrow">What to expect</p>
             <h2 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-slate-950">{detail.lead}</h2>
             <p className="mt-6 text-lg leading-8 text-slate-600">{detail.body}</p>
-            <p className="mt-8 inline-flex items-start gap-2 text-sm font-semibold text-slate-700"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />Serving St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities</p>
+            <p className="mt-8 flex items-start gap-2 text-sm font-semibold leading-6 text-slate-700">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
+              <span>
+                Serving St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities. See the{' '}
+                <a href={routes.stAugustine} onClick={(event) => { event.preventDefault(); setCurrentView('stAugustine'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Augustine handyman service area</a>{' '}
+                or <a href={routes.stJohnsCounty} onClick={(event) => { event.preventDefault(); setCurrentView('stJohnsCounty'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Johns County coverage</a>.
+              </span>
+            </p>
           </div>
           <div className="rounded-[2rem] bg-white p-8 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-10">
             <p className="eyebrow">Project breakdown</p>
@@ -66,7 +82,7 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
             </aside>
           )}
           <div className="lg:col-span-2">
-            <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex items-center gap-2 border-b-2 border-amber-500 pb-2 font-bold text-slate-950 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Tell Devon about your project <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
+            <a href={routes.quote} onClick={requestQuote} className="inline-flex items-center gap-2 border-b-2 border-amber-500 pb-2 font-bold text-slate-950 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Tell Devon about your project <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
           </div>
         </div>
       </section>
