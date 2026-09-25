@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, CircleDollarSign, FileText, LogOut, Plus, RefreshCw, Send, ShieldCheck, Trash2 } from 'lucide-react';
+import { site } from '../data/site';
 
 interface InvoiceSummary {
   id: string;
@@ -48,6 +49,26 @@ function formatMoney(amountCents: number, currency = 'usd'): string {
 function formatDate(timestamp: number | null): string {
   if (!timestamp) return '—';
   return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(timestamp * 1000));
+}
+
+function reviewRequestHref(invoice: Pick<InvoiceSummary, 'customerEmail' | 'customerName'>): string {
+  const name = invoice.customerName.trim();
+  const greeting = name && name.toLowerCase() !== 'customer' ? `Hi ${name},` : 'Hi there,';
+  const subject = `Thanks for choosing ${site.businessName}`;
+  const body = [
+    greeting,
+    '',
+    'Thanks for having Devon help with your home project. Once the work is complete, you are welcome to share honest feedback about your experience. Reviews are optional, and all feedback is welcome.',
+    '',
+    `Google review link: ${site.googleReviewUrl}`,
+    '',
+    'Thank you,',
+    'Devon',
+    site.businessName,
+  ].join('\n');
+  const params = new URLSearchParams({ subject, body });
+
+  return `mailto:${invoice.customerEmail}?${params.toString()}`;
 }
 
 function amountToCents(value: string): number | null {
@@ -426,6 +447,7 @@ export default function InvoiceAdmin() {
                           <div className="mt-3 flex gap-4 text-sm font-semibold">
                             {invoice.hostedInvoiceUrl && <a href={invoice.hostedInvoiceUrl} target="_blank" rel="noreferrer" className="text-slate-800 underline">{invoice.status === 'paid' ? 'View receipt' : 'View / pay'}</a>}
                             {invoice.invoicePdf && <a href={invoice.invoicePdf} target="_blank" rel="noreferrer" className="text-slate-600 underline">PDF</a>}
+                            {invoice.status === 'paid' && invoice.customerEmail && <a href={reviewRequestHref(invoice)} title="Draft an optional, neutral review request after the project is complete. This does not send automatically." className="text-slate-600 underline">Draft review email</a>}
                           </div>
                         </article>
                       ))}
