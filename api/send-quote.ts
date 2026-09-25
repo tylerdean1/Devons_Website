@@ -201,7 +201,7 @@ function renderCustomerServicesHtml(services: QuoteService[]): string {
   }
 
   return `<ul style="margin:0;padding-left:20px;">${services.map((service) =>
-    `<li>${escapeHtml(service.name)} × ${service.quantity}</li>`).join('')}</ul>`;
+    `<li><strong>${escapeHtml(service.name)}</strong> <span style="color:#64748b;">(${escapeHtml(service.category)}) × ${service.quantity}</span>${service.description ? `<div style="color:#475569;">${escapeHtml(service.description)}</div>` : ''}</li>`).join('')}</ul>`;
 }
 
 function renderCustomerHtml(request: QuoteRequestPayload): string {
@@ -231,7 +231,7 @@ function renderCustomerHtml(request: QuoteRequestPayload): string {
 
 function renderCustomerText(request: QuoteRequestPayload): string {
   const services = request.services.length > 0
-    ? request.services.map((service) => `- ${service.name} x${service.quantity}`).join('\n')
+    ? request.services.map((service) => `- ${service.name} (${service.category}) x${service.quantity}${service.description ? `\n  ${service.description}` : ''}`).join('\n')
     : 'No specific services selected.';
 
   return [

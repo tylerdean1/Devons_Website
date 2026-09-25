@@ -20,7 +20,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import type { Service } from '../types';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 import { pathForView } from '../data/routes';
 
 interface ServiceCardProps {
