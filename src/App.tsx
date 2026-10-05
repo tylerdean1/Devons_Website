@@ -15,9 +15,11 @@ import CountyDetail from './components/CountyDetail';
 import InvoiceAdmin from './components/InvoiceAdmin';
 import { isServiceView, pathForView, viewForPath, type View } from './data/routes';
 import { pageSeo } from './data/seo';
+import { breadcrumbJsonLd } from './data/breadcrumbs';
 
 function App({ initialView }: { initialView?: View }) {
   const [currentView, setCurrentView] = useState<View>(initialView ?? (typeof window === 'undefined' ? 'home' : viewForPath(window.location.pathname)));
+  const breadcrumbData = breadcrumbJsonLd(currentView);
 
   useEffect(() => {
     const handlePopState = () => setCurrentView(viewForPath(window.location.pathname));
@@ -94,6 +96,12 @@ function App({ initialView }: { initialView?: View }) {
   return (
     <CartProvider>
       <div className="min-h-screen">
+        {breadcrumbData && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData).replace(/</g, '\\u003c') }}
+          />
+        )}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-yellow-400 focus:px-4 focus:py-2 focus:font-semibold focus:text-gray-900"
