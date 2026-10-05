@@ -258,7 +258,7 @@ export default function InvoiceAdmin() {
             </p>
             <ul className="mt-5 space-y-2 text-sm text-slate-700">
               <li><code>STRIPE_SECRET_KEY</code> — start with a Stripe test key, then switch to a live key after onboarding and testing.</li>
-              <li><code>INVOICE_ADMIN_PASSWORD</code> — use a private random password at least 24 characters long.</li>
+              <li><code>INVOICE_ADMIN_PASSWORD</code> — use a unique private password at least 16 characters long.</li>
               <li><code>INVOICE_SESSION_SECRET</code> — use a separate random secret at least 32 characters long.</li>
             </ul>
             <p className="mt-5 text-sm text-slate-600">

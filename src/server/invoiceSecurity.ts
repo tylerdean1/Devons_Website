@@ -9,7 +9,7 @@ export type InvoiceApiResponse = ServerResponse<IncomingMessage>;
 
 const COOKIE_NAME = 'devon_invoice_session';
 const SESSION_TTL_SECONDS = 12 * 60 * 60;
-const ADMIN_PASSWORD_MIN_LENGTH = 24;
+const ADMIN_PASSWORD_MIN_LENGTH = 16;
 const SESSION_SECRET_MIN_LENGTH = 32;
 const MAX_REQUEST_BODY_BYTES = 64 * 1024;
 

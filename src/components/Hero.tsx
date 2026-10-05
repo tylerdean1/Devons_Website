@@ -10,7 +10,7 @@ export default function Hero({ setCurrentView }: { setCurrentView: (view: string
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 pb-24 pt-20 sm:px-6 sm:pb-28 sm:pt-24 lg:grid-cols-[1.12fr_0.88fr] lg:gap-20 lg:px-8 lg:py-28">
         <div className="relative z-10">
           <p className="eyebrow inline-flex items-center gap-2 text-amber-300"><MapPin className="h-4 w-4" aria-hidden="true" />St. Augustine · St. Johns County</p>
-          <h1 id="hero-heading" className="mt-7 max-w-3xl font-display text-5xl font-black leading-[0.98] tracking-tight text-balance sm:text-6xl lg:text-7xl xl:text-[5.5rem]">Your local <span className="text-amber-300">handyman.</span><br />Your home, handled.</h1>
+          <h1 id="hero-heading" className="mt-7 max-w-3xl font-display text-5xl font-black leading-[0.98] tracking-tight text-balance sm:text-6xl lg:text-7xl xl:text-[5.5rem]">Your St. Augustine <span className="text-amber-300">handyman.</span><br />Your home, handled.</h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-slate-300">Repairs, painting, and home improvements in St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities. Work directly with Devon McCleese, backed by 15 years in construction.</p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="inline-flex items-center justify-center gap-3 rounded-xl bg-amber-400 px-7 py-4 font-bold text-slate-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900">Get a project quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
@@ -23,7 +23,7 @@ export default function Hero({ setCurrentView }: { setCurrentView: (view: string
           <div className="relative overflow-hidden rounded-[1.5rem] bg-slate-700 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.65)]">
             <picture className="block">
               <source srcSet="/image.webp" type="image/webp" />
-              <img src="/image.png" width={958} height={960} alt="Devon McCleese in St. Augustine" className="aspect-[4/4.7] w-full object-cover object-center" />
+              <img src="/image.webp" width={958} height={960} alt="Devon McCleese in St. Augustine" fetchpriority="high" decoding="async" className="aspect-[4/4.7] w-full object-cover object-center" />
             </picture>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent px-7 pb-7 pt-20 sm:px-9 sm:pb-9"><p className="eyebrow text-amber-300">Meet Devon</p><p className="mt-2 font-display text-2xl font-bold">A real person for the work on your list.</p></div>
           </div>
