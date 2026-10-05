@@ -87,6 +87,24 @@ test('login uses a signed HttpOnly session cookie and rejects a different origin
   assert.match(logout.headers['set-cookie'], /Max-Age=0/);
 });
 
+test('invoice setup accepts a 16-character owner password and rejects shorter passwords', async () => {
+  configure();
+  const minimumPassword = 'long-enough-pass';
+  assert.equal(minimumPassword.length, 16);
+
+  process.env.INVOICE_ADMIN_PASSWORD = minimumPassword;
+  const accepted = response();
+  await authHandler(request('POST', { action: 'login', password: minimumPassword }), accepted);
+  assert.equal(accepted.statusCode, 200);
+  assert.equal(accepted.body.authenticated, true);
+
+  const tooShort = minimumPassword.slice(0, 15);
+  process.env.INVOICE_ADMIN_PASSWORD = tooShort;
+  const rejected = response();
+  await authHandler(request('GET', undefined), rejected);
+  assert.deepEqual(rejected.body, { configured: false, authenticated: false });
+});
+
 test('invoice creation rejects cross-origin requests before calling Stripe', async () => {
   configure();
   const cookie = await login();

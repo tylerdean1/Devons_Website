@@ -32,6 +32,25 @@ const serviceGroups = [
   },
 ];
 
+const questions: Array<{ question: string; answer: string; links?: Array<{ label: string; href: string }> }> = [
+  {
+    question: 'What handyman services can I request in St. Augustine?',
+    answer: 'You can ask Devon about drywall repair, painting, trim, pressure washing, deck maintenance, finish updates, and other home projects. Use the service pages to review typical scope, or describe a custom project so Devon can confirm whether it is a fit.',
+  },
+  {
+    question: 'Does Devon travel to homes in St. Augustine and nearby areas?',
+    answer: 'Yes. Devon travels to customers in St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities. Include the project address when you request a quote so he can confirm the location and availability.',
+  },
+  {
+    question: 'What information helps Devon review a St. Augustine project?',
+    answer: 'Include the project address, the work you want done, approximate sizes, surface materials, and your preferred timing. If photos would help explain the project, text or email them to Devon after submitting the quote request and include the address.',
+  },
+  {
+    question: 'Are there extra steps for exterior work on a historic St. Augustine property?',
+    answer: 'Depending on the property’s location and the work, exterior changes may need City of St. Augustine review or a building permit. Use the HARB and permit links above to check requirements for the address, then share the project details with Devon before planning.',
+  },
+];
+
 export default function StAugustineDetail({ setCurrentView }: { setCurrentView: (view: string) => void }) {
   return (
     <>
@@ -92,6 +111,23 @@ export default function StAugustineDetail({ setCurrentView }: { setCurrentView: 
             </ol>
             <a href={routes.quote} onClick={(event) => { event.preventDefault(); setCurrentView('quote'); }} className="mt-8 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 font-bold text-white hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">Tell Devon about your project <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
           </aside>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f2eb] py-20 sm:py-24" aria-labelledby="st-augustine-faq-heading">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.65fr_1fr] lg:gap-24 lg:px-8">
+          <div>
+            <p className="eyebrow">Good to know</p>
+            <h2 id="st-augustine-faq-heading" className="mt-4 font-display text-4xl font-bold tracking-tight text-slate-950">St. Augustine handyman questions.</h2>
+          </div>
+          <div className="divide-y divide-slate-300/70 border-t border-slate-300/70">
+            {questions.map(({ question, answer }) => (
+              <article key={question} className="py-6">
+                <h3 className="font-display text-xl font-bold text-slate-950">{question}</h3>
+                <p className="mt-3 leading-7 text-slate-600">{answer}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </>
