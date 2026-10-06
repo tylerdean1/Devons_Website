@@ -47,9 +47,10 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
             <p className="mt-8 flex items-start gap-2 text-sm font-semibold leading-6 text-slate-700">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
               <span>
-                Serving St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities. See the{' '}
-                <a href={routes.stAugustine} onClick={(event) => { event.preventDefault(); setCurrentView('stAugustine'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Augustine handyman service area</a>{' '}
-                or <a href={routes.stJohnsCounty} onClick={(event) => { event.preventDefault(); setCurrentView('stJohnsCounty'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Johns County coverage</a>.
+                Serving St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County communities. See coverage for{' '}
+                <a href={routes.stAugustine} onClick={(event) => { event.preventDefault(); setCurrentView('stAugustine'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Augustine</a>,{' '}
+                <a href={routes.stAugustineBeach} onClick={(event) => { event.preventDefault(); setCurrentView('stAugustineBeach'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Augustine Beach</a>, or{' '}
+                <a href={routes.stJohnsCounty} onClick={(event) => { event.preventDefault(); setCurrentView('stJohnsCounty'); }} className="text-amber-900 underline decoration-amber-500 underline-offset-2 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">St. Johns County</a>.
               </span>
             </p>
           </div>
