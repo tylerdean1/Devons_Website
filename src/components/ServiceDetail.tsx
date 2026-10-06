@@ -63,6 +63,24 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
         </div>
       </section>
 
+      {detail.projectPhotos?.length ? (
+        <section className="bg-white py-16 sm:py-20" aria-labelledby="past-project-photos-heading">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <p className="eyebrow">Selected past work</p>
+            <h2 id="past-project-photos-heading" className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-950">Project photos</h2>
+            <p className="mt-4 max-w-3xl leading-7 text-slate-600">These photos show projects Devon contributed to with Island Builders of North Florida. They are examples of past work; Devon will confirm the scope of any new project before quoting.</p>
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              {detail.projectPhotos.map((photo) => (
+                <figure key={photo.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f2eb]">
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+                  <figcaption className="p-4 text-sm leading-6 text-slate-700">{photo.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="bg-white py-20 sm:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
           <div>

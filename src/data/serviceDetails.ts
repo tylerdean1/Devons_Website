@@ -1,5 +1,11 @@
 import type { ServiceView } from './services';
 
+export interface ServiceProjectPhoto {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
 export interface ServiceDetailContent {
   eyebrow: string;
   title: string;
@@ -11,6 +17,7 @@ export interface ServiceDetailContent {
   tasks: string[];
   prepare: string;
   scopeNote?: string;
+  projectPhotos?: ServiceProjectPhoto[];
 }
 
 export const serviceDetails = {
@@ -73,6 +80,18 @@ export const serviceDetails = {
     tasks: ['Painting suitable existing cabinet or wall surfaces', 'Cabinet hardware updates', 'Tile backsplash and finish details', 'Trim and other nonstructural finishing work'],
     prepare: 'Send a short list of the updates, photos of the existing kitchen, and any materials or colors already chosen. Include whether appliances or cabinets are staying in place.',
     scopeNote: 'This is finish work only. Plumbing, electrical, structural changes, cabinet replacement, and permit-required work are referred to the appropriately qualified trade.',
+    projectPhotos: [
+      {
+        src: '/images/projects/flagler-beach-kitchen-remodel.jpg',
+        alt: 'Finished kitchen with white cabinets, tiled floor, and stainless steel appliances',
+        caption: 'Flagler Beach kitchen remodel · Island Builders of North Florida · Devon McCleese contributed to this past project.',
+      },
+      {
+        src: '/images/projects/flagler-beach-kitchen-detail.jpg',
+        alt: 'Kitchen countertop and dining area beside a sliding glass door',
+        caption: 'Kitchen finish detail · Island Builders of North Florida · Devon McCleese contributed to this past project.',
+      },
+    ],
   },
   bathroomFinishUpdates: {
     eyebrow: 'Bathroom finishes',
@@ -85,6 +104,13 @@ export const serviceDetails = {
     tasks: ['Painting suitable bathroom surfaces', 'Tile and finish updates within scope', 'Trim, molding, and detail work', 'Planning a refresh around existing fixtures'],
     prepare: 'Share photos, the bathroom surfaces involved, the approximate area, and whether you have noticed leaks or recurring moisture. List any materials you already selected.',
     scopeNote: 'Plumbing, electrical, waterproofing systems, structural changes, and permit-required work are not included; contact the appropriately licensed contractor for those tasks.',
+    projectPhotos: [
+      {
+        src: '/images/projects/flagler-beach-bathroom-finish.jpg',
+        alt: 'Bathroom with a glass vessel sink, wood vanity, tiled shower, and curtain',
+        caption: 'Flagler Beach bathroom remodel · Island Builders of North Florida · Devon McCleese contributed to this past project.',
+      },
+    ],
   },
   deckMaintenance: {
     eyebrow: 'Outdoor upkeep',
@@ -277,5 +303,12 @@ export const serviceDetails = {
     tasks: ['Discussing an unlisted nonstructural repair or finish project', 'Reviewing photos, materials, and project access', 'Combining related tasks into one clear scope', 'Connecting you with the right kind of specialist when needed'],
     prepare: 'Explain what you want changed, where the project is, what materials or plans you already have, and any timing or access constraints.',
     scopeNote: 'Electrical, plumbing, structural, window or door replacement, and permit-required work are not offered. Devon will confirm the scope before adding a custom request to a quote.',
+    projectPhotos: [
+      {
+        src: '/images/projects/cypress-tongue-and-groove-ceiling.jpg',
+        alt: 'Cypress tongue-and-groove ceiling with finished wood trim on a covered porch',
+        caption: 'Cypress tongue-and-groove ceiling · Island Builders of North Florida · Devon McCleese contributed to this past project.',
+      },
+    ],
   },
 } satisfies Record<ServiceView, ServiceDetailContent>;
