@@ -6,7 +6,7 @@ import path from 'node:path';
 const require = createRequire(import.meta.url);
 const origin = 'https://devonmccleese.com';
 const pages = [
-  { view: 'home', path: '/', title: 'St. Augustine Handyman | Devon’s Handyman Services', description: 'St. Augustine handyman Devon McCleese handles drywall, painting, home repairs, and outdoor upkeep in St. Augustine Beach, Crescent Beach, and St. Johns County.' },
+  { view: 'home', path: '/', title: 'Devon’s Handyman Services | St. Augustine, FL', description: 'Meet Devon McCleese, a local handyman for drywall, painting, and home repairs in St. Augustine, St. Augustine Beach, Crescent Beach, and St. Johns County.' },
   { view: 'services', path: '/services/', title: 'Handyman Services in St. Augustine, FL | Devon McCleese', description: 'Drywall, painting, flooring, doors, pressure washing, and handyman repairs in St. Augustine, St. Augustine Beach, Crescent Beach, and St. Johns County.' },
   { view: 'stAugustine', path: '/areas/st-augustine/', title: 'Handyman in St. Augustine, FL | Devon McCleese', description: 'Need a handyman in St. Augustine? Devon travels to local homes for drywall repair, painting, deck care, pressure washing, and nonstructural home repairs.' },
   { view: 'stAugustineBeach', path: '/areas/st-augustine-beach/', title: 'St. Augustine Beach Handyman | Devon’s Handyman Services', description: 'Looking for a handyman in St. Augustine Beach, FL? Ask Devon about drywall repair, painting, pressure washing, and nonstructural home maintenance.' },
