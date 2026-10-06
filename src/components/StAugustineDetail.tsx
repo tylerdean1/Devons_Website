@@ -1,6 +1,13 @@
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { routes } from '../data/routes';
 import { site } from '../data/site';
+import { serviceDetails, type ServiceProjectPhoto } from '../data/serviceDetails';
+
+const projectPhotos: ServiceProjectPhoto[] = [
+  serviceDetails.kitchenFinishUpdates.projectPhotos?.[0],
+  serviceDetails.bathroomFinishUpdates.projectPhotos?.[0],
+  serviceDetails.customProject.projectPhotos?.[0],
+].filter((photo): photo is ServiceProjectPhoto => photo !== undefined);
 
 const serviceGroups = [
   {
@@ -89,6 +96,22 @@ export default function StAugustineDetail({ setCurrentView }: { setCurrentView: 
             ))}
           </div>
           <p className="mt-8 text-sm leading-7 text-slate-600">Need another kind of home project? <a className="font-semibold text-amber-900 underline decoration-amber-500 underline-offset-4" href={routes.customProject}>Describe a custom project</a> and Devon can confirm whether it fits his scope.</p>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-20" aria-labelledby="st-augustine-projects-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="eyebrow">Selected past work</p>
+          <h2 id="st-augustine-projects-heading" className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Project examples from Devon’s construction experience.</h2>
+          <p className="mt-4 max-w-3xl leading-7 text-slate-600">These photos show projects Devon contributed to while working with Island Builders of North Florida. They are examples of past work; Devon will confirm the scope and fit of any new project before quoting.</p>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {projectPhotos.map((photo) => (
+              <figure key={photo.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f2eb]">
+                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+                <figcaption className="p-4 text-sm leading-6 text-slate-700">{photo.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
