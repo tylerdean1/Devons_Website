@@ -9,6 +9,36 @@ const featured = [
   { number: '03', title: 'Pressure washing', description: 'A practical refresh for walkways, driveways, decks, and other outdoor surfaces.', view: 'pressureWashing', path: routes.pressureWashing },
 ];
 
+const projectHighlights = [
+  {
+    title: 'Kitchen remodel',
+    area: 'Flagler Beach',
+    service: 'Kitchen finish updates',
+    image: '/images/projects/flagler-beach-kitchen-remodel.jpg',
+    alt: 'Finished kitchen with white cabinets, tiled floor, and stainless steel appliances',
+    view: 'kitchenFinishUpdates',
+    path: routes.kitchenFinishUpdates,
+  },
+  {
+    title: 'Bathroom remodel',
+    area: 'Flagler Beach',
+    service: 'Bathroom finish updates',
+    image: '/images/projects/flagler-beach-bathroom-finish.jpg',
+    alt: 'Bathroom with a glass vessel sink, wood vanity, tiled shower, and curtain',
+    view: 'bathroomFinishUpdates',
+    path: routes.bathroomFinishUpdates,
+  },
+  {
+    title: 'Cypress porch ceiling',
+    area: 'North Florida',
+    service: 'Custom home project',
+    image: '/images/projects/cypress-tongue-and-groove-ceiling.jpg',
+    alt: 'Cypress tongue-and-groove ceiling with finished wood trim on a covered porch',
+    view: 'customProject',
+    path: routes.customProject,
+  },
+];
+
 const questions = [
   { question: 'What areas do you serve?', answer: `Devon works with homeowners in ${site.primaryArea} and nearby communities throughout ${site.countyArea}, Florida. Include your address in the quote request so he can confirm the project location.` },
   { question: 'Can I ask about more than one project?', answer: 'Yes. Add several services to one quote request or describe your full punch list in the notes. Devon can review the scope with you directly.' },
@@ -43,6 +73,31 @@ export default function HomeSections({ setCurrentView }: { setCurrentView: (view
                 <a href={item.path} onClick={(event) => { event.preventDefault(); setCurrentView(item.view); }} className="mt-8 inline-flex items-center gap-2 font-bold text-slate-900 underline decoration-amber-500 decoration-2 underline-offset-8 group-hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
                   Explore {item.title.toLowerCase()} <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-20 sm:py-28" aria-labelledby="project-experience-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Selected project experience</p>
+            <h2 id="project-experience-heading" className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-5xl">A closer look at Devon’s construction experience.</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">These photos show past projects Devon contributed to with Island Builders of North Florida. For new work, Devon will review the details and confirm the project scope directly with you.</p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {projectHighlights.map((project) => (
+              <article key={project.title} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_45px_-35px_rgba(15,23,42,0.45)]">
+                <a href={project.path} onClick={(event) => { event.preventDefault(); setCurrentView(project.view); }} className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-amber-500">
+                  <img src={project.image} alt={project.alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                  <div className="p-6">
+                    <p className="eyebrow">{project.area}</p>
+                    <h3 className="mt-2 font-display text-xl font-bold text-slate-950">{project.title}</h3>
+                    <span className="mt-4 inline-flex items-center gap-2 font-semibold text-amber-900 underline decoration-amber-500 underline-offset-4 group-hover:text-slate-950">{project.service}<ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
+                  </div>
+                </a>
+                <p className="px-6 pb-6 text-sm leading-6 text-slate-600">Past project Devon contributed to with Island Builders of North Florida.</p>
               </article>
             ))}
           </div>
