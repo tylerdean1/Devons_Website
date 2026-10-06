@@ -13,7 +13,7 @@ const compiled = await build({
 });
 const { serviceDetails } = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].contents).toString('base64')}`);
 
-test('selected past projects have real image files, descriptive alt text, and captions', () => {
+test('selected past projects have responsive image assets, descriptive alt text, and captions', () => {
   const projectPages = ['kitchenFinishUpdates', 'bathroomFinishUpdates', 'customProject'];
 
   for (const view of projectPages) {
@@ -25,6 +25,14 @@ test('selected past projects have real image files, descriptive alt text, and ca
       assert.ok(photo.caption.trim(), `${view} photo should have a visible project caption`);
       assert.ok(photo.src.startsWith('/images/projects/'), `${view} photo should use a local project image`);
       assert.ok(existsSync(resolve('public', photo.src.slice(1))), `${photo.src} should exist in the public folder`);
+
+      const webpCandidates = photo.webpSrcSet.split(',').map((candidate) => candidate.trim().split(/\s+/));
+      assert.ok(webpCandidates.length >= 3, `${view} photo should offer responsive WebP sizes`);
+      for (const [src, width] of webpCandidates) {
+        assert.match(width, /^\d+w$/, `${src} should declare its intrinsic width`);
+        assert.ok(src.startsWith('/images/projects/') && src.endsWith('.webp'), `${src} should be a local WebP project image`);
+        assert.ok(existsSync(resolve('public', src.slice(1))), `${src} should exist in the public folder`);
+      }
     }
   }
 });

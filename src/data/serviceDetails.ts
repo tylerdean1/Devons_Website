@@ -2,6 +2,7 @@ import type { ServiceView } from './services';
 
 export interface ServiceProjectPhoto {
   src: string;
+  webpSrcSet: string;
   alt: string;
   caption: string;
 }
@@ -83,11 +84,13 @@ export const serviceDetails = {
     projectPhotos: [
       {
         src: '/images/projects/flagler-beach-kitchen-remodel.jpg',
+        webpSrcSet: '/images/projects/flagler-beach-kitchen-remodel-480.webp 480w, /images/projects/flagler-beach-kitchen-remodel-960.webp 960w, /images/projects/flagler-beach-kitchen-remodel-1600.webp 1600w, /images/projects/flagler-beach-kitchen-remodel-2048.webp 2048w',
         alt: 'Finished kitchen with white cabinets, tiled floor, and stainless steel appliances',
         caption: 'Flagler Beach kitchen remodel · Island Builders of North Florida · Devon McCleese contributed to this past project.',
       },
       {
         src: '/images/projects/flagler-beach-kitchen-detail.jpg',
+        webpSrcSet: '/images/projects/flagler-beach-kitchen-detail-480.webp 480w, /images/projects/flagler-beach-kitchen-detail-960.webp 960w, /images/projects/flagler-beach-kitchen-detail-1600.webp 1600w, /images/projects/flagler-beach-kitchen-detail-2048.webp 2048w',
         alt: 'Kitchen countertop and dining area beside a sliding glass door',
         caption: 'Kitchen finish detail · Island Builders of North Florida · Devon McCleese contributed to this past project.',
       },
@@ -107,6 +110,7 @@ export const serviceDetails = {
     projectPhotos: [
       {
         src: '/images/projects/flagler-beach-bathroom-finish.jpg',
+        webpSrcSet: '/images/projects/flagler-beach-bathroom-finish-480.webp 480w, /images/projects/flagler-beach-bathroom-finish-960.webp 960w, /images/projects/flagler-beach-bathroom-finish-1152.webp 1152w',
         alt: 'Bathroom with a glass vessel sink, wood vanity, tiled shower, and curtain',
         caption: 'Flagler Beach bathroom remodel · Island Builders of North Florida · Devon McCleese contributed to this past project.',
       },
@@ -306,6 +310,7 @@ export const serviceDetails = {
     projectPhotos: [
       {
         src: '/images/projects/cypress-tongue-and-groove-ceiling.jpg',
+        webpSrcSet: '/images/projects/cypress-tongue-and-groove-ceiling-480.webp 480w, /images/projects/cypress-tongue-and-groove-ceiling-960.webp 960w, /images/projects/cypress-tongue-and-groove-ceiling-1600.webp 1600w, /images/projects/cypress-tongue-and-groove-ceiling-2048.webp 2048w',
         alt: 'Cypress tongue-and-groove ceiling with finished wood trim on a covered porch',
         caption: 'Cypress tongue-and-groove ceiling · Island Builders of North Florida · Devon McCleese contributed to this past project.',
       },

@@ -107,7 +107,10 @@ export default function StAugustineDetail({ setCurrentView }: { setCurrentView: 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {projectPhotos.map((photo) => (
               <figure key={photo.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f2eb]">
-                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+                <picture>
+                  <source type="image/webp" srcSet={photo.webpSrcSet} sizes="(min-width: 1280px) 24.3rem, (min-width: 768px) 33vw, calc(100vw - 2rem)" />
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+                </picture>
                 <figcaption className="p-4 text-sm leading-6 text-slate-700">{photo.caption}</figcaption>
               </figure>
             ))}
