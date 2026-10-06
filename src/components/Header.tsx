@@ -11,17 +11,14 @@ interface HeaderProps {
 const navigation = [
   { view: 'home', label: 'Home' },
   { view: 'services', label: 'Services' },
+  { view: 'stAugustine', label: 'St. Augustine' },
   { view: 'quote', label: 'Get a Quote' },
 ];
 
 export default function Header({ currentView, setCurrentView }: HeaderProps) {
   const { state } = useCart();
   const itemCount = state.items.reduce((total, item) => total + item.quantity, 0);
-  const activeView = isServiceView(currentView)
-    ? 'services'
-    : ['stAugustine', 'stAugustineBeach', 'stJohnsCounty'].includes(currentView)
-      ? 'home'
-      : currentView;
+  const activeView = isServiceView(currentView) ? 'services' : currentView;
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#172230] text-white shadow-sm">
@@ -74,14 +71,14 @@ export default function Header({ currentView, setCurrentView }: HeaderProps) {
           </a>
         </div>
 
-        <nav className="flex justify-center gap-7 border-t border-white/10 py-3 md:hidden" aria-label="Mobile navigation">
+        <nav className="flex justify-center gap-2 border-t border-white/10 py-3 md:hidden" aria-label="Mobile navigation">
           {navigation.map(({ view, label }) => (
             <a
               key={view}
               href={pathForView(view)}
               onClick={(event) => { event.preventDefault(); setCurrentView(view); }}
               aria-current={activeView === view ? 'page' : undefined}
-              className={`rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${activeView === view ? 'text-amber-300' : 'text-slate-200'}`}
+              className={`rounded-sm text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 sm:text-sm ${activeView === view ? 'text-amber-300' : 'text-slate-200'}`}
             >
               {label}
             </a>
