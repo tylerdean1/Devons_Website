@@ -248,7 +248,7 @@ export const serviceDetails = {
     eyebrow: 'Outdoor upkeep',
     title: 'Gutter cleaning in St. Augustine, FL',
     metaTitle: 'Gutter Cleaning in St. Augustine, FL | Devon McCleese',
-    metaDescription: 'Clear leaves and debris from suitable residential gutters in St. Augustine. Share the home height, access, and any drainage concerns.',
+    metaDescription: 'Need gutter cleaning in St. Augustine? Devon clears leaves and debris from accessible residential gutters. Share your home height and access details to request a quote.',
     intro: 'Leaves and debris can block the path rainwater needs to follow. Devon can discuss cleaning accessible residential gutters and the conditions around your home.',
     lead: 'Clear gutters help rainwater reach the downspouts.',
     body: 'Home height, roofline, access, and the amount of debris affect the cleaning plan. Let Devon know what you can see from the ground and where you notice overflow so the scope can be reviewed before a visit.',
