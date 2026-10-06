@@ -36,10 +36,18 @@ const business = {
   description: "Devon's Handyman Services provides handyman services for homes in St. Augustine, St. Augustine Beach, Crescent Beach, and nearby St. Johns County. Ask Devon about drywall repair, painting, flooring, door hardware, trim, pressure washing, deck maintenance, and other nonstructural home projects. Work directly with Devon McCleese, who brings 15 years of construction experience. Share your project details and location to confirm scope and availability.",
   areaServed: [{ '@type': 'City', name: 'St. Augustine, Florida' }, { '@type': 'City', name: 'St. Augustine Beach, Florida' }, { '@type': 'Place', name: 'Crescent Beach, Florida' }, { '@type': 'AdministrativeArea', name: 'St. Johns County, Florida' }],
 };
+const website = {
+  '@type': 'WebSite',
+  '@id': `${origin}/#website`,
+  url: `${origin}/`,
+  name: "Devon's Handyman Services",
+  publisher: { '@id': business['@id'] },
+};
 
 function schemaFor(page) {
-  const webPage = { '@type': 'WebPage', '@id': `${origin}${page.path}#webpage`, url: `${origin}${page.path}`, name: page.title, description: page.description, about: { '@id': business['@id'] } };
+  const webPage = { '@type': 'WebPage', '@id': `${origin}${page.path}#webpage`, url: `${origin}${page.path}`, name: page.title, description: page.description, about: { '@id': business['@id'] }, isPartOf: { '@id': website['@id'] } };
   const graph = [business, webPage];
+  if (page.path === '/') graph.push(website);
   if (page.path !== '/' && !page.noindex) {
     const breadcrumbItems = [{ name: 'Home', url: `${origin}/` }];
     if (page.serviceName) {
