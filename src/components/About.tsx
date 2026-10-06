@@ -19,10 +19,10 @@ export default function About() {
         <div className="mt-10 flex flex-col gap-6 rounded-2xl border border-amber-200 bg-amber-50 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="max-w-2xl">
             <h3 className="font-display text-xl font-bold text-slate-950">Worked with Devon?</h3>
-            <p className="mt-2 text-sm leading-7 text-slate-600">If Devon has completed a project for you, share an honest Google review. Your feedback helps nearby homeowners decide who to call.</p>
+            <p className="mt-2 text-sm leading-7 text-slate-600">If you hired Devon for a project, share your honest customer experience on Google. All feedback is welcome; no particular rating is requested.</p>
           </div>
           <a href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 font-semibold text-white transition-colors hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2">
-            Leave a Google review <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            Share a customer review <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
       </div>

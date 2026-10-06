@@ -49,7 +49,7 @@ export default function Footer() {
                 <span>{site.businessHoursLabel}</span>
               </p>
               <a className="flex items-center gap-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer">
-                <MessageSquare className="h-4 w-4 text-amber-300" aria-hidden="true" />Leave a Google review
+                <MessageSquare className="h-4 w-4 text-amber-300" aria-hidden="true" />Share a customer review on Google
               </a>
             </div>
           </div>
