@@ -1,7 +1,7 @@
 import type { MouseEvent } from 'react';
 import { ArrowRight, ArrowUpRight, Check, MapPin, Phone } from 'lucide-react';
 import { routes, pathForView, type ServiceView } from '../data/routes';
-import { serviceDetails } from '../data/serviceDetails';
+import { serviceDetails, type ServiceDetailContent } from '../data/serviceDetails';
 import { services } from '../data/services';
 import { site } from '../data/site';
 import { useCart } from '../context/useCart';
@@ -9,7 +9,7 @@ import { useCart } from '../context/useCart';
 export default function ServiceDetail({ view, setCurrentView }: { view: ServiceView; setCurrentView: (view: string) => void }) {
   const { dispatch } = useCart();
   const service = services.find((item) => item.view === view);
-  const detail = serviceDetails[view];
+  const detail: ServiceDetailContent = serviceDetails[view];
 
   if (!service) return null;
 
@@ -69,13 +69,13 @@ export default function ServiceDetail({ view, setCurrentView }: { view: ServiceV
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <p className="eyebrow">Selected past work</p>
             <h2 id="past-project-photos-heading" className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-950">Project photos</h2>
-            <p className="mt-4 max-w-3xl leading-7 text-slate-600">These photos show projects Devon contributed to with Island Builders of North Florida. They are examples of past work; Devon will confirm the scope of any new project before quoting.</p>
+            <p className="mt-4 max-w-3xl leading-7 text-slate-600">A closer look at home improvement projects and finish work completed by Devon McCleese.</p>
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               {detail.projectPhotos.map((photo) => (
                 <figure key={photo.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f2eb]">
                   <picture>
                     <source type="image/webp" srcSet={photo.webpSrcSet} sizes="(min-width: 1280px) 37.25rem, (min-width: 768px) 50vw, calc(100vw - 2rem)" />
-                    <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+                    <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
                   </picture>
                   <figcaption className="p-4 text-sm leading-6 text-slate-700">{photo.caption}</figcaption>
                 </figure>

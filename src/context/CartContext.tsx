@@ -1,4 +1,4 @@
-import React, { useReducer, type ReactNode } from 'react';
+import { useReducer, type ReactNode } from 'react';
 import { cartReducer } from './cartReducer';
 import { CartContext } from './cart-context';
 
